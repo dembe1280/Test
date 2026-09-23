@@ -1,0 +1,2308 @@
+/* ==========================================
+   MASTERCOMMERCE
+   MAIN STYLES
+========================================== */
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: #ffffff;
+    color: #111111;
+
+    overflow: hidden;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+button,
+textarea,
+input,
+select {
+    font-family: inherit;
+}
+
+button {
+    border: 0;
+    cursor: pointer;
+}
+
+input,
+textarea,
+select {
+    font-size: 16px;
+}
+
+
+/* ==========================================
+   APP
+========================================== */
+
+#app {
+    width: 100vw;
+    height: 100vh;
+    min-height: 100dvh;
+
+    display: flex;
+
+    overflow: hidden;
+}
+
+
+/* ==========================================
+   SIDEBAR
+========================================== */
+
+.sidebar {
+    position: fixed;
+    z-index: 1000;
+
+    left: 0;
+    top: 0;
+
+    width: 280px;
+    height: 100vh;
+
+    background: #ffffff;
+
+    border-right: 1px solid #e7e7e7;
+
+    display: flex;
+    flex-direction: column;
+
+    transform: translateX(-100%);
+
+    transition:
+        transform 0.25s ease,
+        background-color 0.2s ease;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar-top {
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.sidebar-logo,
+.brand-mark,
+.welcome-logo,
+.modal-logo {
+    background: #000000;
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.sidebar-logo {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 10px;
+}
+
+.icon-button {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    color: #333333;
+
+    border-radius: 9px;
+}
+
+.icon-button:hover {
+    background: #f1f1f1;
+}
+
+.icon-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+.sidebar-nav {
+    padding: 14px 10px;
+}
+
+.nav-item {
+    width: 100%;
+    min-height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 0 14px;
+
+    margin-bottom: 4px;
+
+    border-radius: 10px;
+
+    background: transparent;
+    color: #222222;
+
+    text-align: left;
+
+    font-size: 15px;
+}
+
+.nav-item:hover {
+    background: #f3f3f3;
+}
+
+.nav-item.active {
+    background: #eeeeee;
+    font-weight: 650;
+}
+
+.nav-item svg {
+    width: 20px;
+    height: 20px;
+
+    flex-shrink: 0;
+}
+
+
+/* ==========================================
+   SIDEBAR BOTTOM
+========================================== */
+
+.sidebar-bottom {
+    margin-top: auto;
+
+    padding: 14px 10px 20px;
+}
+
+.sidebar-action {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    margin-top: 5px;
+
+    border-radius: 9px;
+
+    background: transparent;
+    color: #222222;
+
+    text-align: left;
+
+    font-size: 14px;
+}
+
+.sidebar-action:hover {
+    background: #f3f3f3;
+}
+
+
+/* ==========================================
+   OVERLAY
+========================================== */
+
+.sidebar-overlay {
+    position: fixed;
+    z-index: 900;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.28);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: opacity 0.2s ease;
+}
+
+.sidebar-overlay.show {
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+
+/* ==========================================
+   MAIN
+========================================== */
+
+.main {
+    position: relative;
+
+    width: 100%;
+    height: 100vh;
+    min-height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+
+    transition:
+        background-color 0.2s ease;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.header {
+    height: 68px;
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.brand-mark {
+    width: 32px;
+    height: 32px;
+
+    border-radius: 8px;
+
+    font-size: 17px;
+}
+
+.brand-name {
+    font-size: 17px;
+
+    font-weight: 650;
+
+    letter-spacing: -0.3px;
+}
+
+.menu-button {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    color: #222222;
+}
+
+.menu-button:hover {
+    background: #f2f2f2;
+}
+
+.menu-button svg {
+    width: 22px;
+    height: 22px;
+}
+
+
+/* ==========================================
+   CHAT AREA
+========================================== */
+
+.chat-area {
+    flex: 1;
+
+    position: relative;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding-bottom: 150px;
+
+    scroll-behavior: smooth;
+}
+
+
+/* ==========================================
+   WELCOME
+========================================== */
+
+.welcome-screen {
+    min-height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 60px 20px 160px;
+}
+
+.welcome-content {
+    width: min(760px, 100%);
+
+    text-align: center;
+}
+
+.welcome-logo {
+    width: 62px;
+    height: 62px;
+
+    margin: 0 auto 22px;
+
+    border-radius: 17px;
+
+    font-size: 29px;
+}
+
+.welcome-content h1 {
+    margin: 0;
+
+    font-size: clamp(28px, 4vw, 42px);
+
+    line-height: 1.1;
+
+    letter-spacing: -1.5px;
+}
+
+.welcome-content > p {
+    margin: 15px auto 35px;
+
+    max-width: 570px;
+
+    color: #707070;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+}
+
+.ink-underline {
+    width: min(260px, 70%);
+    margin-top: 8px;
+}
+
+
+/* ==========================================
+   SUBJECT CARDS
+========================================== */
+
+.subject-cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 12px;
+
+    text-align: left;
+}
+
+.subject-card {
+    padding: 18px;
+
+    border: 1px solid #e8e8e8;
+
+    border-radius: 15px;
+
+    background: rgba(255, 255, 255, 0.7);
+
+    display: flex;
+
+    gap: 13px;
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.subject-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.subject-letter {
+    flex-shrink: 0;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 10px;
+
+    background: #111111;
+
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+}
+
+.subject-card h3 {
+    margin: 1px 0 7px;
+
+    font-size: 15px;
+}
+
+.subject-card p {
+    margin: 0;
+
+    color: #777777;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   CHAT MESSAGES
+========================================== */
+
+.message-row {
+    width: min(900px, calc(100% - 30px));
+
+    margin: 0 auto;
+
+    display: flex;
+
+    padding: 16px 0;
+}
+
+.message-row.user {
+    justify-content: flex-end;
+}
+
+.message-row.assistant {
+    justify-content: flex-start;
+}
+
+.message {
+    max-width: 82%;
+
+    font-size: 15px;
+
+    line-height: 1.65;
+
+    overflow-wrap: anywhere;
+}
+
+.message.user-message {
+    background: #f1f1f1;
+
+    padding: 11px 15px;
+
+    border-radius:
+        17px
+        17px
+        5px
+        17px;
+}
+
+.message.assistant-message {
+    width: 100%;
+
+    padding: 4px 0;
+}
+
+.message h2,
+.message h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.message h2 {
+    font-size: 20px;
+}
+
+.message h3 {
+    font-size: 16px;
+}
+
+.message p {
+    margin: 8px 0;
+}
+
+.message ul {
+    margin: 8px 0;
+
+    padding-left: 22px;
+}
+
+.message li {
+    margin: 5px 0;
+}
+
+
+/* ==========================================
+   FORMULA
+========================================== */
+
+.formula {
+    margin: 12px 0;
+
+    padding: 12px 14px;
+
+    border-left: 3px solid #111111;
+
+    background: #f6f6f6;
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+    overflow-x: auto;
+}
+
+
+/* ==========================================
+   EXAMPLE BOX
+========================================== */
+
+.example-box {
+    margin: 14px 0;
+
+    padding: 14px;
+
+    border: 1px solid #e4e4e4;
+
+    border-radius: 10px;
+
+    background: #fafafa;
+}
+
+
+/* ==========================================
+   INPUT
+========================================== */
+
+.input-area {
+    position: absolute;
+
+    z-index: 200;
+
+    left: 50%;
+    bottom: 40px;
+
+    transform: translateX(-50%);
+
+    width: min(850px, calc(100% - 32px));
+}
+
+.input-wrapper {
+    min-height: 58px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 7px;
+
+    background: #ffffff;
+
+    border: 1px solid #dcdcdc;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.input-plus,
+.send-button {
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    color: #222222;
+}
+
+.input-plus:hover {
+    background: #f2f2f2;
+}
+
+.input-plus svg,
+.send-button svg {
+    width: 21px;
+    height: 21px;
+}
+
+#questionInput {
+    flex: 1;
+
+    min-width: 0;
+
+    min-height: 42px;
+    max-height: 180px;
+
+    resize: none;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    padding: 10px 8px;
+
+    color: #111111;
+
+    line-height: 1.4;
+
+    overflow-y: auto;
+}
+
+#questionInput::placeholder {
+    color: #8b8b8b;
+}
+
+.send-button {
+    background: #111111;
+
+    color: #ffffff;
+}
+
+.send-button:hover {
+    background: #2b2b2b;
+}
+
+
+/* ==========================================
+   PLUS MENU
+========================================== */
+
+.plus-menu {
+    position: absolute;
+
+    left: 5px;
+    bottom: 67px;
+
+    width: 205px;
+
+    padding: 7px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e4e4;
+
+    border-radius: 13px;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.12);
+
+    opacity: 0;
+
+    transform:
+        translateY(8px)
+        scale(0.98);
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
+}
+
+.plus-menu.show {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    pointer-events: auto;
+}
+
+.plus-option {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: #222222;
+
+    text-align: left;
+
+    font-size: 14px;
+}
+
+.plus-option:hover {
+    background: #f3f3f3;
+}
+
+.plus-option svg {
+    width: 19px;
+    height: 19px;
+
+    flex-shrink: 0;
+}
+
+
+/* ==========================================
+   TOOL VIEWS
+========================================== */
+
+.tool-view {
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    padding:
+        30px
+        20px
+        130px;
+}
+
+.tool-container {
+    width: min(1050px, 100%);
+
+    margin: 0 auto;
+}
+
+.tool-header {
+    margin-bottom: 25px;
+}
+
+.tool-header h1 {
+    margin: 0 0 7px;
+
+    font-size: clamp(26px, 4vw, 36px);
+
+    letter-spacing: -1px;
+}
+
+.tool-header p {
+    margin: 0;
+
+    color: #707070;
+
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   TOOL CARDS
+========================================== */
+
+.tool-card {
+    background: rgba(255, 255, 255, 0.75);
+
+    border: 1px solid #e3e3e3;
+
+    border-radius: 17px;
+
+    padding: 20px;
+
+    margin-bottom: 16px;
+}
+
+.tool-card h2 {
+    margin: 0 0 15px;
+
+    font-size: 19px;
+}
+
+.tool-card h3 {
+    margin: 0 0 10px;
+
+    font-size: 16px;
+}
+
+.tool-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+.tool-grid.three {
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+}
+
+
+/* ==========================================
+   TOOL BUTTONS
+========================================== */
+
+.tool-button {
+    min-height: 42px;
+
+    padding: 10px 15px;
+
+    border-radius: 10px;
+
+    background: #111111;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.tool-button:hover {
+    transform: translateY(-1px);
+}
+
+.tool-button.secondary {
+    background: #eeeeee;
+
+    color: #222222;
+}
+
+.tool-button.danger {
+    background: #eeeeee;
+
+    color: #222222;
+}
+
+.tool-button.full {
+    width: 100%;
+}
+
+
+/* ==========================================
+   FORM CONTROLS
+========================================== */
+
+.tool-input,
+.tool-select {
+    width: 100%;
+
+    height: 44px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d8d8d8;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #111111;
+
+    outline: none;
+}
+
+.tool-input:focus,
+.tool-select:focus {
+    border-color: #999999;
+}
+
+.form-row {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 13px;
+
+    font-weight: 650;
+}
+
+
+/* ==========================================
+   CALENDAR
+========================================== */
+
+.calendar-toolbar {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 15px;
+}
+
+.calendar-title {
+    font-size: 21px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+}
+
+.calendar-nav {
+    display: flex;
+
+    gap: 6px;
+}
+
+.calendar-nav button {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 10px;
+
+    background: #eeeeee;
+
+    color: #222222;
+
+    font-size: 18px;
+}
+
+.calendar-nav button:hover {
+    background: #dddddd;
+}
+
+.calendar-weekdays,
+.calendar-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+
+    gap: 5px;
+}
+
+.calendar-weekdays {
+    margin-bottom: 5px;
+}
+
+.calendar-weekdays div {
+    text-align: center;
+
+    padding: 8px 2px;
+
+    color: #777777;
+
+    font-size: 12px;
+
+    font-weight: 650;
+}
+
+.calendar-day {
+    min-height: 68px;
+
+    padding: 7px;
+
+    border: 1px solid #e5e5e5;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.7);
+
+    text-align: left;
+
+    position: relative;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.calendar-day:hover {
+    background: #f3f3f3;
+}
+
+.calendar-day.other-month {
+    opacity: 0.4;
+}
+
+.calendar-day.today {
+    border: 2px solid #111111;
+}
+
+.calendar-day.selected {
+    background: #eeeeee;
+}
+
+.calendar-number {
+    font-size: 13px;
+
+    font-weight: 650;
+}
+
+.calendar-event-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #111111;
+
+    display: inline-block;
+
+    margin-left: 3px;
+}
+
+.calendar-event-preview {
+    margin-top: 7px;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.calendar-events {
+    margin-top: 20px;
+}
+
+.event-item {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 12px;
+
+    margin-bottom: 8px;
+
+    border: 1px solid #e2e2e2;
+
+    border-radius: 11px;
+
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.event-date {
+    font-size: 12px;
+
+    color: #777777;
+
+    margin-bottom: 3px;
+}
+
+.event-title {
+    font-weight: 650;
+
+    font-size: 14px;
+}
+
+.event-note {
+    color: #666666;
+
+    font-size: 13px;
+
+    margin-top: 4px;
+}
+
+.event-delete {
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    background: #eeeeee;
+
+    color: #333333;
+}
+
+.empty-state {
+    padding: 25px 10px;
+
+    text-align: center;
+
+    color: #777777;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   SCIENTIFIC CALCULATOR
+========================================== */
+
+.calculator-shell {
+    width: min(620px, 100%);
+
+    margin: 0 auto;
+}
+
+.calc-display {
+    width: 100%;
+
+    min-height: 105px;
+
+    padding: 15px;
+
+    border-radius: 16px;
+
+    background: #111111;
+
+    color: #ffffff;
+
+    margin-bottom: 12px;
+
+    overflow: hidden;
+}
+
+.calc-expression {
+    min-height: 24px;
+
+    text-align: right;
+
+    color: #aaaaaa;
+
+    font-size: 14px;
+
+    overflow-x: auto;
+
+    white-space: nowrap;
+}
+
+.calc-result {
+    margin-top: 8px;
+
+    text-align: right;
+
+    font-size: 31px;
+
+    font-weight: 650;
+
+    white-space: nowrap;
+
+    overflow-x: auto;
+}
+
+.calc-status {
+    margin-top: 7px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #999999;
+
+    font-size: 11px;
+}
+
+.calc-memory {
+    display: flex;
+
+    gap: 6px;
+
+    margin-bottom: 8px;
+}
+
+.calc-memory button {
+    flex: 1;
+
+    height: 36px;
+
+    border-radius: 8px;
+
+    background: #eeeeee;
+
+    color: #222222;
+
+    font-size: 12px;
+}
+
+.calc-keypad {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+
+    gap: 7px;
+}
+
+.calc-key {
+    min-height: 48px;
+
+    border-radius: 10px;
+
+    background: #eeeeee;
+
+    color: #111111;
+
+    font-size: 14px;
+
+    font-weight: 550;
+}
+
+.calc-key:hover {
+    background: #dddddd;
+}
+
+.calc-key.operator {
+    background: #dddddd;
+}
+
+.calc-key.equal {
+    background: #111111;
+
+    color: #ffffff;
+}
+
+.calc-key.function {
+    font-size: 12px;
+}
+
+.calc-key.wide {
+    grid-column: span 2;
+}
+
+.calc-history {
+    margin-top: 15px;
+}
+
+.history-item {
+    padding: 9px 0;
+
+    border-bottom: 1px solid #e5e5e5;
+
+    text-align: right;
+
+    cursor: pointer;
+}
+
+.history-expression {
+    color: #777777;
+
+    font-size: 12px;
+}
+
+.history-result {
+    font-size: 15px;
+
+    font-weight: 650;
+}
+
+
+/* ==========================================
+   FINANCIAL CALCULATOR
+========================================== */
+
+.financial-tabs {
+    display: flex;
+
+    gap: 7px;
+
+    overflow-x: auto;
+
+    margin-bottom: 16px;
+
+    padding-bottom: 3px;
+}
+
+.financial-tab {
+    flex-shrink: 0;
+
+    padding: 10px 14px;
+
+    border-radius: 10px;
+
+    background: #eeeeee;
+
+    color: #333333;
+
+    font-size: 13px;
+}
+
+.financial-tab.active {
+    background: #111111;
+
+    color: #ffffff;
+}
+
+.finance-result {
+    padding: 16px;
+
+    border-radius: 13px;
+
+    background: #f5f5f5;
+
+    margin-top: 15px;
+}
+
+.finance-result strong {
+    font-size: 18px;
+}
+
+.finance-result-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin-top: 12px;
+}
+
+.result-box {
+    padding: 13px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    border: 1px solid #e3e3e3;
+}
+
+.result-box span {
+    display: block;
+
+    color: #777777;
+
+    font-size: 11px;
+
+    margin-bottom: 4px;
+}
+
+.result-box strong {
+    font-size: 15px;
+}
+
+.amortization-wrapper {
+    overflow-x: auto;
+
+    margin-top: 15px;
+}
+
+.amortization-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 12px;
+}
+
+.amortization-table th,
+.amortization-table td {
+    padding: 9px;
+
+    border-bottom: 1px solid #e2e2e2;
+
+    text-align: right;
+
+    white-space: nowrap;
+}
+
+.amortization-table th {
+    background: #f1f1f1;
+
+    font-weight: 650;
+}
+
+
+/* ==========================================
+   TOAST
+========================================== */
+
+.feature-toast {
+    position: absolute;
+
+    left: 50%;
+    bottom: 70px;
+
+    transform:
+        translate(-50%, 10px);
+
+    padding: 10px 14px;
+
+    background: #111111;
+
+    color: #ffffff;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.feature-toast.show {
+    opacity: 1;
+
+    transform:
+        translate(-50%, 0);
+}
+
+
+/* ==========================================
+   MODALS
+========================================== */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+}
+
+.modal.show {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.modal-box {
+    position: relative;
+
+    width: min(520px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    color: #111111;
+
+    box-shadow:
+        0 20px 70px rgba(0, 0, 0, 0.2);
+}
+
+.modal-close {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: #555555;
+
+    font-size: 24px;
+}
+
+.modal-close:hover {
+    background: #f1f1f1;
+}
+
+.modal-logo {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 13px;
+
+    margin-bottom: 18px;
+}
+
+.modal-box h2 {
+    margin: 0 0 12px;
+
+    font-size: 24px;
+}
+
+.modal-box > p {
+    color: #666666;
+
+    line-height: 1.6;
+}
+
+.developer-info {
+    margin-top: 22px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #e5e5e5;
+}
+
+.developer-info p {
+    margin: 14px 0;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   SETTINGS
+========================================== */
+
+.setting-group {
+    margin-top: 22px;
+}
+
+.setting-group > label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    font-weight: 650;
+
+    font-size: 14px;
+}
+
+.setting-buttons {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+}
+
+.setting-buttons button {
+    padding: 9px 12px;
+
+    border-radius: 9px;
+
+    background: #f2f2f2;
+
+    color: #222222;
+
+    font-size: 13px;
+
+    transition:
+        transform 0.15s ease,
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.setting-buttons button:hover {
+    background: #e7e7e7;
+}
+
+.setting-buttons button.active {
+    background: #111111;
+
+    color: #ffffff;
+}
+
+.setting-buttons button[data-background] {
+    min-width: 75px;
+
+    border: 1px solid #dedede;
+}
+
+.reset-settings {
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: #111111;
+
+    color: #ffffff;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   BACKGROUND COLOURS
+========================================== */
+
+.setting-buttons button[data-background="white"] {
+    background: #ffffff;
+}
+
+.setting-buttons button[data-background="gray"] {
+    background: #f4f4f4;
+}
+
+.setting-buttons button[data-background="warm"] {
+    background: #faf7f1;
+}
+
+.setting-buttons button[data-background="blue"] {
+    background: #f3f7fb;
+}
+
+.setting-buttons button[data-background="green"] {
+    background: #f3f8f4;
+}
+
+.setting-buttons button[data-background="lavender"] {
+    background: #f6f3fa;
+}
+
+.setting-buttons button[data-background="rose"] {
+    background: #fff4f6;
+}
+
+.setting-buttons button[data-background="peach"] {
+    background: #fff6ef;
+}
+
+.setting-buttons button[data-background="cream"] {
+    background: #fffdf3;
+}
+
+.setting-buttons button[data-background="sky"] {
+    background: #eef8ff;
+}
+
+.setting-buttons button[data-background="mint"] {
+    background: #effbf6;
+}
+
+.setting-buttons button[data-background="sand"] {
+    background: #f8f3e8;
+}
+
+.setting-buttons button[data-background="pink"] {
+    background: #fff0f7;
+}
+
+.setting-buttons button[data-background="slate"] {
+    background: #f1f4f7;
+}
+
+.setting-buttons button[data-background="pearl"] {
+    background: #f8f8f6;
+}
+
+.setting-buttons button[data-background="ice"] {
+    background: #f2faff;
+}
+
+.setting-buttons button[data-background="lilac"] {
+    background: #f8f3ff;
+}
+
+
+/* ==========================================
+   BACKGROUNDS
+========================================== */
+
+body.background-white .main {
+    background: #ffffff;
+}
+
+body.background-gray .main {
+    background: #f4f4f4;
+}
+
+body.background-warm .main {
+    background: #faf7f1;
+}
+
+body.background-blue .main {
+    background: #f3f7fb;
+}
+
+body.background-green .main {
+    background: #f3f8f4;
+}
+
+body.background-lavender .main {
+    background: #f6f3fa;
+}
+
+body.background-rose .main {
+    background: #fff4f6;
+}
+
+body.background-peach .main {
+    background: #fff6ef;
+}
+
+body.background-cream .main {
+    background: #fffdf3;
+}
+
+body.background-sky .main {
+    background: #eef8ff;
+}
+
+body.background-mint .main {
+    background: #effbf6;
+}
+
+body.background-sand .main {
+    background: #f8f3e8;
+}
+
+body.background-pink .main {
+    background: #fff0f7;
+}
+
+body.background-slate .main {
+    background: #f1f4f7;
+}
+
+body.background-pearl .main {
+    background: #f8f8f6;
+}
+
+body.background-ice .main {
+    background: #f2faff;
+}
+
+body.background-lilac .main {
+    background: #f8f3ff;
+}
+
+
+/* ==========================================
+   DARK MODE
+========================================== */
+
+body.dark {
+    background: #101010;
+    color: #f2f2f2;
+}
+
+body.dark .main {
+    background: #101010;
+}
+
+body.dark .header {
+    border-color: #292929;
+}
+
+body.dark .brand-name {
+    color: #ffffff;
+}
+
+body.dark .menu-button {
+    color: #eeeeee;
+}
+
+body.dark .menu-button:hover,
+body.dark .icon-button:hover,
+body.dark .nav-item:hover,
+body.dark .sidebar-action:hover {
+    background: #222222;
+}
+
+body.dark .sidebar {
+    background: #151515;
+    border-color: #292929;
+}
+
+body.dark .sidebar-top {
+    border-color: #292929;
+}
+
+body.dark .nav-item,
+body.dark .sidebar-action,
+body.dark .icon-button {
+    color: #eeeeee;
+}
+
+body.dark .nav-item.active {
+    background: #292929;
+}
+
+body.dark .welcome-content > p,
+body.dark .tool-header p {
+    color: #999999;
+}
+
+body.dark .subject-card,
+body.dark .tool-card {
+    background: #151515;
+    border-color: #292929;
+}
+
+body.dark .subject-card p {
+    color: #999999;
+}
+
+body.dark .input-wrapper {
+    background: #151515;
+    border-color: #333333;
+}
+
+body.dark #questionInput {
+    color: #ffffff;
+}
+
+body.dark .input-plus {
+    color: #eeeeee;
+}
+
+body.dark .input-plus:hover {
+    background: #222222;
+}
+
+body.dark .plus-menu {
+    background: #181818;
+    border-color: #333333;
+}
+
+body.dark .plus-option {
+    color: #eeeeee;
+}
+
+body.dark .plus-option:hover {
+    background: #252525;
+}
+
+body.dark .message.user-message {
+    background: #252525;
+}
+
+body.dark .formula,
+body.dark .example-box {
+    background: #191919;
+    border-color: #333333;
+}
+
+body.dark .formula {
+    border-left-color: #ffffff;
+}
+
+body.dark .tool-input,
+body.dark .tool-select {
+    background: #202020;
+    border-color: #3a3a3a;
+    color: #ffffff;
+}
+
+body.dark .tool-button.secondary,
+body.dark .calendar-nav button,
+body.dark .financial-tab {
+    background: #292929;
+    color: #eeeeee;
+}
+
+body.dark .calendar-day,
+body.dark .event-item {
+    background: #171717;
+    border-color: #303030;
+}
+
+body.dark .calendar-day:hover,
+body.dark .calendar-day.selected {
+    background: #242424;
+}
+
+body.dark .calendar-day.today {
+    border-color: #ffffff;
+}
+
+body.dark .calendar-nav button:hover {
+    background: #333333;
+}
+
+body.dark .calc-key {
+    background: #292929;
+    color: #ffffff;
+}
+
+body.dark .calc-key.operator {
+    background: #353535;
+}
+
+body.dark .calc-key:hover {
+    background: #3b3b3b;
+}
+
+body.dark .calc-memory button {
+    background: #292929;
+    color: #ffffff;
+}
+
+body.dark .finance-result {
+    background: #202020;
+}
+
+body.dark .result-box {
+    background: #171717;
+    border-color: #333333;
+}
+
+body.dark .amortization-table th {
+    background: #292929;
+}
+
+body.dark .modal-box {
+    background: #181818;
+    color: #eeeeee;
+}
+
+body.dark .modal-box > p {
+    color: #aaaaaa;
+}
+
+body.dark .developer-info {
+    border-color: #333333;
+}
+
+body.dark .setting-buttons button {
+    background: #282828;
+    color: #eeeeee;
+}
+
+body.dark .setting-buttons button:hover {
+    background: #333333;
+}
+
+body.dark .setting-buttons button.active {
+    background: #ffffff;
+    color: #111111;
+}
+
+body.dark .setting-buttons button[data-background] {
+    border-color: #444444;
+}
+
+
+/* ==========================================
+   FONT SIZES
+========================================== */
+
+body.font-small {
+    font-size: 14px;
+}
+
+body.font-medium {
+    font-size: 16px;
+}
+
+body.font-large {
+    font-size: 18px;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 800px) {
+
+    .header {
+        height: 62px;
+        min-height: 62px;
+        padding: 0 12px;
+    }
+
+    .brand-name {
+        font-size: 16px;
+    }
+
+    .chat-area {
+        padding-bottom: 140px;
+    }
+
+    .welcome-screen {
+        padding:
+            40px
+            15px
+            150px;
+    }
+
+    .welcome-logo {
+        width: 55px;
+        height: 55px;
+
+        border-radius: 15px;
+
+        font-size: 25px;
+    }
+
+    .welcome-content h1 {
+        font-size: 29px;
+    }
+
+    .welcome-content > p {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .subject-cards {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .subject-card {
+        padding: 14px;
+    }
+
+    .message-row {
+        width: calc(100% - 24px);
+    }
+
+    .message {
+        max-width: 92%;
+        font-size: 15px;
+    }
+
+    .input-area {
+        width: calc(100% - 18px);
+        bottom: 28px;
+    }
+
+    .input-wrapper {
+        min-height: 56px;
+        border-radius: 17px;
+    }
+
+    .input-plus,
+    .send-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    #questionInput {
+        font-size: 16px !important;
+    }
+
+    .modal-box {
+        padding: 25px 20px;
+    }
+
+    .setting-buttons button[data-background] {
+        min-width: 70px;
+    }
+
+    .tool-view {
+        padding:
+            22px
+            12px
+            120px;
+    }
+
+    .tool-grid,
+    .tool-grid.three {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .calendar-day {
+        min-height: 58px;
+        padding: 5px;
+    }
+
+    .calendar-event-preview {
+        display: none;
+    }
+
+    .calendar-weekdays div {
+        font-size: 10px;
+    }
+
+    .calc-keypad {
+        gap: 5px;
+    }
+
+    .calc-key {
+        min-height: 44px;
+        font-size: 13px;
+    }
+}
+
+
+/* ==========================================
+   SMALL PHONES
+========================================== */
+
+@media (max-width: 380px) {
+
+    .brand-name {
+        font-size: 15px;
+    }
+
+    .welcome-content h1 {
+        font-size: 26px;
+    }
+
+    .input-area {
+        width: calc(100% - 14px);
+        bottom: 24px;
+    }
+
+    .input-plus,
+    .send-button {
+        width: 39px;
+        height: 39px;
+    }
+
+    .setting-buttons {
+        gap: 6px;
+    }
+
+    .setting-buttons button[data-background] {
+        min-width: 68px;
+        padding: 8px 9px;
+        font-size: 12px;
+    }
+
+    .calc-keypad {
+        grid-template-columns:
+            repeat(5, minmax(0, 1fr));
+    }
+
+    .calc-key.wide {
+        grid-column: span 1;
+    }
+}
+
+
+/* ==========================================
+   DESKTOP
+========================================== */
+
+@media (min-width: 1000px) {
+
+    .sidebar {
+        width: 300px;
+    }
+}
+
+
+/* ==========================================
+   REDUCED MOTION
+========================================== */
+
+body.reduced-motion *,
+body.reduced-motion *::before,
+body.reduced-motion *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+}
+
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cfcfcf;
+    border-radius: 10px;
+}
+
+body.dark ::-webkit-scrollbar-thumb {
+    background: #444444;
+}
+
+
+/* ==========================================
+   SUBJECT COLOURS
+========================================== */
+
+:root {
+    --acc-accounting: #111111;
+    --acc-economics: #555555;
+    --acc-maths: #888888;
+}
