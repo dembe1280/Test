@@ -1,0 +1,2214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width,
+                 initial-scale=1.0,
+                 maximum-scale=1.0,
+                 user-scalable=no"
+    >
+
+    <meta
+        name="theme-color"
+        content="#ffffff"
+    >
+
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="icon.PNG"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="icon.PNG"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="default"
+    >
+
+    <meta
+        name="apple-mobile-web-app-title"
+        content="Mastercommerce"
+    >
+
+    <meta
+        name="mobile-web-app-capable"
+        content="yes"
+    >
+
+    <title>Mastercommerce</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+<div id="app">
+
+
+    <!-- ==========================================
+         SIDEBAR
+    =========================================== -->
+
+    <aside
+        id="sidebar"
+        class="sidebar"
+    >
+
+        <div class="sidebar-top">
+
+            <div class="sidebar-logo">
+                M
+            </div>
+
+            <button
+                id="closeSidebar"
+                class="icon-button"
+                aria-label="Close menu"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+
+                    <path
+                        d="M6 6L18 18M18 6L6 18"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+
+                </svg>
+
+            </button>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+            <button
+                id="homeButton"
+                class="nav-item"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+
+                    <path
+                        d="M3 10.5L12 3L21 10.5V20H14.5V14H9.5V20H3V10.5Z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linejoin="round"
+                    />
+
+                </svg>
+
+                <span>
+                    Home
+                </span>
+
+            </button>
+
+
+            <!-- FINANCIAL CALCULATOR -->
+
+            <a
+                href="#financialCalculator"
+                class="nav-item nav-link"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+
+                    <rect
+                        x="4"
+                        y="3"
+                        width="16"
+                        height="18"
+                        rx="2"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+
+                    <rect
+                        x="7"
+                        y="6"
+                        width="10"
+                        height="3"
+                        rx="0.8"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                    />
+
+                    <path
+                        d="M8 13H10M14 13H16M8 17H10M14 17H16"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                    />
+
+                </svg>
+
+                <span>
+                    Financial Calculator
+                </span>
+
+            </a>
+
+
+            <button
+                id="aboutButton"
+                class="nav-item"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="9"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+
+                    <path
+                        d="M12 10.5V16"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                    <circle
+                        cx="12"
+                        cy="7.5"
+                        r="1"
+                        fill="currentColor"
+                    />
+
+                </svg>
+
+                <span>
+                    About
+                </span>
+
+            </button>
+
+
+            <button
+                id="settingsButton"
+                class="nav-item"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+
+                    <path
+                        d="M12 15.2A3.2 3.2 0 1 0 12 8.8A3.2 3.2 0 0 0 12 15.2Z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+
+                    <path
+                        d="M19.4 15A1.7 1.7 0 0 0 19.7 16.8L19.8 17
+                        L17 19.8L16.8 19.7A1.7 1.7 0 0 0 15 19.4
+                        A1.7 1.7 0 0 0 13.8 21V21H10.2V20.8
+                        A1.7 1.7 0 0 0 9 19.4
+                        A1.7 1.7 0 0 0 7.2 19.7L7 19.8L4.2 17
+                        L4.3 16.8A1.7 1.7 0 0 0 4.6 15
+                        A1.7 1.7 0 0 0 3 13.8H3V10.2H3.2
+                        A1.7 1.7 0 0 0 4.6 9
+                        A1.7 1.7 0 0 0 4.3 7.2L4.2 7L7 4.2
+                        L7.2 4.3A1.7 1.7 0 0 0 9 4.6
+                        A1.7 1.7 0 0 0 10.2 3V3H13.8V3.2
+                        A1.7 1.7 0 0 0 15 4.6
+                        A1.7 1.7 0 0 0 16.8 4.3L17 4.2L19.8 7
+                        L19.7 7.2A1.7 1.7 0 0 0 19.4 9
+                        A1.7 1.7 0 0 0 21 10.2V13.8
+                        A1.7 1.7 0 0 0 19.4 15Z"
+                        stroke="currentColor"
+                        stroke-width="1.3"
+                        stroke-linejoin="round"
+                    />
+
+                </svg>
+
+                <span>
+                    Settings
+                </span>
+
+            </button>
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="newChatButton"
+                class="sidebar-action"
+            >
+                <span>
+                    New chat
+                </span>
+            </button>
+
+
+            <button
+                id="clearChatButton"
+                class="sidebar-action"
+            >
+                <span>
+                    Clear chat
+                </span>
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- SIDEBAR OVERLAY -->
+
+    <div
+        id="sidebarOverlay"
+        class="sidebar-overlay"
+    ></div>
+
+
+    <!-- ==========================================
+         MAIN
+    =========================================== -->
+
+    <main class="main">
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div class="header-left">
+
+                <div class="brand-mark">
+                    M
+                </div>
+
+                <div class="brand-name">
+                    Mastercommerce
+                </div>
+
+            </div>
+
+
+            <button
+                id="menuButton"
+                class="menu-button"
+                aria-label="Open menu"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+
+                    <path
+                        d="M5 7H19M5 12H19M5 17H19"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                </svg>
+
+            </button>
+
+        </header>
+
+
+        <!-- ==========================================
+             MAIN SCROLL AREA
+        =========================================== -->
+
+        <section
+            id="chatArea"
+            class="chat-area"
+        >
+
+
+            <!-- ======================================
+                 HOME
+            ======================================= -->
+
+            <div
+                id="welcomeScreen"
+                class="welcome-screen"
+            >
+
+                <div class="welcome-content">
+
+                    <div class="welcome-logo">
+                        M
+                    </div>
+
+                    <h1>
+                        What would you like to learn?
+                    </h1>
+
+                    <svg
+                        class="ink-underline"
+                        viewBox="0 0 260 14"
+                        fill="none"
+                        aria-hidden="true"
+                    >
+
+                        <path
+                            d="M4 8.5C40 3 80 3 100 8C120 13 140 3 160 6
+                            C180 9 200 3 224 7C238 9.5 248 6 256 8"
+                            stroke="url(#underlineGradient)"
+                            stroke-width="3"
+                            stroke-linecap="round"
+                        />
+
+                        <defs>
+
+                            <linearGradient
+                                id="underlineGradient"
+                                x1="0"
+                                y1="0"
+                                x2="260"
+                                y2="0"
+                            >
+
+                                <stop
+                                    offset="0%"
+                                    stop-color="var(--acc-accounting)"
+                                />
+
+                                <stop
+                                    offset="50%"
+                                    stop-color="var(--acc-economics)"
+                                />
+
+                                <stop
+                                    offset="100%"
+                                    stop-color="var(--acc-maths)"
+                                />
+
+                            </linearGradient>
+
+                        </defs>
+
+                    </svg>
+
+                    <p>
+                        Ask a question about Accounting,
+                        Economics or Mathematics.
+                    </p>
+
+
+                    <div class="subject-cards">
+
+
+                        <div class="subject-card acc-accounting">
+
+                            <div class="subject-letter">
+                                A
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Accounting
+                                </h3>
+
+                                <p>
+                                    Financial accounting,
+                                    management accounting,
+                                    tax, auditing, IFRS
+                                    and calculations.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="subject-card acc-economics">
+
+                            <div class="subject-letter">
+                                E
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Economics
+                                </h3>
+
+                                <p>
+                                    Microeconomics,
+                                    macroeconomics,
+                                    policies, markets,
+                                    essays and calculations.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="subject-card acc-maths">
+
+                            <div class="subject-letter">
+                                M
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Mathematics
+                                </h3>
+
+                                <p>
+                                    Algebra, functions,
+                                    statistics, probability,
+                                    calculus and problem solving.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ======================================
+                 FINANCIAL CALCULATOR
+            ======================================= -->
+
+            <section
+                id="financialCalculator"
+                class="financial-calculator"
+            >
+
+                <div class="financial-header">
+
+                    <div class="financial-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                        >
+
+                            <rect
+                                x="4"
+                                y="3"
+                                width="16"
+                                height="18"
+                                rx="2"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            />
+
+                            <rect
+                                x="7"
+                                y="6"
+                                width="10"
+                                height="3"
+                                rx="0.8"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                            />
+
+                            <path
+                                d="M8 13H10M14 13H16M8 17H10M14 17H16"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                                stroke-linecap="round"
+                            />
+
+                        </svg>
+
+                    </div>
+
+                    <div>
+
+                        <span class="financial-label">
+                            MASTERCOMMERCE TOOL
+                        </span>
+
+                        <h1>
+                            Financial Calculator
+                        </h1>
+
+                        <p>
+                            A financial mathematics workspace
+                            for Accounting, Economics,
+                            Business and Finance.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CALCULATOR INPUT AREA -->
+
+                <div class="financial-grid">
+
+
+                    <!-- SIMPLE INTEREST -->
+
+                    <article class="finance-card">
+
+                        <div class="finance-card-title">
+
+                            <div class="finance-number">
+                                01
+                            </div>
+
+                            <div>
+                                <h2>
+                                    Simple Interest
+                                </h2>
+
+                                <p>
+                                    Calculate interest and
+                                    future value.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-fields">
+
+                            <label>
+                                Principal (P)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 10000"
+                                >
+                            </label>
+
+                            <label>
+                                Rate (%)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 8"
+                                >
+                            </label>
+
+                            <label>
+                                Time (years)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 3"
+                                >
+                            </label>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Interest
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Future Value
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-formula">
+                            I = P × r × t
+                            <br>
+                            A = P + I
+                        </div>
+
+                    </article>
+
+
+                    <!-- COMPOUND INTEREST -->
+
+                    <article class="finance-card">
+
+                        <div class="finance-card-title">
+
+                            <div class="finance-number">
+                                02
+                            </div>
+
+                            <div>
+                                <h2>
+                                    Compound Interest
+                                </h2>
+
+                                <p>
+                                    Calculate compound growth.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-fields">
+
+                            <label>
+                                Principal (P)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 10000"
+                                >
+                            </label>
+
+                            <label>
+                                Annual Rate (%)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 10"
+                                >
+                            </label>
+
+                            <label>
+                                Years (t)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 5"
+                                >
+                            </label>
+
+                            <label>
+                                Compounds / year (n)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 12"
+                                >
+                            </label>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Future Value
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Interest Earned
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-formula">
+                            A = P(1 + r/n)ⁿᵗ
+                        </div>
+
+                    </article>
+
+
+                    <!-- LOAN -->
+
+                    <article class="finance-card finance-card-wide">
+
+                        <div class="finance-card-title">
+
+                            <div class="finance-number">
+                                03
+                            </div>
+
+                            <div>
+                                <h2>
+                                    Loan & Mortgage
+                                </h2>
+
+                                <p>
+                                    Analyse monthly repayments,
+                                    total payments and interest.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-fields finance-fields-four">
+
+                            <label>
+                                Loan Amount
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 300000"
+                                >
+                            </label>
+
+                            <label>
+                                Annual Rate (%)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 11.75"
+                                >
+                            </label>
+
+                            <label>
+                                Term (years)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 5"
+                                >
+                            </label>
+
+                            <label>
+                                Payments / year
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 12"
+                                >
+                            </label>
+
+                        </div>
+
+
+                        <div class="finance-results-grid">
+
+                            <div class="finance-result">
+
+                                <span>
+                                    Periodic Payment
+                                </span>
+
+                                <strong>
+                                    Enter values
+                                </strong>
+
+                            </div>
+
+                            <div class="finance-result">
+
+                                <span>
+                                    Total Payments
+                                </span>
+
+                                <strong>
+                                    Enter values
+                                </strong>
+
+                            </div>
+
+                            <div class="finance-result">
+
+                                <span>
+                                    Total Interest
+                                </span>
+
+                                <strong>
+                                    Enter values
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-formula">
+                            PMT =
+                            P × [r(1+r)ⁿ] / [(1+r)ⁿ − 1]
+                        </div>
+
+                    </article>
+
+
+                    <!-- PV / FV -->
+
+                    <article class="finance-card">
+
+                        <div class="finance-card-title">
+
+                            <div class="finance-number">
+                                04
+                            </div>
+
+                            <div>
+                                <h2>
+                                    Time Value of Money
+                                </h2>
+
+                                <p>
+                                    Present value and future value.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-fields">
+
+                            <label>
+                                Future Value
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 50000"
+                                >
+                            </label>
+
+                            <label>
+                                Rate (%)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 9"
+                                >
+                            </label>
+
+                            <label>
+                                Periods
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 5"
+                                >
+                            </label>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Present Value
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-formula">
+                            PV = FV / (1 + r)ⁿ
+                            <br>
+                            FV = PV(1 + r)ⁿ
+                        </div>
+
+                    </article>
+
+
+                    <!-- PROFIT MARGIN -->
+
+                    <article class="finance-card">
+
+                        <div class="finance-card-title">
+
+                            <div class="finance-number">
+                                05
+                            </div>
+
+                            <div>
+                                <h2>
+                                    Profit Margin
+                                </h2>
+
+                                <p>
+                                    Measure profitability.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-fields">
+
+                            <label>
+                                Revenue
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 150000"
+                                >
+                            </label>
+
+                            <label>
+                                Cost
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 100000"
+                                >
+                            </label>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Profit
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Profit Margin
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-formula">
+                            Profit = Revenue − Cost
+                            <br>
+                            Margin = Profit / Revenue × 100
+                        </div>
+
+                    </article>
+
+
+                    <!-- MARKUP -->
+
+                    <article class="finance-card">
+
+                        <div class="finance-card-title">
+
+                            <div class="finance-number">
+                                06
+                            </div>
+
+                            <div>
+                                <h2>
+                                    Markup
+                                </h2>
+
+                                <p>
+                                    Calculate selling price.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-fields">
+
+                            <label>
+                                Cost Price
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 500"
+                                >
+                            </label>
+
+                            <label>
+                                Markup (%)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 30"
+                                >
+                            </label>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Markup Amount
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Selling Price
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-formula">
+                            Markup = Cost × Markup%
+                            <br>
+                            Selling Price = Cost + Markup
+                        </div>
+
+                    </article>
+
+
+                    <!-- DISCOUNT -->
+
+                    <article class="finance-card">
+
+                        <div class="finance-card-title">
+
+                            <div class="finance-number">
+                                07
+                            </div>
+
+                            <div>
+                                <h2>
+                                    Discount
+                                </h2>
+
+                                <p>
+                                    Calculate discounted prices.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-fields">
+
+                            <label>
+                                Original Price
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 2000"
+                                >
+                            </label>
+
+                            <label>
+                                Discount (%)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 15"
+                                >
+                            </label>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Discount Amount
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Final Price
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-formula">
+                            Discount = Price × Rate
+                            <br>
+                            Final Price = Price − Discount
+                        </div>
+
+                    </article>
+
+
+                    <!-- PERCENTAGE CHANGE -->
+
+                    <article class="finance-card">
+
+                        <div class="finance-card-title">
+
+                            <div class="finance-number">
+                                08
+                            </div>
+
+                            <div>
+                                <h2>
+                                    Percentage Change
+                                </h2>
+
+                                <p>
+                                    Measure increases or decreases.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-fields">
+
+                            <label>
+                                Original Value
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 800"
+                                >
+                            </label>
+
+                            <label>
+                                New Value
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 920"
+                                >
+                            </label>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Change
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Percentage Change
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-formula">
+                            % Change =
+                            (New − Original) / Original × 100
+                        </div>
+
+                    </article>
+
+
+                    <!-- BREAK EVEN -->
+
+                    <article class="finance-card finance-card-wide">
+
+                        <div class="finance-card-title">
+
+                            <div class="finance-number">
+                                09
+                            </div>
+
+                            <div>
+                                <h2>
+                                    Break-Even Analysis
+                                </h2>
+
+                                <p>
+                                    Determine the sales level
+                                    where profit equals zero.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-fields finance-fields-four">
+
+                            <label>
+                                Fixed Costs
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 50000"
+                                >
+                            </label>
+
+                            <label>
+                                Selling Price / Unit
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 250"
+                                >
+                            </label>
+
+                            <label>
+                                Variable Cost / Unit
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 150"
+                                >
+                            </label>
+
+                            <label>
+                                Expected Units
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 1000"
+                                >
+                            </label>
+
+                        </div>
+
+
+                        <div class="finance-results-grid">
+
+                            <div class="finance-result">
+
+                                <span>
+                                    Contribution / Unit
+                                </span>
+
+                                <strong>
+                                    Enter values
+                                </strong>
+
+                            </div>
+
+                            <div class="finance-result">
+
+                                <span>
+                                    Break-Even Units
+                                </span>
+
+                                <strong>
+                                    Enter values
+                                </strong>
+
+                            </div>
+
+                            <div class="finance-result">
+
+                                <span>
+                                    Break-Even Sales
+                                </span>
+
+                                <strong>
+                                    Enter values
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-formula">
+                            Contribution = Selling Price − Variable Cost
+                            <br>
+                            BE Units = Fixed Costs / Contribution
+                        </div>
+
+                    </article>
+
+
+                    <!-- DEPRECIATION -->
+
+                    <article class="finance-card">
+
+                        <div class="finance-card-title">
+
+                            <div class="finance-number">
+                                10
+                            </div>
+
+                            <div>
+                                <h2>
+                                    Straight-Line Depreciation
+                                </h2>
+
+                                <p>
+                                    Calculate annual depreciation.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-fields">
+
+                            <label>
+                                Cost
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 120000"
+                                >
+                            </label>
+
+                            <label>
+                                Residual Value
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 20000"
+                                >
+                            </label>
+
+                            <label>
+                                Useful Life (years)
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 5"
+                                >
+                            </label>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Annual Depreciation
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-formula">
+                            Depreciation =
+                            (Cost − Residual Value) / Useful Life
+                        </div>
+
+                    </article>
+
+
+                    <!-- INVESTMENT RETURN -->
+
+                    <article class="finance-card">
+
+                        <div class="finance-card-title">
+
+                            <div class="finance-number">
+                                11
+                            </div>
+
+                            <div>
+                                <h2>
+                                    Investment Return
+                                </h2>
+
+                                <p>
+                                    Calculate basic investment return.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-fields">
+
+                            <label>
+                                Initial Investment
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 100000"
+                                >
+                            </label>
+
+                            <label>
+                                Final Value
+                                <input
+                                    type="number"
+                                    placeholder="e.g. 125000"
+                                >
+                            </label>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                Gain / Loss
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-result">
+
+                            <span>
+                                ROI
+                            </span>
+
+                            <strong>
+                                Enter values
+                            </strong>
+
+                        </div>
+
+
+                        <div class="finance-formula">
+                            ROI =
+                            (Final Value − Initial Investment)
+                            / Initial Investment × 100
+                        </div>
+
+                    </article>
+
+
+                    <!-- NPV / IRR -->
+
+                    <article class="finance-card finance-card-wide">
+
+                        <div class="finance-card-title">
+
+                            <div class="finance-number">
+                                12
+                            </div>
+
+                            <div>
+                                <h2>
+                                    NPV & IRR
+                                </h2>
+
+                                <p>
+                                    Capital budgeting reference
+                                    for investment decisions.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="finance-info-grid">
+
+                            <div class="finance-info-box">
+
+                                <h3>
+                                    Net Present Value
+                                </h3>
+
+                                <p>
+                                    NPV compares the present
+                                    value of future cash inflows
+                                    and outflows.
+                                </p>
+
+                                <div class="finance-formula">
+                                    NPV =
+                                    Σ [CFₜ / (1 + r)ᵗ]
+                                    − Initial Investment
+                                </div>
+
+                            </div>
+
+
+                            <div class="finance-info-box">
+
+                                <h3>
+                                    Internal Rate of Return
+                                </h3>
+
+                                <p>
+                                    IRR is the discount rate at
+                                    which the NPV of an investment
+                                    becomes zero.
+                                </p>
+
+                                <div class="finance-formula">
+                                    NPV = 0
+                                    <br>
+                                    at IRR
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- FORMULA REFERENCE -->
+
+                <div class="finance-reference">
+
+                    <div class="finance-reference-heading">
+
+                        <span>
+                            FORMULA REFERENCE
+                        </span>
+
+                        <h2>
+                            Financial Mathematics
+                        </h2>
+
+                        <p>
+                            Quick formulas for Accounting,
+                            Economics and Finance students.
+                        </p>
+
+                    </div>
+
+
+                    <div class="formula-reference-grid">
+
+                        <div>
+                            <strong>
+                                Simple Interest
+                            </strong>
+                            <span>
+                                I = P × r × t
+                            </span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                Compound Interest
+                            </strong>
+                            <span>
+                                A = P(1 + r/n)ⁿᵗ
+                            </span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                Present Value
+                            </strong>
+                            <span>
+                                PV = FV / (1+r)ⁿ
+                            </span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                Future Value
+                            </strong>
+                            <span>
+                                FV = PV(1+r)ⁿ
+                            </span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                Profit Margin
+                            </strong>
+                            <span>
+                                Profit / Revenue × 100
+                            </span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                Break-Even
+                            </strong>
+                            <span>
+                                Fixed Costs / Contribution
+                            </span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                ROI
+                            </strong>
+                            <span>
+                                Gain / Investment × 100
+                            </span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                Percentage Change
+                            </strong>
+                            <span>
+                                Change / Original × 100
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </section>
+
+
+        <!-- ==========================================
+             INPUT
+        =========================================== -->
+
+        <div class="input-area">
+
+            <div
+                id="plusMenu"
+                class="plus-menu"
+                aria-hidden="true"
+            >
+
+                <button
+                    class="plus-option"
+                    type="button"
+                    data-feature="Upload files"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M12 16V4M12 4L7.5 8.5M12 4L16.5 8.5"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M5 14V19H19V14"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                    <span>
+                        Upload files
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="plus-option"
+                    type="button"
+                    data-feature="Add image"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <rect
+                            x="4"
+                            y="5"
+                            width="16"
+                            height="14"
+                            rx="2"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        />
+
+                        <circle
+                            cx="9"
+                            cy="10"
+                            r="1.5"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                        />
+
+                        <path
+                            d="M5 17L10 13L13 15L16 12L19 16"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+                    <span>
+                        Add image
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="plus-option"
+                    type="button"
+                    data-feature="Study tools"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M6 4H18V20H6V4Z"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M9 8H15M9 12H15M9 16H13"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                    <span>
+                        Study tools
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <div class="input-wrapper">
+
+                <button
+                    id="plusButton"
+                    class="input-plus"
+                    type="button"
+                    aria-label="Add options"
+                    aria-expanded="false"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M12 5V19M5 12H19"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                </button>
+
+
+                <textarea
+                    id="questionInput"
+                    placeholder="Ask Mastercommerce"
+                    rows="1"
+                    autocomplete="off"
+                    spellcheck="true"
+                ></textarea>
+
+
+                <button
+                    id="sendButton"
+                    class="send-button"
+                    type="button"
+                    aria-label="Send"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M5 12H18"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M13 7L18 12L13 17"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="featureToast"
+                class="feature-toast"
+            >
+                This feature is still under development.
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- ==========================================
+     ABOUT MODAL
+=========================================== -->
+
+<div
+    id="aboutModal"
+    class="modal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            data-close="aboutModal"
+        >
+            ×
+        </button>
+
+        <div class="modal-logo">
+            M
+        </div>
+
+        <h2>
+            About Mastercommerce
+        </h2>
+
+        <p>
+            Mastercommerce is an educational
+            learning platform designed to help
+            learners study Accounting, Economics
+            and Mathematics.
+        </p>
+
+        <div class="developer-info">
+
+            <p>
+                <strong>Developer</strong><br>
+                PD | Web & App Development
+            </p>
+
+            <p>
+                <strong>Founder</strong><br>
+                Phungo Dembe Vusani
+            </p>
+
+            <p>
+                <strong>Location</strong><br>
+                Limpopo, South Africa
+            </p>
+
+            <p>
+                <strong>Education</strong><br>
+                University of Venda, BCom in Accounting
+            </p>
+
+            <p>
+                <strong>Product</strong><br>
+                Mastercommerce
+            </p>
+
+            <p>
+                <strong>Version</strong><br>
+                v1.0.0
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     SETTINGS MODAL
+=========================================== -->
+
+<div
+    id="settingsModal"
+    class="modal"
+>
+
+    <div class="modal-box settings-box">
+
+        <button
+            class="modal-close"
+            data-close="settingsModal"
+        >
+            ×
+        </button>
+
+        <h2>
+            Settings
+        </h2>
+
+
+        <div class="setting-group">
+
+            <label>
+                Appearance
+            </label>
+
+            <div class="setting-buttons">
+
+                <button data-theme="light">
+                    Light
+                </button>
+
+                <button data-theme="dark">
+                    Dark
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting-group">
+
+            <label>
+                Background
+            </label>
+
+            <div class="setting-buttons">
+
+                <button data-background="white">
+                    White
+                </button>
+
+                <button data-background="gray">
+                    Gray
+                </button>
+
+                <button data-background="pearl">
+                    Pearl
+                </button>
+
+                <button data-background="slate">
+                    Slate
+                </button>
+
+                <button data-background="warm">
+                    Warm
+                </button>
+
+                <button data-background="cream">
+                    Cream
+                </button>
+
+                <button data-background="sand">
+                    Sand
+                </button>
+
+                <button data-background="peach">
+                    Peach
+                </button>
+
+                <button data-background="blue">
+                    Blue
+                </button>
+
+                <button data-background="sky">
+                    Sky
+                </button>
+
+                <button data-background="ice">
+                    Ice
+                </button>
+
+                <button data-background="green">
+                    Green
+                </button>
+
+                <button data-background="mint">
+                    Mint
+                </button>
+
+                <button data-background="lavender">
+                    Lavender
+                </button>
+
+                <button data-background="lilac">
+                    Lilac
+                </button>
+
+                <button data-background="rose">
+                    Rose
+                </button>
+
+                <button data-background="pink">
+                    Pink
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting-group">
+
+            <label>
+                Font size
+            </label>
+
+            <div class="setting-buttons">
+
+                <button data-font="small">
+                    Small
+                </button>
+
+                <button data-font="medium">
+                    Medium
+                </button>
+
+                <button data-font="large">
+                    Large
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting-group">
+
+            <label>
+                Motion
+            </label>
+
+            <div class="setting-buttons">
+
+                <button id="motionButton">
+                    Reduced motion
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="resetSettingsButton"
+            class="reset-settings"
+        >
+            Reset settings
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     YOUR EXISTING JAVASCRIPT
+     
+     DO NOT REMOVE OR CHANGE THIS.
+=========================================== -->
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
