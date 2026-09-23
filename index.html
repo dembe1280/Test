@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta
+    name="viewport"
+    content="width=device-width,
+             initial-scale=1.0,
+             maximum-scale=1.0,
+             user-scalable=no"
+>
+<!-- App / Browser Theme -->
+<meta
+    name="theme-color"
+    content="#ffffff"
+>
+<!-- PWA Manifest -->
+<link
+    rel="manifest"
+    href="manifest.json"
+>
+<!-- Mastercommerce App Icon -->
+<link
+    rel="icon"
+    type="image/png"
+    href="icon.PNG"
+>
+<!-- iPhone / iPad Home Screen Icon -->
+<link
+    rel="apple-touch-icon"
+    href="icon.PNG"
+>
+<!-- iOS Web App Settings -->
+<meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+>
+<meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="default"
+>
+<meta
+    name="apple-mobile-web-app-title"
+    content="Mastercommerce"
+>
+<!-- Android / Chrome Web App -->
+<meta
+    name="mobile-web-app-capable"
+    content="yes"
+>
+<title>Mastercommerce</title>
+<!-- Google Fonts -->
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
+<link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+    rel="stylesheet"
+>
+<!-- Main CSS -->
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+</head>
+<body>
+<div id="app">
+<!-- ==========================================
+     SIDEBAR
+=========================================== -->
+<aside
+    id="sidebar"
+    class="sidebar"
+>
+    <div class="sidebar-top">
+        <div class="sidebar-logo">
+            M
+        </div>
+        <button
+            id="closeSidebar"
+            class="icon-button"
+            aria-label="Close menu"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+            >
+                <path
+                    d="M6 6L18 18M18 6L6 18"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                />
+            </svg>
+        </button>
+    </div>
+    <!-- NAVIGATION -->
+    <nav class="sidebar-nav">
+        <button
+            id="homeButton"
+            class="nav-item"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+            >
+                <path
+                    d="M3 10.5L12 3L21 10.5V20H14.5V14H9.5V20H3V10.5Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                />
+            </svg>
+            <span>
+                Home
+            </span>
+        </button>
+        <button
+            id="calculatorButton"
+            class="nav-item"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+            >
+                <rect
+                    x="5"
+                    y="3"
+                    width="14"
+                    height="18"
+                    rx="2"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                />
+                <path
+                    d="M8 7H16"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                />
+                <circle cx="8.3" cy="11.3" r="1" fill="currentColor" />
+                <circle cx="12" cy="11.3" r="1" fill="currentColor" />
+                <circle cx="15.7" cy="11.3" r="1" fill="currentColor" />
+                <circle cx="8.3" cy="14.6" r="1" fill="currentColor" />
+                <circle cx="12" cy="14.6" r="1" fill="currentColor" />
+                <circle cx="15.7" cy="14.6" r="1" fill="currentColor" />
+                <circle cx="8.3" cy="17.9" r="1" fill="currentColor" />
+                <circle cx="12" cy="17.9" r="1" fill="currentColor" />
+                <circle cx="15.7" cy="17.9" r="1" fill="currentColor" />
+            </svg>
+            <span>
+                Calculator
+            </span>
+        </button>
+        <button
+            id="aboutButton"
+            class="nav-item"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+            >
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="9"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                />
+                <path
+                    d="M12 10.5V16"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                />
+                <circle
+                    cx="12"
+                    cy="7.5"
+                    r="1"
+                    fill="currentColor"
+                />
+            </svg>
+            <span>
+                About
+            </span>
+        </button>
+        <button
+            id="settingsButton"
+            class="nav-item"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+            >
+                <path
+                    d="M12 15.2A3.2 3.2 0 1 0 12 8.8A3.2 3.2 0 0 0 12 15.2Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                />
+                <path
+                    d="M19.4 15A1.7 1.7 0 0 0 19.7 16.8L19.8 17
+                    L17 19.8L16.8 19.7A1.7 1.7 0 0 0 15 19.4
+                    A1.7 1.7 0 0 0 13.8 21V21H10.2V20.8
+                    A1.7 1.7 0 0 0 9 19.4
+                    A1.7 1.7 0 0 0 7.2 19.7L7 19.8L4.2 17
+                    L4.3 16.8A1.7 1.7 0 0 0 4.6 15
+                    A1.7 1.7 0 0 0 3 13.8H3V10.2H3.2
+                    A1.7 1.7 0 0 0 4.6 9
+                    A1.7 1.7 0 0 0 4.3 7.2L4.2 7L7 4.2
+                    L7.2 4.3A1.7 1.7 0 0 0 9 4.6
+                    A1.7 1.7 0 0 0 10.2 3V3H13.8V3.2
+                    A1.7 1.7 0 0 0 15 4.6
+                    A1.7 1.7 0 0 0 16.8 4.3L17 4.2L19.8 7
+                    L19.7 7.2A1.7 1.7 0 0 0 19.4 9
+                    A1.7 1.7 0 0 0 21 10.2V13.8
+                    A1.7 1.7 0 0 0 19.4 15Z"
+                    stroke="currentColor"
+                    stroke-width="1.3"
+                    stroke-linejoin="round"
+                />
+            </svg>
+            <span>
+                Settings
+            </span>
+        </button>
+    </nav>
+    <!-- SIDEBAR BOTTOM -->
+    <div class="sidebar-bottom">
+        <button
+            id="newChatButton"
+            class="sidebar-action"
+        >
+            <span>
+                New chat
+            </span>
+        </button>
+        <button
+            id="clearChatButton"
+            class="sidebar-action"
+        >
+            <span>
+                Clear chat
+            </span>
+        </button>
+    </div>
+</aside>
+<!-- SIDEBAR OVERLAY -->
+<div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+>
+</div>
+<!-- ==========================================
+     MAIN
+=========================================== -->
+<main class="main">
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-left">
+            <div class="brand-mark">
+                M
+            </div>
+            <div class="brand-name">
+                Mastercommerce
+            </div>
+        </div>
+        <button
+            id="menuButton"
+            class="menu-button"
+            aria-label="Open menu"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+            >
+                <path
+                    d="M5 7H19M5 12H19M5 17H19"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                />
+            </svg>
+        </button>
+    </header>
+    <!-- ==========================================
+         CHAT
+    =========================================== -->
+    <section
+        id="chatArea"
+        class="chat-area"
+    >
+        <div
+            id="welcomeScreen"
+            class="welcome-screen"
+        >
+            <div class="welcome-content">
+                <!-- LOGO -->
+                <div class="welcome-logo">
+                    M
+                </div>
+                <!-- TITLE -->
+                <h1>
+                    What would you like to learn?
+                </h1>
+                <!-- UNDERLINE -->
+                <svg
+                    class="ink-underline"
+                    viewBox="0 0 260 14"
+                    fill="none"
+                    aria-hidden="true"
+                >
+                    <path
+                        d="M4 8.5C40 3 80 3 100 8C120 13 140 3 160 6
+                        C180 9 200 3 224 7C238 9.5 248 6 256 8"
+                        stroke="url(#underlineGradient)"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                    />
+                    <defs>
+                        <linearGradient
+                            id="underlineGradient"
+                            x1="0"
+                            y1="0"
+                            x2="260"
+                            y2="0"
+                        >
+                            <stop
+                                offset="0%"
+                                stop-color="var(--acc-accounting)"
+                            />
+                            <stop
+                                offset="50%"
+                                stop-color="var(--acc-economics)"
+                            />
+                            <stop
+                                offset="100%"
+                                stop-color="var(--acc-maths)"
+                            />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <!-- DESCRIPTION -->
+                <p>
+                    Ask a question about Accounting,
+                    Economics or Mathematics.
+                </p>
+                <!-- SUBJECT CARDS -->
+                <div class="subject-cards">
+                    <!-- ACCOUNTING -->
+                    <div class="subject-card acc-accounting">
+                        <div class="subject-letter">
+                            A
+                        </div>
+                        <div>
+                            <h3>
+                                Accounting
+                            </h3>
+                            <p>
+                                Financial accounting,
+                                management accounting,
+                                tax, auditing, IFRS
+                                and calculations.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- ECONOMICS -->
+                    <div class="subject-card acc-economics">
+                        <div class="subject-letter">
+                            E
+                        </div>
+                        <div>
+                            <h3>
+                                Economics
+                            </h3>
+                            <p>
+                                Microeconomics,
+                                macroeconomics,
+                                policies, markets,
+                                essays and calculations.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- MATHEMATICS -->
+                    <div class="subject-card acc-maths">
+                        <div class="subject-letter">
+                            M
+                        </div>
+                        <div>
+                            <h3>
+                                Mathematics
+                            </h3>
+                            <p>
+                                Algebra, functions,
+                                statistics, probability,
+                                calculus and problem solving.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ==========================================
+         INPUT
+    =========================================== -->
+    <div class="input-area">
+        <!-- PLUS MENU -->
+        <div
+            id="plusMenu"
+            class="plus-menu"
+            aria-hidden="true"
+        >
+            <button
+                class="plus-option"
+                type="button"
+                data-feature="Upload files"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+                    <path
+                        d="M12 16V4M12 4L7.5 8.5M12 4L16.5 8.5"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M5 14V19H19V14"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+                </svg>
+                <span>
+                    Upload files
+                </span>
+            </button>
+            <button
+                class="plus-option"
+                type="button"
+                data-feature="Add image"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+                    <rect
+                        x="4"
+                        y="5"
+                        width="16"
+                        height="14"
+                        rx="2"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+                    <circle
+                        cx="9"
+                        cy="10"
+                        r="1.5"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                    />
+                    <path
+                        d="M5 17L10 13L13 15L16 12L19 16"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+                <span>
+                    Add image
+                </span>
+            </button>
+            <button
+                class="plus-option"
+                type="button"
+                data-feature="Study tools"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+                    <path
+                        d="M6 4H18V20H6V4Z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M9 8H15M9 12H15M9 16H13"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+                </svg>
+                <span>
+                    Study tools
+                </span>
+            </button>
+        </div>
+        <!-- INPUT WRAPPER -->
+        <div class="input-wrapper">
+            <!-- PLUS -->
+            <button
+                id="plusButton"
+                class="input-plus"
+                type="button"
+                aria-label="Add options"
+                aria-expanded="false"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+                    <path
+                        d="M12 5V19M5 12H19"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+                </svg>
+            </button>
+            <!-- TEXT INPUT -->
+            <textarea
+                id="questionInput"
+                placeholder="Ask Mastercommerce"
+                rows="1"
+                autocomplete="off"
+                spellcheck="true"
+            ></textarea>
+            <!-- SEND -->
+            <button
+                id="sendButton"
+                class="send-button"
+                type="button"
+                aria-label="Send"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                >
+                    <path
+                        d="M5 12H18"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+                    <path
+                        d="M13 7L18 12L13 17"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </button>
+        </div>
+        <!-- TOAST -->
+        <div
+            id="featureToast"
+            class="feature-toast"
+        >
+            This feature is still under development.
+        </div>
+    </div>
+</main>
+</div>
+<!-- ==========================================
+     ABOUT MODAL
+=========================================== -->
+<div
+    id="aboutModal"
+    class="modal"
+>
+<div class="modal-box">
+    <button
+        class="modal-close"
+        data-close="aboutModal"
+    >
+        ×
+    </button>
+    <div class="modal-logo">
+        M
+    </div>
+    <h2>
+        About Mastercommerce
+    </h2>
+    <p>
+        Mastercommerce is an educational
+        learning platform designed to help
+        learners study Accounting, Economics
+        and Mathematics.
+    </p>
+    <div class="developer-info">
+        <p>
+            <strong>Developer</strong><br>
+            PD | Web & App Development
+        </p>
+        <p>
+            <strong>Founder</strong><br>
+            Phungo Dembe Vusani
+        </p>
+        <p>
+            <strong>Location</strong><br>
+            Limpopo, South Africa
+        </p>
+        <p>
+            <strong>Education</strong><br>
+            University of Venda, BCom in Accounting
+        </p>
+        <p>
+            <strong>Product</strong><br>
+            Mastercommerce
+        </p>
+        <p>
+            <strong>Version</strong><br>
+            v1.1.0
+        </p>
+    </div>
+</div>
+</div>
+<!-- ==========================================
+     SETTINGS MODAL
+=========================================== -->
+<div
+    id="settingsModal"
+    class="modal"
+>
+<div class="modal-box settings-box">
+    <button
+        class="modal-close"
+        data-close="settingsModal"
+    >
+        ×
+    </button>
+    <h2>
+        Settings
+    </h2>
+    <!-- ======================================
+         APPEARANCE
+    ======================================= -->
+    <div class="setting-group">
+        <label>
+            Appearance
+        </label>
+        <div class="setting-buttons">
+            <button
+                data-theme="light"
+            >
+                Light
+            </button>
+            <button
+                data-theme="dark"
+            >
+                Dark
+            </button>
+        </div>
+    </div>
+    <!-- ======================================
+         BACKGROUND
+    ======================================= -->
+    <div class="setting-group">
+        <label>
+            Background
+        </label>
+        <div class="setting-buttons">
+            <!-- DEFAULT -->
+            <button
+                data-background="white"
+            >
+                White
+            </button>
+            <!-- NEUTRALS -->
+            <button
+                data-background="gray"
+            >
+                Gray
+            </button>
+            <button
+                data-background="pearl"
+            >
+                Pearl
+            </button>
+            <button
+                data-background="slate"
+            >
+                Slate
+            </button>
+            <!-- WARM -->
+            <button
+                data-background="warm"
+            >
+                Warm
+            </button>
+            <button
+                data-background="cream"
+            >
+                Cream
+            </button>
+            <button
+                data-background="sand"
+            >
+                Sand
+            </button>
+            <button
+                data-background="peach"
+            >
+                Peach
+            </button>
+            <!-- BLUE -->
+            <button
+                data-background="blue"
+            >
+                Blue
+            </button>
+            <button
+                data-background="sky"
+            >
+                Sky
+            </button>
+            <button
+                data-background="ice"
+            >
+                Ice
+            </button>
+            <!-- GREEN -->
+            <button
+                data-background="green"
+            >
+                Green
+            </button>
+            <button
+                data-background="mint"
+            >
+                Mint
+            </button>
+            <!-- PURPLE -->
+            <button
+                data-background="lavender"
+            >
+                Lavender
+            </button>
+            <button
+                data-background="lilac"
+            >
+                Lilac
+            </button>
+            <!-- PINK -->
+            <button
+                data-background="rose"
+            >
+                Rose
+            </button>
+            <button
+                data-background="pink"
+            >
+                Pink
+            </button>
+        </div>
+    </div>
+    <!-- ======================================
+         FONT SIZE
+    ======================================= -->
+    <div class="setting-group">
+        <label>
+            Font size
+        </label>
+        <div class="setting-buttons">
+            <button
+                data-font="small"
+            >
+                Small
+            </button>
+            <button
+                data-font="medium"
+            >
+                Medium
+            </button>
+            <button
+                data-font="large"
+            >
+                Large
+            </button>
+        </div>
+    </div>
+    <!-- ======================================
+         MOTION
+    ======================================= -->
+    <div class="setting-group">
+        <label>
+            Motion
+        </label>
+        <div class="setting-buttons">
+            <button
+                id="motionButton"
+            >
+                Reduced motion
+            </button>
+        </div>
+    </div>
+    <!-- ======================================
+         RESET
+    ======================================= -->
+    <button
+        id="resetSettingsButton"
+        class="reset-settings"
+    >
+        Reset settings
+    </button>
+</div>
+</div>
+<!-- ==========================================
+     CALCULATOR MODAL
+=========================================== -->
+<div
+    id="calculatorModal"
+    class="modal"
+>
+<div class="modal-box calculator-box">
+    <button
+        class="modal-close"
+        data-close="calculatorModal"
+    >
+        ×
+    </button>
+    <h2>
+        Calculator
+    </h2>
+    <!-- CALC TOP TABS -->
+    <div class="calc-tabs">
+        <button
+            class="calc-tab-btn active"
+            data-calctab="scientific"
+            type="button"
+        >
+            Scientific
+        </button>
+        <button
+            class="calc-tab-btn"
+            data-calctab="financial"
+            type="button"
+        >
+            Financial
+        </button>
+    </div>
+    <!-- ======================================
+         SCIENTIFIC CALCULATOR
+    ======================================= -->
+    <div
+        id="calcSciPanel"
+        class="calc-panel active"
+    >
+        <div class="calc-display">
+            <div
+                id="calcSciHistory"
+                class="calc-history"
+            ></div>
+            <div
+                id="calcSciInput"
+                class="calc-input"
+            >
+                0
+            </div>
+        </div>
+        <div
+            id="calcSciGrid"
+            class="calc-sci-grid"
+        >
+            <button class="calc-btn calc-btn-fn" data-calc-key="DEG" id="calcDegRad" type="button">DEG</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="AC" type="button">AC</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="back" type="button">⌫</button>
+            <button class="calc-btn calc-btn-op" data-calc-key="%" type="button">%</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="sin" type="button">sin</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="cos" type="button">cos</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="tan" type="button">tan</button>
+            <button class="calc-btn calc-btn-op" data-calc-key="÷" type="button">÷</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="asin" type="button">sin⁻¹</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="acos" type="button">cos⁻¹</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="atan" type="button">tan⁻¹</button>
+            <button class="calc-btn calc-btn-op" data-calc-key="×" type="button">×</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="log" type="button">log</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="ln" type="button">ln</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="sqrt" type="button">√</button>
+            <button class="calc-btn calc-btn-op" data-calc-key="-" type="button">-</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="x2" type="button">x²</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="1/x" type="button">1/x</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="fact" type="button">n!</button>
+            <button class="calc-btn calc-btn-op" data-calc-key="+" type="button">+</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="(" type="button">(</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key=")" type="button">)</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="pi" type="button">π</button>
+            <button class="calc-btn calc-btn-op" data-calc-key="^" type="button">^</button>
+            <button class="calc-btn calc-btn-mem" data-calc-key="MC" type="button">MC</button>
+            <button class="calc-btn calc-btn-mem" data-calc-key="MR" type="button">MR</button>
+            <button class="calc-btn calc-btn-mem" data-calc-key="M+" type="button">M+</button>
+            <button class="calc-btn calc-btn-mem" data-calc-key="M-" type="button">M-</button>
+            <button class="calc-btn" data-calc-key="7" type="button">7</button>
+            <button class="calc-btn" data-calc-key="8" type="button">8</button>
+            <button class="calc-btn" data-calc-key="9" type="button">9</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="euler" type="button">e</button>
+            <button class="calc-btn" data-calc-key="4" type="button">4</button>
+            <button class="calc-btn" data-calc-key="5" type="button">5</button>
+            <button class="calc-btn" data-calc-key="6" type="button">6</button>
+            <button class="calc-btn calc-btn-fn" data-calc-key="pm" type="button">±</button>
+            <button class="calc-btn" data-calc-key="1" type="button">1</button>
+            <button class="calc-btn" data-calc-key="2" type="button">2</button>
+            <button class="calc-btn" data-calc-key="3" type="button">3</button>
+            <button class="calc-btn calc-btn-eq" data-calc-key="equals" type="button">=</button>
+            <button class="calc-btn calc-btn-zero" data-calc-key="0" type="button">0</button>
+            <button class="calc-btn" data-calc-key="." type="button">.</button>
+        </div>
+    </div>
+    <!-- ======================================
+         FINANCIAL CALCULATOR
+    ======================================= -->
+    <div
+        id="calcFinPanel"
+        class="calc-panel"
+    >
+        <div class="calc-fin-tabs">
+            <button class="calc-fin-tab-btn active" data-fintab="tvm" type="button">TVM</button>
+            <button class="calc-fin-tab-btn" data-fintab="loan" type="button">Loan</button>
+            <button class="calc-fin-tab-btn" data-fintab="compound" type="button">Compound Interest</button>
+        </div>
+        <!-- TVM PANEL -->
+        <div id="calcTVM" class="calc-fin-panel active">
+            <p class="calc-note">
+                Time value of money solver. Choose what to solve for, fill in the
+                other fields, then press Solve.
+            </p>
+            <div class="calc-form-row">
+                <label>Solve for</label>
+                <select id="tvmTarget" class="calc-select">
+                    <option value="FV">Future Value (FV)</option>
+                    <option value="PV">Present Value (PV)</option>
+                    <option value="PMT">Payment (PMT)</option>
+                    <option value="N">Number of periods (N)</option>
+                    <option value="IY">Interest rate (I/Y)</option>
+                </select>
+            </div>
+            <div class="calc-form-grid">
+                <div class="calc-form-field">
+                    <label>N (total periods)</label>
+                    <input id="tvmN" type="number" step="any" placeholder="e.g. 60" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>I/Y (annual rate %)</label>
+                    <input id="tvmIY" type="number" step="any" placeholder="e.g. 11" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>PV (present value)</label>
+                    <input id="tvmPV" type="number" step="any" placeholder="e.g. -10000" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>PMT (payment)</label>
+                    <input id="tvmPMT" type="number" step="any" placeholder="e.g. 250" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>FV (future value)</label>
+                    <input id="tvmFV" type="number" step="any" placeholder="e.g. 0" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>Payments per year (P/Y)</label>
+                    <input id="tvmPY" type="number" step="any" value="12" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>Timing</label>
+                    <select id="tvmTiming" class="calc-select">
+                        <option value="end">End of period (ordinary)</option>
+                        <option value="begin">Beginning of period (annuity due)</option>
+                    </select>
+                </div>
+            </div>
+            <button id="tvmSolveBtn" class="calc-calc-btn" type="button">Solve</button>
+            <div id="tvmResult" class="calc-result"></div>
+        </div>
+        <!-- LOAN PANEL -->
+        <div id="calcLoan" class="calc-fin-panel">
+            <p class="calc-note">
+                Loan / amortisation calculator - computes the periodic payment
+                and can generate a full repayment schedule.
+            </p>
+            <div class="calc-form-grid">
+                <div class="calc-form-field">
+                    <label>Loan amount</label>
+                    <input id="loanPrincipal" type="number" step="any" placeholder="e.g. 250000" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>Annual interest rate (%)</label>
+                    <input id="loanRate" type="number" step="any" placeholder="e.g. 11.5" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>Term (years)</label>
+                    <input id="loanYears" type="number" step="any" placeholder="e.g. 20" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>Payments per year</label>
+                    <input id="loanPY" type="number" step="any" value="12" class="calc-input-field">
+                </div>
+            </div>
+            <button id="loanCalcBtn" class="calc-calc-btn" type="button">Calculate</button>
+            <div id="loanResult" class="calc-result"></div>
+            <button id="loanAmortBtn" class="calc-calc-btn calc-calc-btn-secondary" type="button">
+                Show amortisation schedule
+            </button>
+            <div id="loanAmortTableWrap" class="calc-amort-wrap"></div>
+        </div>
+        <!-- COMPOUND INTEREST PANEL -->
+        <div id="calcCompound" class="calc-fin-panel">
+            <p class="calc-note">
+                Compound interest calculator - with an optional regular
+                contribution added at the end of every compounding period.
+            </p>
+            <div class="calc-form-grid">
+                <div class="calc-form-field">
+                    <label>Principal</label>
+                    <input id="compoundPrincipal" type="number" step="any" placeholder="e.g. 10000" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>Annual interest rate (%)</label>
+                    <input id="compoundRate" type="number" step="any" placeholder="e.g. 9" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>Term (years)</label>
+                    <input id="compoundYears" type="number" step="any" placeholder="e.g. 10" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>Compounds per year</label>
+                    <input id="compoundN" type="number" step="any" value="12" class="calc-input-field">
+                </div>
+                <div class="calc-form-field">
+                    <label>Regular contribution (per period)</label>
+                    <input id="compoundContribution" type="number" step="any" placeholder="e.g. 500" class="calc-input-field">
+                </div>
+            </div>
+            <button id="compoundCalcBtn" class="calc-calc-btn" type="button">Calculate</button>
+            <div id="compoundResult" class="calc-result"></div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- ==========================================
+     JAVASCRIPT
+=========================================== -->
+<!-- Existing Accounting + Economics + Mathematics knowledge -->
+<script src="script.js"></script>
+<!-- Business Studies knowledge -->
+<script src="business.js"></script>
+</body>
+</html>
