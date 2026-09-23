@@ -5143,3 +5143,823 @@ document.addEventListener("DOMContentLoaded", () => {
     questionInput.focus();
 
 });
+/* =========================================================
+   MASTERCOMMERCE - BUSINESS STUDIES PATCH (Grade 12)
+   5 small steps. Nothing else in your code changes.
+========================================================= */
+
+
+/* =========================================================
+   STEP A - PASTE THIS BLOCK right after mathematicsKnowledge
+========================================================= */
+
+const businessStudiesKnowledge = [
+
+    {
+        topic: "Skills Development Act (SDA)",
+        keywords: ["skills development act", "sda", "skills development levy", "sdl", "seta", "setas", "learnership", "learnerships", "national skills development strategy"],
+        relatedKeywords: ["training", "workplace skills plan", "payroll", "facilitator", "nqf"],
+        information: "The SDA (Act 97 of 1998) improves the skills of people already employed, redresses past imbalances through training and requires businesses to contribute a Skills Development Levy (SDL).",
+        formulas: [],
+        rules: [
+            "Develops skills to improve productivity.",
+            "Invests in education and training of workers.",
+            "Improves job chances of previously disadvantaged people.",
+            "Encourages businesses to train their workers.",
+            "Encourages workers to join learning programmes."
+        ],
+        parts: {
+            purpose: ["Develop the skills of South Africans to improve productivity.", "Redress imbalances of the past through education and training.", "Encourage employers to improve workers' skills.", "Improve job prospects of previously disadvantaged people."],
+            advantages: ["Trained employees are more productive.", "Business becomes more globally competitive.", "More skilled workers in scarce-skill areas.", "Promotes black entrepreneurship and self-employment.", "Workplace becomes an active learning environment."],
+            disadvantages: ["Levy is an extra burden on struggling businesses.", "Much paperwork increases costs.", "Training time reduces production time.", "Trained employees may leave, wasting the investment.", "Many training providers are not SAQA accredited."],
+            discriminatory: ["Stopping employees from joining a learnership because of age or position.", "Unfairly promoting training for certain employees only.", "Giving false information in prescribed documents."],
+            penalties: ["A business that does not pay the SDL cannot offer learnerships or claim grants.", "A labour inspector may order the business to stop operating if it is found guilty of illegal practices."],
+            comply: ["Pay 1% of payroll to SARS/SETA.", "Register with the relevant SETA.", "Submit a workplace skills plan and evidence of implementation.", "Appoint a skills development facilitator (50+ employees).", "Assess employees' skills and encourage learnerships."],
+            setas: ["Promote and establish learnerships.", "Collect levies and pay out grants.", "Approve workplace skills plans and annual training reports.", "Accredit providers and facilitators, and monitor training.", "Funding: 80% of levies go to SETAs, 20% to the National Skills Fund, plus donations and fees for services."]
+        },
+        examples: [
+            "A shop with a R400 000 monthly payroll pays 1% (R4 000) as SDL.",
+            "A bank enrols 20 unemployed youths in a 12-month learnership.",
+            "A factory submits a workplace skills plan to claim grants from its SETA.",
+            "A construction firm with 60 employees appoints a skills development facilitator.",
+            "A hotel sends waiters on an accredited customer-service course.",
+            "A retailer refuses a 50-year-old a learnership because of his age (discriminatory).",
+            "A mine uses MQA-accredited trainers for its artisans.",
+            "A farm pays for a worker's ABET literacy classes.",
+            "A firm that never paid its levy cannot claim training grants.",
+            "A call centre pairs new staff with mentors for on-the-job training."
+        ]
+    },
+
+    {
+        topic: "Labour Relations Act (LRA)",
+        keywords: ["labour relations act", "lra", "ccma", "collective bargaining", "workplace forum", "lockout", "lock out", "strike", "trade union", "bargaining council"],
+        relatedKeywords: ["dispute", "dismissal", "union", "labour court", "employer organisation"],
+        information: "The LRA (Act 66 of 1995) regulates relations between employers, employees and unions, promotes collective bargaining and gives simple procedures (CCMA) to resolve labour disputes.",
+        formulas: [],
+        rules: [
+            "Provides a framework for labour relations.",
+            "Promotes collective bargaining and workplace forums.",
+            "Establishes the CCMA and Labour Courts.",
+            "Gives employers the right to lock out.",
+            "Promotes fair labour practices and labour peace."
+        ],
+        parts: {
+            purpose: ["Provide a framework for employer-employee relations.", "Promote collective bargaining and workplace forums.", "Establish the CCMA, Labour Court and Labour Appeal Court.", "Provide for lock-outs after lengthy strikes.", "Advance social justice and labour peace."],
+            advantages: ["Promotes a healthy employer-employee relationship.", "Disputes are settled faster and cheaper via the CCMA.", "Gives clear guidelines on fair discipline and dismissal.", "Protects lawful lock-outs.", "Employers can claim damages from unprotected strikes."],
+            disadvantages: ["Union activities during work time can lower productivity.", "Legal strikes raise labour costs.", "Employers cannot dismiss at will.", "Employers may have to disclose sensitive information to unions.", "Bargaining processes are time-consuming."],
+            discriminatory: ["Unfair or illegal dismissal.", "Preventing employees from joining unions.", "Forcing employees to give up union membership.", "Refusing paid time off for workplace forum meetings.", "Breaching collective agreements."],
+            penalties: ["Being forced into a dispute resolution process.", "Fines for not honouring agreements.", "Legal and CCMA costs."],
+            comply: ["Allow union membership and legal strikes.", "Support workplace forums.", "Follow fair dismissal procedures.", "Honour collective agreements.", "Disclose information unions need for negotiations."],
+            rights: ["EMPLOYERS: lock out employees on unprotected strikes; form employer organisations and bargaining councils; dismiss for violence or misconduct; no-work-no-pay during protected strikes.", "EMPLOYEES: join a union of their choice; be represented at hearings; embark on legal strikes; refer disputes to the CCMA and appeal to the Labour Court."]
+        },
+        examples: [
+            "Workers form a union at a bakery and the owner may not stop them.",
+            "An employee dismissed without a hearing refers the case to the CCMA.",
+            "A retailer locks out staff who joined an unprotected strike.",
+            "Employer and union sign a collective agreement raising wages by 7%.",
+            "A factory sets up a workplace forum to consult workers on shift changes.",
+            "A shop steward gets paid time off to attend union training.",
+            "A company fired for violence during a strike acts within its rights.",
+            "An employer that ignores a bargaining council agreement is fined.",
+            "A business sold to a new owner keeps its employees' contracts.",
+            "A dissatisfied CCMA outcome is taken on appeal to the Labour Court."
+        ]
+    },
+
+    {
+        topic: "Employment Equity Act (EEA)",
+        keywords: ["employment equity act", "eea", "employment equity", "affirmative action", "designated groups", "equal pay"],
+        relatedKeywords: ["discrimination", "equity plan", "psychometric", "workforce", "diversity"],
+        information: "The EEA (Act 55 of 1998) promotes equal opportunity and fair treatment, prevents unfair discrimination and requires affirmative action for designated groups.",
+        formulas: [],
+        rules: [
+            "Equal pay for work of equal value.",
+            "No unfair discrimination in the workplace.",
+            "Promotes affirmative action.",
+            "Protects employees from victimisation.",
+            "Unresolved disputes may go to the CCMA."
+        ],
+        parts: {
+            purpose: ["Promote equal opportunity and fair treatment.", "Equal pay for work of equal value.", "Prevent discrimination, e.g. on gender.", "Protect employees from victimisation.", "Allow unresolved disputes to be referred to the CCMA."],
+            advantages: ["Fair treatment and equal opportunity for all.", "Redresses imbalances through affirmative action.", "Motivates a diverse, representative workforce.", "Legal recourse against unfair discrimination.", "Better chance of winning government contracts and a good BEE rating."],
+            disadvantages: ["Employment equity reports every two years add admin.", "Fines for non-compliance are costly.", "Senior managers must be appointed to monitor the plan.", "Pressure to appoint unsuitable candidates.", "Posts may stay vacant when no suitable EE candidate exists."],
+            discriminatory: ["Not hiring a young woman because she may have children.", "Refusing to hire someone with a disability or strong religious beliefs.", "HIV testing without Labour Court approval.", "Denying access based on gender, race or culture."],
+            penalties: ["Prosecution in the Labour Court.", "Fines for failing to report.", "Being blocked from government business."],
+            comply: ["Prepare and implement an employment equity plan with employees.", "Assign a senior manager to monitor it.", "Report to the Department of Labour.", "Use certified psychometric tests.", "Accommodate and train designated groups."]
+        },
+        examples: [
+            "A bank pays a male and a female analyst the same salary for the same work.",
+            "A retailer submits its equity plan to the Department of Labour.",
+            "A firm builds ramps and adapts desks for a wheelchair user.",
+            "A company refuses to hire a pregnant applicant (discriminatory).",
+            "A manufacturer trains black female supervisors for management posts.",
+            "A firm uses certified psychometric tests for all applicants.",
+            "A mine assigns a senior manager to monitor its equity plan.",
+            "A company demanding an HIV test without court approval breaches the Act.",
+            "A supplier without a compliance certificate loses a state tender.",
+            "A retailer reviews its promotion policy to remove barriers for designated groups."
+        ]
+    },
+
+    {
+        topic: "Basic Conditions of Employment Act (BCEA)",
+        keywords: ["basic conditions of employment", "bcea", "overtime", "annual leave", "sick leave", "maternity leave", "family responsibility leave", "working hours", "severance pay", "public holiday"],
+        relatedKeywords: ["employment contract", "notice period", "meal break", "child labour", "minimum standards"],
+        information: "The BCEA (Act 75 of 1997) sets minimum standards for employment such as working hours, overtime, leave, termination and child labour.",
+        formulas: [],
+        rules: [
+            "Maximum 45 ordinary hours a week.",
+            "Overtime paid at 1.5 times the normal rate.",
+            "Sundays and public holidays paid at double.",
+            "21 consecutive days annual leave.",
+            "No child labour under 15."
+        ],
+        parts: {
+            purpose: ["Give clear terms and conditions of employment.", "Set minimum standards for employment contracts.", "Regulate fair labour practice per the Constitution.", "Advance economic development and social justice."],
+            advantages: ["Sets acceptable practices on hours and leave.", "Employers cannot exploit workers on hours.", "Clear rules guide employers.", "Employees can complain to labour inspectors.", "Encourages consultation."],
+            disadvantages: ["Drafting contracts is costly and time-consuming.", "Cheap labour is no longer possible.", "Compliance raises labour costs.", "Working-hour limits may reduce productivity.", "Heavy penalties hit cash flow."],
+            discriminatory: ["Forbidding workers to discuss wages.", "Preventing access to their employment contract.", "Refusing a valid medical certificate.", "Refusing family responsibility leave."],
+            penalties: ["A compliance order from a labour inspector.", "Referral to the Labour Court.", "Heavy fines.", "Ordered to pay compensation or damages."],
+            comply: ["9 hours a day (5-day week) or 8 hours a day (6-day week).", "Overtime max 10 hours a week, by agreement.", "60-minute meal break after 5 hours.", "Six weeks paid sick leave in a 36-month cycle.", "Pay double on Sundays and public holidays."],
+            provisions: ["HOURS: max 45 a week; overtime max 3 hours a day/10 a week.", "ANNUAL LEAVE: 21 consecutive days.", "SICK LEAVE: 6 weeks in 36 months; certificate after 2 days.", "MATERNITY: 4 months; FAMILY RESPONSIBILITY: 3 days paid.", "NOTICE: 1 week (up to 6 months), 4 weeks (1 year+); severance 1 week per year of service.", "CHILD LABOUR: illegal under 15."]
+        },
+        examples: [
+            "A cashier working 5 days does 9 hours a day (45 hours a week).",
+            "A worker is paid 1.5 times for Saturday overtime.",
+            "An employee working on a public holiday is paid double.",
+            "A pregnant employee takes 4 months' maternity leave.",
+            "A worker gets 60 minutes off after 5 continuous hours.",
+            "An employee with 6 months' service gets one week's written notice.",
+            "A retrenched worker with 4 years' service receives 4 weeks' severance.",
+            "An employer forbids workers to discuss salaries (discriminatory).",
+            "A factory that employs a 14-year-old breaks the child labour rule.",
+            "A worker takes 3 days' family responsibility leave when a parent dies."
+        ]
+    },
+
+    {
+        topic: "COIDA - Compensation for Occupational Injuries and Diseases",
+        keywords: ["coida", "compensation for occupational injuries", "compensation fund", "occupational injuries", "workplace injury"],
+        relatedKeywords: ["injury", "disease", "accident", "compensation commissioner", "safety"],
+        information: "COIDA gives employees who are injured or contract diseases at work the right to claim compensation, funded by employers' contributions to the Compensation Fund.",
+        formulas: [],
+        rules: [
+            "Employers contribute; employees do not.",
+            "Covers casual and full-time workers.",
+            "Compensation is exempt from income tax.",
+            "Dependants are supported if the worker dies."
+        ],
+        parts: {
+            purpose: ["Protect employees injured while performing duties.", "Cover casual and full-time workers who are injured, ill, disabled or killed at work.", "Establish a Compensation Board to advise the Minister of Labour."],
+            advantages: ["Promotes workplace safety.", "Avoids lengthy court cases.", "Protects employers if they were not negligent.", "Simple claims process.", "Dependants receive financial support."],
+            disadvantages: ["Claims can be slow.", "Paperwork is an administrative burden.", "Annual contributions strain cash flow.", "Negligent employers pay heavy penalties.", "Domestic and military workers are not covered."],
+            discriminatory: ["Bribing employees not to report an injury.", "Giving false information about accidents.", "Not contributing to the fund.", "Delaying claims."],
+            penalties: ["Fines for not lodging claims.", "Paying recovery costs.", "Court action by employees for non-registration.", "Imprisonment for serious misconduct."],
+            comply: ["Register with the Compensation Commissioner.", "Report accidents (within 7 days) and diseases (14 days).", "Keep earnings records for four years.", "Submit annual returns by 1 March.", "Never deduct contributions from workers' pay."]
+        },
+        examples: [
+            "A welder burnt on duty is paid medical costs by the fund.",
+            "A miner with lung disease receives compensation for disablement.",
+            "The family of a driver killed at work receives support.",
+            "A casual packer injured by a forklift can claim.",
+            "A shop registers all staff with the Commissioner.",
+            "An employer reports an accident within 7 days.",
+            "A firm that deducts COIDA from wages breaks the Act.",
+            "A factory is inspected to assess risk levels.",
+            "An employer that hides an injury faces a fine.",
+            "Compensation received by a worker is not taxed."
+        ]
+    },
+
+    {
+        topic: "Broad-Based Black Economic Empowerment (BBBEE)",
+        keywords: ["bbbee", "b-bbee", "bee", "black economic empowerment", "bbbee pillars", "bee scorecard", "fronting", "enterprise and supplier development"],
+        relatedKeywords: ["ownership", "management control", "skills development", "socio-economic development", "tender"],
+        information: "The BBBEE Act (Act 53 of 2003, amended 2013) spreads wealth more broadly by encouraging ownership, management and enterprise opportunities for previously disadvantaged people.",
+        formulas: [],
+        rules: [
+            "Five revised pillars: management control, skills development, ownership, enterprise and supplier development, socio-economic development.",
+            "Fronting is illegal."
+        ],
+        parts: {
+            purpose: ["Spread wealth across all population groups.", "Give government a platform for equitable wealth distribution.", "Allow Codes of Good Practice.", "Target inequality in the economy."],
+            advantages: ["Improves the business image and BEE rating.", "Good rating helps win government tenders.", "Develops entrepreneurial skills of designated people.", "Shows commitment to community development.", "Share prices of compliant businesses may rise."],
+            disadvantages: ["Compliance is costly and needs independent verification.", "Risk of corruption and nepotism.", "Ownership issues can upset existing shareholders.", "Preferential procurement excludes some suppliers.", "Non-compliance can bring penalties."],
+            penalties: ["Imprisonment for fronting.", "Fine up to 10% of annual turnover.", "Ban from government contracts for 10 years.", "Contracts based on false BEE status are cancelled.", "Downgraded one level for missing minimum compliance."],
+            comply: ["Appoint black people in management.", "Sell shares to black employees or investors.", "Send black employees for skills training.", "Buy from BEE-compliant suppliers.", "Develop SMMEs through ESD and invest in communities."],
+            pillars: ["MANAGEMENT CONTROL: black people in senior and board positions.", "SKILLS DEVELOPMENT: train black employees, 1% of payroll.", "OWNERSHIP: share ownership by black people.", "ENTERPRISE & SUPPLIER DEVELOPMENT: support black-owned SMMEs.", "SOCIO-ECONOMIC DEVELOPMENT: CSI in communities."]
+        },
+        examples: [
+            "A firm sells 26% of shares to black investors.",
+            "A bank appoints black women to its executive team.",
+            "A supermarket buys produce from black-owned farmers.",
+            "A builder gives a start-up supplier advice and early payment.",
+            "A mine funds bursaries for local students.",
+            "A tender goes to a company with a level 1 BEE certificate.",
+            "A company pretends to be black-owned to win a tender (fronting).",
+            "A retailer enrols black staff in learnerships.",
+            "A firm builds a clinic in a rural community (socio-economic development).",
+            "A listed company is downgraded one level for failing minimum ownership targets."
+        ]
+    },
+
+    {
+        topic: "National Credit Act (NCA)",
+        keywords: ["national credit act", "nca", "credit act", "national credit regulator", "ncr", "reckless lending", "debt review", "debt counselling", "credit provider", "affordability assessment"],
+        relatedKeywords: ["credit", "blacklisting", "credit bureau", "consumer", "loan"],
+        information: "The NCA (Act 34 of 2005) protects consumers against unfair and reckless credit granting and requires credit providers to register with the National Credit Regulator.",
+        formulas: [],
+        rules: [
+            "Credit providers must be registered with the NCR.",
+            "Affordability must be assessed before granting credit.",
+            "Reckless credit may be declared void."
+        ],
+        parts: {
+            purpose: ["Promote the social and financial interests of consumers.", "Promote a fair but competitive credit market.", "Make consumers aware of their credit contracts.", "Prevent discrimination in granting credit.", "Establish the NCR and register credit bureaus and debt counsellors."],
+            advantages: ["Transparent credit process.", "Lower bad debts and better cash flow.", "Stops reckless lending.", "Credit bureau checks show who can pay.", "Protects businesses from non-paying consumers."],
+            disadvantages: ["Fewer customers qualify, so sales fall.", "Paperwork is costly and time-consuming.", "Extra staff needed for administration.", "Debt collection is more complex.", "Cannot collect from consumers under debt review."],
+            discriminatory: ["Refusing credit because of gender or race.", "Charging different interest rates by gender or race.", "Blacklisting without trying to recover the debt."],
+            penalties: ["Credit agreement declared reckless: consumer need not repay.", "Business may not sue or attach salaries or assets.", "No fees or interest may be charged.", "NCR fines.", "Business pays to remove wrongful blacklisting."],
+            comply: ["Register with the NCR.", "Submit an annual compliance report.", "Do affordability assessments.", "Check the credit bureau and National Credit Register.", "Disclose all costs; verify identity per FICA."],
+            rights: ["Apply for credit free from discrimination.", "Be given reasons if credit is refused.", "Receive pre-agreement documents.", "Fair and responsible marketing.", "Plain language information.", "Access and challenge credit records."]
+        },
+        examples: [
+            "A furniture store checks a customer's payslips before offering credit.",
+            "A bank obtains a credit bureau report before approving a loan.",
+            "A car dealer registers with the NCR.",
+            "A store cannot sue a client who is under debt review.",
+            "A lender charging hidden fees breaks the disclosure rule.",
+            "A consumer asks why his application was refused and receives reasons.",
+            "A court declares a loan to an unemployed person reckless.",
+            "A shop submits its annual compliance report.",
+            "A retailer that blacklists without contacting the client pays to clear the record.",
+            "A borrower with too much debt applies for debt counselling."
+        ]
+    },
+
+    {
+        topic: "Consumer Protection Act (CPA)",
+        keywords: ["consumer protection act", "cpa", "consumer protection", "national consumer commission", "cooling off", "consumer rights", "unfair advertising law", "consumer complaint"],
+        relatedKeywords: ["refund", "faulty goods", "warranty", "direct marketing", "lay-bye"],
+        information: "The CPA (Act 68 of 2008) promotes and protects consumers' economic interests by giving them information, fair treatment and safe, quality goods.",
+        formulas: [],
+        rules: [
+            "Faulty goods may be returned within six months.",
+            "Five-day cooling-off period for direct marketing.",
+            "Contracts must be in plain language."
+        ],
+        parts: {
+            purpose: ["Protect consumers' economic interests through information.", "Set national standards for consumer protection.", "Prohibit unfair business practices and misleading marketing.", "Establish the National Consumer Commission.", "Protect against unfair contract terms and hazardous products."],
+            advantages: ["Disputes resolved through the NCC or consumer court.", "Builds a good image and customer loyalty.", "Safeguards businesses from dishonest competitors.", "Prevents big businesses undermining smaller ones."],
+            disadvantages: ["Must disclose more information about products.", "Penalties can be very high.", "Staff training and legal advice raise costs.", "Contracts must be rewritten in plain language.", "Must replace or refund faulty goods within six months."],
+            discriminatory: ["Denying customers product information.", "Varying quality of goods by area.", "Charging unfair prices for the same goods.", "Treating customers differently by gender, age or race."],
+            penalties: ["Contract declared void.", "Fines or imprisonment up to 10 years.", "Compensating consumers.", "Government audits and possible closure."],
+            comply: ["Display all prices.", "Train staff on the CPA.", "Standardise the quality of goods.", "Include a five-day cooling-off period in direct sales.", "Label products correctly and provide complaint channels."],
+            rights: ["Choose suppliers and shop around.", "Privacy: stop unwanted direct marketing.", "Fair and honest dealings.", "Information in plain language.", "Return faulty goods within six months.", "Fair, just and reasonable terms.", "Complain and be heard."]
+        },
+        examples: [
+            "A customer returns a faulty kettle after 3 months and gets a refund.",
+            "A shop displays the full VAT-inclusive price on every item.",
+            "A consumer cancels a telesales purchase within five working days.",
+            "A supplier that advertises a product it does not have is bait and switch.",
+            "A store honours a customer's credit voucher.",
+            "A shop labels the country of origin and expiry dates.",
+            "A customer opts out of promotional emails.",
+            "A gym contract is rewritten in plain language.",
+            "A pyramid scheme is reported to the NCC.",
+            "A restaurant charges different prices to different races (discriminatory)."
+        ]
+    },
+
+    {
+        topic: "Leadership Styles",
+        keywords: ["leadership style", "leadership styles", "democratic", "autocratic", "laissez-faire", "laissez faire", "transactional", "charismatic", "leadership", "management and leadership"],
+        relatedKeywords: ["leader", "followers", "decision making", "motivation", "situational leadership"],
+        information: "Leadership styles describe how leaders influence and guide followers. The five examinable styles are democratic, autocratic, laissez-faire, transactional and charismatic.",
+        formulas: [],
+        rules: [
+            "Democratic: leader invites input.",
+            "Autocratic: leader decides alone.",
+            "Laissez-faire: leader delegates with little direction.",
+            "Transactional: reward and punishment.",
+            "Charismatic: leader uses charm and vision."
+        ],
+        parts: {
+            styles: ["DEMOCRATIC: involves team in decisions.", "AUTOCRATIC: leader decides without consulting.", "LAISSEZ-FAIRE: employees work with maximum freedom.", "TRANSACTIONAL: motivates through rewards and punishment.", "CHARISMATIC: inspires through energy and personality."],
+            advantages: ["Democratic: staff ideas lead to innovation and empowerment.", "Autocratic: quick decisions and clear command in a crisis.", "Laissez-faire: motivates experts by trusting them.", "Transactional: workers know what is expected and rewards motivate.", "Charismatic: sells the vision and inspires loyalty."],
+            disadvantages: ["Democratic: slow, and poor in a crisis.", "Autocratic: demotivates workers and ignores ideas.", "Laissez-faire: no direction, may cause underperformance.", "Transactional: bored, uncreative workers; time-consuming monitoring.", "Charismatic: projects collapse if the leader leaves."],
+            when: ["Democratic: skilled, eager team; several perspectives needed.", "Autocratic: emergencies and uncooperative or inexperienced staff.", "Laissez-faire: highly experienced experts.", "Transactional: deadlines and low morale.", "Charismatic: selling a new vision."],
+            differences: ["Leadership influences and inspires (what and why, people-oriented); management plans, organises and controls (how and when, task-oriented).", "Leaders have influence from skill; managers have power from position."]
+        },
+        examples: [
+            "A principal asks teachers to vote on the new timetable (democratic).",
+            "A site manager orders everyone out after a gas leak (autocratic).",
+            "A CEO lets her senior engineers choose their own methods (laissez-faire).",
+            "A sales manager pays bonuses for exceeding targets (transactional).",
+            "A start-up founder inspires staff with an energetic vision (charismatic).",
+            "A supervisor gives detailed instructions to a new intern (autocratic).",
+            "A hospital manager consults nurses before changing shifts (democratic).",
+            "A firm delegates a project to experienced consultants (laissez-faire).",
+            "A factory penalises workers who miss quotas (transactional).",
+            "Sales collapse after the charismatic CEO resigns."
+        ]
+    },
+
+    {
+        topic: "Ordinary and Preference Shares",
+        keywords: ["ordinary shares", "preference shares", "preference share", "ordinary share", "cumulative", "redeemable", "convertible", "participating", "bonus shares", "founders shares", "shareholder rights"],
+        relatedKeywords: ["dividend", "jse", "voting", "liquidation", "share"],
+        information: "Ordinary shares carry voting rights and variable dividends; preference shares usually pay a fixed dividend and have a preferred claim on assets on liquidation.",
+        formulas: [],
+        rules: [
+            "Ordinary shareholders are paid last on liquidation.",
+            "Preference shareholders are paid before ordinary shareholders.",
+            "Shares of listed companies trade on the JSE."
+        ],
+        parts: {
+            rights: ["ORDINARY: vote at the AGM; attend the AGM; receive interim and annual reports; claim assets after creditors and preference shareholders.", "PREFERENCE: fixed dividend even when profits are low; paid first; preferred claim on assets; voting only in special circumstances; cumulative holders receive outstanding dividends."],
+            differences: ["Ordinary dividends vary with profit; preference dividends are fixed.", "Ordinary holders are paid last on liquidation; preference holders have a preferred claim.", "Ordinary shareholders can vote at the AGM; preference voting rights are restricted.", "Ordinary shares carry higher risk and higher potential return."],
+            types: ["CUMULATIVE: unpaid dividends from previous years are paid later.", "NON-CUMULATIVE: missed dividends are lost.", "PARTICIPATING: share in surplus profits.", "REDEEMABLE: company may buy them back on a set date.", "CONVERTIBLE: can be converted into ordinary shares.", "NON-PARTICIPATING, NON-REDEEMABLE and NON-CONVERTIBLE are the opposites."],
+            advantages: ["Shares can be freely traded on the JSE.", "Limited liability.", "Voting rights (ordinary).", "Protection against inflation.", "Return linked to company performance."],
+            disadvantages: ["Dividends may be low or zero when profits are low.", "No legal obligation to pay dividends.", "High risk: the investment may be lost on liquidation.", "Share prices are volatile."]
+        },
+        examples: [
+            "An ordinary shareholder votes on directors at the AGM.",
+            "A company pays no ordinary dividend after a poor year.",
+            "A 6% preference share pays R6 per R100 share regardless of profit.",
+            "Cumulative preference holders receive last year's missed dividend.",
+            "A company buys back redeemable preference shares in 2030.",
+            "Convertible preference shares turn into 1 000 ordinary shares.",
+            "On liquidation, preference holders are paid before ordinary holders.",
+            "Bonus shares are issued to shareholders instead of a cash dividend.",
+            "Founders' shares are paid after all other shareholders.",
+            "A JSE-listed share drops 8% in a day, showing volatility."
+        ]
+    }
+
+];
+
+
+
+/* =========================================================
+   STEP A (continued) - PASTE right after the block above
+   Reads the question and returns ONLY the parts asked for.
+========================================================= */
+
+const bsPartMap = [
+    { key: "purpose", label: "Purpose", words: ["purpose", "aim", "objective", "why was", "why do"] },
+    { key: "styles", label: "The styles", words: ["what are the styles", "list the styles", "types of leadership", "leadership styles"] },
+    { key: "advantages", label: "Advantages (positives)", words: ["advantage", "positive", "benefit", "pros", "impact", "effective", "importance"] },
+    { key: "disadvantages", label: "Disadvantages (negatives)", words: ["disadvantage", "negative", "drawback", "cons", "impact", "effective", "problem"] },
+    { key: "discriminatory", label: "Discriminatory actions", words: ["discriminat"] },
+    { key: "penalties", label: "Penalties for non-compliance", words: ["penalt", "non-compliance", "noncompliance", "consequence", "fines"] },
+    { key: "comply", label: "Ways to comply", words: ["comply", "compliance", "ways to", "ways in", "recommend"] },
+    { key: "rights", label: "Rights", words: ["right"] },
+    { key: "provisions", label: "Provisions", words: ["provision", "hours", "overtime", "leave", "notice"] },
+    { key: "pillars", label: "The pillars", words: ["pillar", "scorecard"] },
+    { key: "setas", label: "Role and funding of SETAs", words: ["seta", "role", "function", "funding"] },
+    { key: "when", label: "When to use", words: ["situation", "when to", "when can", "when should"] },
+    { key: "differences", label: "Differences", words: ["difference", "distinguish", "differentiate", "compare", "versus", " vs "] },
+    { key: "types", label: "Types", words: ["types", "type of", "cumulative", "redeemable", "convertible", "participating"] }
+];
+
+
+function formatBusinessStudies(item, question) {
+    const text = normalizeText(question);
+    const parts = item.parts || {};
+
+    const wanted = bsPartMap.filter(p =>
+        parts[p.key] && p.words.some(w => text.includes(w))
+    );
+
+    let html = `<h2>${escapeHtml(item.topic)}</h2>`;
+
+    if (!wanted.length) {
+        // No specific part asked for: give the meaning and key points only
+        html += `<p>${escapeHtml(item.information)}</p>`;
+
+        if (item.rules && item.rules.length) {
+            html += `<h3>Key points</h3><ul>`;
+            item.rules.forEach(rule => { html += `<li>${escapeHtml(rule)}</li>`; });
+            html += `</ul>`;
+        }
+    } else {
+        wanted.forEach(p => {
+            html += `<h3>${escapeHtml(p.label)}</h3><ul>`;
+            parts[p.key].forEach(point => { html += `<li>${escapeHtml(point)}</li>`; });
+            html += `</ul>`;
+        });
+    }
+
+    // Always give at least 10 examples
+    const examples = (item.examples || []).slice(0, 10);
+    if (examples.length) {
+        html += `<h3>${examples.length} Examples</h3><ol>`;
+        examples.forEach(example => {
+            html += `<li style="margin-bottom:6px;">${escapeHtml(example)}</li>`;
+        });
+        html += `</ol>`;
+    }
+
+    if (!wanted.length) {
+        html += `<p><em>Tip: ask for the advantages, disadvantages, penalties, rights, discriminatory actions or ways to comply.</em></p>`;
+    }
+
+    return html;
+}
+
+
+
+/* =========================================================
+   STEP B - In subjectWords, add this entry after Mathematics
+   (put a comma after the Mathematics array's closing bracket)
+========================================================= */
+
+/*
+        "Business Studies": [
+            "business studies", "skills development", "sda", "seta", "setas", "learnership",
+            "labour relations", "lra", "ccma", "collective bargaining", "employment equity",
+            "affirmative action", "basic conditions", "bcea", "coida", "compensation fund",
+            "bbbee", "black economic", "fronting", "national credit act", "credit act", "debt review",
+            "consumer protection", "cooling off", "leadership", "democratic", "autocratic",
+            "laissez", "transactional", "charismatic", "ordinary shares", "preference shares",
+            "cumulative", "redeemable", "convertible"
+        ]
+*/
+
+
+/* =========================================================
+   STEP C - In detectSubject(), change the scores line to:
+========================================================= */
+
+/*
+        let scores = { Accounting: 0, Economics: 0, Mathematics: 0, "Business Studies": 0 };
+*/
+
+
+/* =========================================================
+   STEP D - Add ONE line in searchKnowledge() and getTopicList()
+   (below the Mathematics line in each function)
+========================================================= */
+
+/*
+        if (subject === "Business Studies") knowledge = businessStudiesKnowledge;
+*/
+
+
+/* =========================================================
+   STEP E - In generateAnswer(), directly BELOW this line:
+
+        if (wantsExamples) return formatExamplesOnly(best);
+
+   add:
+========================================================= */
+
+/*
+        if (subject === "Business Studies") return formatBusinessStudies(best, question);
+*/
+
+
+/* =========================================================
+   TRY THESE
+   - "What are the penalties for the BCEA?"
+   - "Advantages and disadvantages of the National Credit Act"
+   - "Rights of employers and employees in the LRA"
+   - "Difference between ordinary and preference shares"
+   - "Examples of autocratic leadership"
+========================================================= */
+/* =========================================================
+   BUSINESS STUDIES - BATCH 2 (12 more topics)
+   Requires business-studies-patch.js to be installed first.
+
+   STEP 1: Paste the block below DIRECTLY UNDER the closing "];"
+           of businessStudiesKnowledge.
+   STEP 2: In bsPartMap add this line:
+     { key: "steps", label: "Steps / procedure", words: ["step", "procedure", "process", "how to"] },
+   STEP 3: In subjectWords["Business Studies"] add these keywords:
+     "recruitment", "job analysis", "job description", "induction", "ethics", "professionalism",
+     "unfair advertising", "tax evasion", "swot", "pestle", "porter", "five forces", "business strategy",
+     "business strategies", "integration strategy", "csr", "csi", "social responsibility", "delphi",
+     "brainstorming", "nominal group", "force field", "tqm", "total quality", "pdca", "quality circle",
+     "insurance", "under-insurance", "average clause", "sole trader", "private company", "public company"
+========================================================= */
+
+businessStudiesKnowledge.push(
+
+    {
+        topic: "Recruitment and Selection",
+        keywords: ["recruitment", "selection", "job analysis", "job description", "job specification", "internal recruitment", "external recruitment", "interview", "screening", "shortlist"],
+        relatedKeywords: ["applicant", "cv", "vacancy", "hr", "employment contract"],
+        information: "Recruitment identifies vacancies and attracts suitable candidates; selection chooses the best candidate through screening, testing and interviews.",
+        formulas: [],
+        rules: ["Job analysis = job description + job specification.", "Internal recruitment uses existing staff; external uses outside sources.", "Selection ends with a written offer."],
+        parts: {
+            steps: ["Prepare a job analysis (description and specification).", "Decide on internal or external recruitment.", "Draft and place the advertisement.", "Screen applications against minimum requirements.", "Check references and shortlist.", "Test and interview shortlisted candidates.", "Make a written offer and inform unsuccessful applicants."],
+            differences: ["JOB DESCRIPTION: duties, responsibilities, working conditions.", "JOB SPECIFICATION: minimum qualifications, skills and experience needed."],
+            advantages: ["INTERNAL: cheaper, quicker, offers career paths, little induction needed.", "EXTERNAL: new ideas and skills, larger pool, helps meet BBBEE targets."],
+            disadvantages: ["INTERNAL: resentment, limited pool, no new ideas.", "EXTERNAL: expensive agency fees, slower, CVs may be unreliable."],
+            types: ["Internal sources: notice board, intranet, newsletter, referrals.", "External sources: newspapers, social media, agencies, walk-ins, head-hunting, universities."]
+        },
+        examples: [
+            "A shop promotes its best cashier to supervisor (internal).",
+            "A bank advertises a teller post on LinkedIn (external).",
+            "A job ad lists 'matric and two years' experience' (job specification).",
+            "A job ad lists 'duties: opening tills, cash-ups' (job description).",
+            "A firm uses a recruitment agency for an IT manager.",
+            "HR phones previous employers to verify a CV (reference check).",
+            "A company gives shortlisted applicants a typing test.",
+            "A hotel posts a vacancy on its staff notice board.",
+            "A panel asks every candidate the same core questions.",
+            "A written offer is sent to the successful candidate."
+        ]
+    },
+
+    {
+        topic: "Induction and Placement",
+        keywords: ["induction", "placement", "induction programme", "orientation", "new employees"],
+        relatedKeywords: ["training", "hr", "new employee", "psychometric"],
+        information: "Induction introduces new employees to the business, colleagues and rules; placement matches the employee's skills to a specific job.",
+        formulas: [],
+        rules: ["Induction reduces anxiety and speeds up productivity.", "Placement matches skills, personality and job requirements."],
+        parts: {
+            purpose: ["Introduce new staff to colleagues and managers.", "Explain safety rules and policies.", "Show the layout of the premises.", "Explain their role and the products or services.", "Reduce insecurity and answer questions."],
+            advantages: ["Settle in quickly and work effectively.", "Understand rules and safety regulations.", "Better morale and team spirit.", "Less need for later training.", "Realistic expectations on both sides."],
+            steps: ["Outline the employee's responsibilities and expectations.", "Compare the position's needs with the employee's competencies.", "Use psychometric tests to identify strengths and interests."]
+        },
+        examples: [
+            "A manager gives a new clerk a tour of the building.",
+            "A factory explains emergency exits on day one.",
+            "New staff meet the CEO and hear the company vision.",
+            "HR explains leave and grievance procedures.",
+            "A supermarket pairs a new packer with a mentor.",
+            "A hospital explains its dress code and ethics policy.",
+            "A trainee is shown how the payroll system works.",
+            "A new hire is placed in accounts because of his BCom.",
+            "Psychometric tests place a talkative applicant in sales.",
+            "A firm explains its CSR projects to new employees."
+        ]
+    },
+
+    {
+        topic: "Business Ethics and Professionalism",
+        keywords: ["ethics", "ethical behaviour", "unethical", "professionalism", "professional behaviour", "king code", "unfair advertising", "tax evasion", "sexual harassment", "abuse of work time", "rural pricing", "corporate governance"],
+        relatedKeywords: ["transparency", "accountability", "responsibility", "code of conduct", "fraud"],
+        information: "Ethics is about what society regards as morally right in business; professionalism is the expected standard of conduct and competence at work.",
+        formulas: [],
+        rules: ["King Code principles: transparency, accountability, responsibility.", "Ethics = right and wrong; professionalism = standards of conduct."],
+        parts: {
+            differences: ["ETHICS: principles of right and wrong accepted by society.", "PROFESSIONALISM: standards of conduct and competence expected in a profession or business."],
+            types: ["Unethical: unfair advertising, high rural prices, tax evasion, bribery.", "Unprofessional: sexual harassment, misusing business funds, abusing work time."],
+            comply: ["Pay fair wages and comply with the law.", "Treat employees equally.", "Submit tax returns honestly.", "Have a code of conduct and fraud policy.", "Charge fair prices in rural areas."],
+            purpose: ["Transparency: open decisions and accurate reports.", "Accountability: audits and reports to shareholders at the AGM.", "Responsibility: protect communities and the environment."]
+        },
+        examples: [
+            "A shop uses bait-and-switch advertising (unethical).",
+            "A spaza shop inflates prices in a remote village.",
+            "A company hides income from SARS (tax evasion).",
+            "A manager promises promotion for sexual favours.",
+            "An employee downloads movies on the office server.",
+            "Staff take two-hour lunches regularly (abuse of work time).",
+            "A firm publishes accurate audited reports (transparency).",
+            "A company cleans up its waste (responsibility).",
+            "A supplier is paid fair wages and no child labour is used.",
+            "An accountant keeps a client's information confidential."
+        ]
+    },
+
+    {
+        topic: "SWOT Analysis",
+        keywords: ["swot", "swot analysis", "strengths", "weaknesses", "opportunities", "threats"],
+        relatedKeywords: ["internal", "external", "environment", "scanning"],
+        information: "SWOT analyses a business's internal Strengths and Weaknesses and external Opportunities and Threats.",
+        formulas: [],
+        rules: ["Strengths and weaknesses are internal.", "Opportunities and threats are external.", "Quote the scenario when identifying each."],
+        parts: {
+            types: ["STRENGTHS: skilled staff, strong brand, sufficient capital.", "WEAKNESSES: high debt, high staff turnover, weak brand.", "OPPORTUNITIES: market growth, new technology, competitors closing down.", "THREATS: rising fuel prices, intense competition, crime, currency swings."]
+        },
+        examples: [
+            "Qualified sound engineers are a strength.",
+            "Insufficient capital for large events is a weakness.",
+            "Competitors closing down is an opportunity.",
+            "Operating in a high-crime area is a threat.",
+            "A loyal customer base is a strength.",
+            "High employee turnover is a weakness.",
+            "Growth in online shopping is an opportunity.",
+            "Increasing fuel prices are a threat.",
+            "A strong brand portfolio is a strength.",
+            "New government incentives for the industry are an opportunity."
+        ]
+    },
+
+    {
+        topic: "PESTLE Analysis",
+        keywords: ["pestle", "pestle analysis", "political", "economic factors", "social factors", "technological", "legal factors", "environmental factors", "macro environment"],
+        relatedKeywords: ["challenge", "recommendation", "business environment"],
+        information: "PESTLE analyses the macro environment: Political, Economic, Social, Technological, Legal and Environmental factors.",
+        formulas: [],
+        rules: ["Name the factor, identify the challenge, then recommend how to deal with it."],
+        parts: {
+            types: ["POLITICAL: government policies and trade agreements.", "ECONOMIC: inflation, interest rates, exchange rates.", "SOCIAL: income levels and language.", "TECHNOLOGICAL: new equipment and e-commerce.", "LEGAL: CPA, BCEA, licences and patents.", "ENVIRONMENTAL: waste disposal and packaging."],
+            comply: ["Political: research policies and lobby.", "Economic: borrow when rates are favourable.", "Social: sell affordable products and learn local languages.", "Technological: train staff and research equipment.", "Legal: comply with all Acts and budget for licences.", "Environmental: label products and recycle."]
+        },
+        examples: [
+            "A new import law affects a pharmacy (political).",
+            "Higher interest rates raise loan repayments (economic).",
+            "Customers cannot afford premium products (social).",
+            "Staff lack skills for new machines (technological).",
+            "The CPA forces a shop to refund faulty goods (legal).",
+            "A factory's packaging is not recyclable (environmental).",
+            "A weaker rand raises the cost of imported parts.",
+            "A firm learns isiZulu to serve customers.",
+            "A restaurant adds online ordering.",
+            "A firm budgets for trademark registration costs."
+        ]
+    },
+
+    {
+        topic: "Porter's Five Forces",
+        keywords: ["porter", "porters five forces", "five forces", "power of suppliers", "power of buyers", "competitive rivalry", "threat of substitutes", "new entrants"],
+        relatedKeywords: ["market", "competitors", "industry analysis"],
+        information: "Porter's Five Forces analyses a business's position in its market: supplier power, buyer power, competitive rivalry, threat of substitutes and threat of new entrants.",
+        formulas: [],
+        rules: ["It analyses the market position; recommendations are not required."],
+        parts: {
+            types: ["Power of suppliers: few suppliers means they dictate prices.", "Power of buyers: bulk buyers bargain prices down.", "Competitive rivalry: many competitors reduce power.", "Threat of substitutes: different products meeting the same need.", "Threat of new entrants: low barriers let new businesses in easily."]
+        },
+        examples: [
+            "Only one supplier of flour can raise prices (suppliers).",
+            "A supermarket chain demands discounts (buyers).",
+            "Five bakeries in one street compete fiercely (rivalry).",
+            "Tea drinkers switching to coffee (substitutes).",
+            "A new taxi app enters the market (new entrants).",
+            "Buyers can easily switch brands at low cost.",
+            "A unique patented product lowers rivalry.",
+            "High start-up capital blocks new entrants.",
+            "Many suppliers give the business more control.",
+            "Highly profitable industries attract new competitors."
+        ]
+    },
+
+    {
+        topic: "Business Strategies",
+        keywords: ["business strategy", "business strategies", "integration strategy", "forward integration", "backward integration", "horizontal integration", "market penetration", "market development", "product development", "diversification", "retrenchment", "divestiture", "liquidation", "strategy evaluation"],
+        relatedKeywords: ["growth", "defensive", "intensive", "expansion"],
+        information: "A strategy is a long-term plan to achieve a goal. Types include integration, intensive, diversification and defensive strategies.",
+        formulas: [],
+        rules: ["Steps: analyse, formulate, implement, evaluate."],
+        parts: {
+            types: ["INTEGRATION: forward (buy distributors), backward (buy suppliers), horizontal (buy competitors).", "INTENSIVE: market penetration, market development, product development.", "DIVERSIFICATION: concentric, horizontal, conglomerate.", "DEFENSIVE: retrenchment, divestiture, liquidation."],
+            steps: ["Analyse with SWOT, PESTLE and Porter.", "Formulate strategies and objectives.", "Implement with an action plan.", "Evaluate: compare expected and actual performance.", "Take corrective action and set follow-up dates."],
+            advantages: ["Larger market share and sales.", "Reduced risk through variety of products.", "Better brand image.", "More control over prices and supply."]
+        },
+        examples: [
+            "A farm buys a chain of shops (forward integration).",
+            "A bakery buys its wheat supplier (backward integration).",
+            "One retailer takes over a rival (horizontal integration).",
+            "A shop cuts prices to gain market share (market penetration).",
+            "A local brand opens in Botswana (market development).",
+            "A phone maker launches a new model (product development).",
+            "A dairy adds yoghurt to its range (concentric diversification).",
+            "A mine buys a hotel chain (conglomerate diversification).",
+            "A firm sells an unprofitable division (divestiture).",
+            "A struggling company sells all assets to pay creditors (liquidation)."
+        ]
+    },
+
+    {
+        topic: "CSR and CSI",
+        keywords: ["csr", "csi", "corporate social responsibility", "corporate social investment", "social responsibility", "triple bottom line", "socio-economic", "hiv", "poverty", "unemployment"],
+        relatedKeywords: ["community", "environment", "wellbeing", "sustainability"],
+        information: "CSR is a business's ongoing commitment to behave ethically; CSI is money and resources invested to uplift communities, often as external projects.",
+        formulas: [],
+        rules: ["Triple bottom line: profit, people, planet.", "CSI projects are not for increasing profit."],
+        parts: {
+            differences: ["CSR: changes business practices, linked to image and profit.", "CSI: commits money to uplift communities, external and developmental."],
+            advantages: ["Better image and customer loyalty.", "Tax advantages.", "Attracts skilled staff and investors.", "Community goodwill."],
+            disadvantages: ["Costs reduce profits and dividends.", "Difficult to measure results.", "Distracts from core business.", "Communities may become dependent."],
+            comply: ["HIV/AIDS: counselling, ARV programmes, awareness workshops.", "Unemployment: learnerships, bursaries, entrepreneurship programmes.", "Poverty: food parcels, support for SMEs."]
+        },
+        examples: [
+            "A mine builds a school for the local village (CSI).",
+            "A bank offers bursaries to matriculants.",
+            "A retailer donates food parcels to an NGO.",
+            "A firm runs an HIV workplace clinic.",
+            "A factory recycles its packaging (planet).",
+            "A firm trains unemployed youths in sewing.",
+            "A company pays fair wages and offers childcare (people).",
+            "A brewery funds a community sports field.",
+            "A firm gives staff paid time for volunteering.",
+            "A manufacturer offers employees a subsidised meal."
+        ]
+    },
+
+    {
+        topic: "Problem-Solving Techniques",
+        keywords: ["problem solving", "problem-solving", "delphi technique", "brainstorming", "nominal group technique", "force field analysis", "decision making", "creative thinking"],
+        relatedKeywords: ["solution", "experts", "team", "ideas"],
+        information: "Problem-solving techniques help businesses generate and evaluate solutions: Delphi, force field analysis, brainstorming and nominal group technique.",
+        formulas: [],
+        rules: ["Steps: identify, define, generate solutions, choose, plan, implement, evaluate."],
+        parts: {
+            steps: ["Identify and define the problem.", "Identify alternative solutions.", "Evaluate and choose the best solution.", "Develop an action plan.", "Implement the plan.", "Monitor and evaluate."],
+            types: ["DELPHI: questionnaires to experts in rounds.", "FORCE FIELD: list driving and restraining forces and score them 1-5.", "BRAINSTORMING: free ideas, no criticism.", "NOMINAL GROUP: silent idea writing, then anonymous voting."],
+            advantages: ["Delphi: experts give honest ideas without meeting.", "Force field: shows driving and restraining forces.", "Brainstorming: many ideas and motivated staff.", "Nominal group: nobody dominates and voting is anonymous."],
+            disadvantages: ["Delphi: expensive and slow.", "Force field: time-consuming.", "Brainstorming: dominant members and groupthink.", "Nominal group: limits discussion and needs preparation."]
+        },
+        examples: [
+            "A paint firm mails questionnaires to three experts (Delphi).",
+            "A team lists forces for and against a new branch (force field).",
+            "Staff shout out ideas to cut waste (brainstorming).",
+            "Each employee writes ideas silently, then votes (nominal group).",
+            "A manager defines 'late deliveries' before choosing solutions.",
+            "A team scores restraining forces from 1 to 5.",
+            "A panel returns a second questionnaire after feedback.",
+            "Ideas are captured on a flip chart without judgement.",
+            "A firm evaluates results a month after implementing.",
+            "Voting slips are collected and totalled anonymously."
+        ]
+    },
+
+    {
+        topic: "Total Quality Management (TQM)",
+        keywords: ["tqm", "total quality management", "quality control", "quality assurance", "quality circles", "quality circle", "pdca", "continuous improvement", "quality management"],
+        relatedKeywords: ["quality", "customer satisfaction", "iso 9001", "sabs", "standards"],
+        information: "TQM is an approach where every employee is responsible for quality, aiming at continuous improvement and total customer satisfaction.",
+        formulas: [],
+        rules: ["Quality control inspects the final product; quality assurance builds quality into every stage.", "PDCA = Plan, Do, Check, Act."],
+        parts: {
+            types: ["TQM elements: continuous skills development, total client satisfaction, continuous improvement, adequate financing, monitoring and evaluation."],
+            differences: ["QUALITY CONTROL: inspects the final product.", "QUALITY ASSURANCE: checks during the process to get it right the first time."],
+            steps: ["PLAN: identify the problem and plan improvements.", "DO: implement on a small scale.", "CHECK: analyse the results with data.", "ACT: roll out or revise."],
+            advantages: ["Higher customer satisfaction.", "Fewer defects and returns.", "Efficient use of time and resources.", "Competitive advantage and better image."],
+            purpose: ["Quality circles solve quality problems.", "They improve morale and communication.", "They reduce costs and duplication."]
+        },
+        examples: [
+            "A supervisor inspects finished shoes (quality control).",
+            "Checks at every stage of a car assembly line (quality assurance).",
+            "A team trials a new process on one line first (Do).",
+            "Workers meet weekly to fix defects (quality circle).",
+            "A firm gets SABS approval.",
+            "Staff attend regular training (skills development).",
+            "A firm surveys customers after purchase.",
+            "Equipment is maintained regularly to avoid breakdowns.",
+            "Defect rates are compared with targets (Check).",
+            "Poor TQM leads to returns and a damaged reputation."
+        ]
+    },
+
+    {
+        topic: "Insurance and Assurance",
+        keywords: ["insurance", "assurance", "under-insurance", "underinsurance", "over-insurance", "average clause", "reinstatement", "indemnity", "utmost good faith", "insurable interest", "uif", "raf", "rabs", "compulsory insurance"],
+        relatedKeywords: ["premium", "insurer", "insured", "risk", "claim"],
+        information: "Insurance covers a possible loss in exchange for a premium; assurance covers an event that is certain, such as death.",
+        formulas: ["Average clause: (Amount insured ÷ Market value) × Damages"],
+        rules: ["Average clause applies to under-insurance.", "Reinstatement applies to over-insurance.", "UIF, RAF/RABS and COIDA are compulsory."],
+        parts: {
+            differences: ["INSURANCE: principle of indemnity, short term, covers an event that may occur.", "ASSURANCE: principle of security, long term, event is certain but timing is not.", "COMPULSORY: required by law (UIF, RAF, COIDA). NON-COMPULSORY: voluntary (theft, fire, life)."],
+            types: ["PRINCIPLES: indemnity, security/certainty, utmost good faith, insurable interest.", "COMPULSORY: UIF, RAF/RABS, COIDA."],
+            advantages: ["Transfers risk to the insurer.", "Covers theft, fire and natural disasters.", "Protects against dishonest employees.", "Covers replacement of expensive equipment."]
+        },
+        examples: [
+            "House worth R1m insured for R800 000; damage R30 000 pays R24 000.",
+            "A shop is insured against fire and theft.",
+            "A life policy pays the family when the breadwinner dies.",
+            "Both employer and employee pay 1% of salary to UIF.",
+            "A driver injured in a crash claims from the RAF.",
+            "A worker hurt on duty claims from the Compensation Fund.",
+            "A property insured for R300 000 but worth R200 000 is over-insured.",
+            "A client hides previous claims, breaking utmost good faith.",
+            "A tenant with no financial interest cannot insure the building.",
+            "The insurer rebuilds the property instead of paying cash (reinstatement)."
+        ]
+    },
+
+    {
+        topic: "Forms of Ownership",
+        keywords: ["forms of ownership", "sole trader", "sole proprietor", "partnership", "close corporation", "private company", "public company", "personal liability company", "state owned company", "non-profit company", "cooperative", "limited liability", "unlimited liability"],
+        relatedKeywords: ["directors", "shareholders", "moi", "prospectus", "continuity"],
+        information: "The form of ownership determines liability, tax, capital, management and legal requirements, and so influences a business's success or failure.",
+        formulas: [],
+        rules: ["Sole traders and partners have unlimited liability.", "Companies have limited liability and continuity."],
+        parts: {
+            types: ["SOLE TRADER: one owner, unlimited liability.", "PARTNERSHIP: 2+ partners, written agreement, unlimited liability.", "PRIVATE COMPANY: (Pty) Ltd, cannot sell shares to the public.", "PUBLIC COMPANY: Ltd, sells shares on the JSE, needs 3 directors.", "PERSONAL LIABILITY COMPANY: Inc, directors personally liable.", "STATE-OWNED COMPANY: SOC Ltd.", "NON-PROFIT COMPANY: NPC, not for gain.", "CO-OPERATIVE: min 5 members, one vote each."],
+            advantages: ["Sole trader: all decisions and profit belong to the owner.", "Partnership: shared skills and workload.", "Company: limited liability and easier capital raising."],
+            disadvantages: ["Sole trader: unlimited liability and limited capital.", "Partnership: conflict and joint liability.", "Company: costly, complicated to form and double taxation."],
+            differences: ["PRIVATE: no public share sales, name ends (Pty) Ltd, audit optional.", "PUBLIC: shares on the JSE, name ends Ltd, audit and prospectus required."]
+        },
+        examples: [
+            "A hairdresser working alone is a sole trader.",
+            "Two friends open a restaurant with a partnership agreement.",
+            "A family firm named 'Dlamini (Pty) Ltd' is a private company.",
+            "Shoprite Holdings Ltd is a public company on the JSE.",
+            "Eskom is a state-owned company.",
+            "A law firm named 'Smith Inc' is a personal liability company.",
+            "A charity registered as an NPC gets tax exemption.",
+            "Five farmers form a co-operative to share equipment.",
+            "A sole trader's house may be sold to pay business debts.",
+            "A shareholder loses only what he invested in the shares."
+        ]
+    }
+
+);
