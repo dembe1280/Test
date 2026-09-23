@@ -1,0 +1,4616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="manifest" href="manifest.json">
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="icon.PNG"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="icon.PNG"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="default"
+    >
+
+    <meta
+        name="apple-mobile-web-app-title"
+        content="Mastercommerce"
+    >
+
+    <meta
+        name="mobile-web-app-capable"
+        content="yes"
+    >
+
+    <title>Mastercommerce</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="background-white font-medium">
+
+<div id="app">
+
+
+    <!-- ==========================================
+         SIDEBAR
+    =========================================== -->
+
+    <aside
+        id="sidebar"
+        class="sidebar"
+    >
+
+        <div class="sidebar-top">
+
+            <div class="sidebar-logo">
+                M
+            </div>
+
+            <button
+                id="closeSidebar"
+                class="icon-button"
+                aria-label="Close menu"
+            >
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M6 6L18 18M18 6L6 18"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    />
+                </svg>
+            </button>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <!-- HOME -->
+
+            <button
+                id="homeButton"
+                class="nav-item active"
+            >
+
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M3 10.5L12 3L21 10.5V20H14.5V14H9.5V20H3V10.5Z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+
+                <span>Home</span>
+
+            </button>
+
+
+            <!-- CALENDAR -->
+
+            <button
+                id="calendarButton"
+                class="nav-item"
+            >
+
+                <svg viewBox="0 0 24 24" fill="none">
+
+                    <rect
+                        x="3"
+                        y="5"
+                        width="18"
+                        height="16"
+                        rx="2"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+
+                    <path
+                        d="M7 3V7M17 3V7M3 10H21"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                </svg>
+
+                <span>Calendar</span>
+
+            </button>
+
+
+            <!-- SCIENTIFIC CALCULATOR -->
+
+            <button
+                id="scientificButton"
+                class="nav-item"
+            >
+
+                <svg viewBox="0 0 24 24" fill="none">
+
+                    <rect
+                        x="4"
+                        y="3"
+                        width="16"
+                        height="18"
+                        rx="2"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+
+                    <path
+                        d="M7 7H17"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                    <circle cx="8" cy="12" r="1" fill="currentColor"/>
+                    <circle cx="12" cy="12" r="1" fill="currentColor"/>
+                    <circle cx="16" cy="12" r="1" fill="currentColor"/>
+                    <circle cx="8" cy="16" r="1" fill="currentColor"/>
+                    <circle cx="12" cy="16" r="1" fill="currentColor"/>
+                    <circle cx="16" cy="16" r="1" fill="currentColor"/>
+
+                </svg>
+
+                <span>Scientific Calculator</span>
+
+            </button>
+
+
+            <!-- FINANCIAL CALCULATOR -->
+
+            <button
+                id="financialButton"
+                class="nav-item"
+            >
+
+                <svg viewBox="0 0 24 24" fill="none">
+
+                    <path
+                        d="M4 19V5M4 19H20"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M7 15L11 11L14 13L19 7"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+
+                </svg>
+
+                <span>Financial Calculator</span>
+
+            </button>
+
+
+            <!-- ABOUT -->
+
+            <button
+                id="aboutButton"
+                class="nav-item"
+            >
+
+                <svg viewBox="0 0 24 24" fill="none">
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="9"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+
+                    <path
+                        d="M12 10.5V16"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                    <circle
+                        cx="12"
+                        cy="7.5"
+                        r="1"
+                        fill="currentColor"
+                    />
+
+                </svg>
+
+                <span>About</span>
+
+            </button>
+
+
+            <!-- SETTINGS -->
+
+            <button
+                id="settingsButton"
+                class="nav-item"
+            >
+
+                <svg viewBox="0 0 24 24" fill="none">
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="3.2"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    />
+
+                    <path
+                        d="M19.4 15A1.7 1.7 0 0 0 19.7 16.8L19.8 17L17 19.8L16.8 19.7A1.7 1.7 0 0 0 15 19.4A1.7 1.7 0 0 0 13.8 21V21H10.2V20.8A1.7 1.7 0 0 0 9 19.4A1.7 1.7 0 0 0 7.2 19.7L7 19.8L4.2 17L4.3 16.8A1.7 1.7 0 0 0 4.6 15A1.7 1.7 0 0 0 3 13.8H3V10.2H3.2A1.7 1.7 0 0 0 4.6 9A1.7 1.7 0 0 0 4.3 7.2L4.2 7L7 4.2L7.2 4.3A1.7 1.7 0 0 0 9 4.6A1.7 1.7 0 0 0 10.2 3V3H13.8V3.2A1.7 1.7 0 0 0 15 4.6A1.7 1.7 0 0 0 16.8 4.3L17 4.2L19.8 7L19.7 7.2A1.7 1.7 0 0 0 19.4 9A1.7 1.7 0 0 0 21 10.2V13.8A1.7 1.7 0 0 0 19.4 15Z"
+                        stroke="currentColor"
+                        stroke-width="1.3"
+                        stroke-linejoin="round"
+                    />
+
+                </svg>
+
+                <span>Settings</span>
+
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="newChatButton"
+                class="sidebar-action"
+            >
+                New chat
+            </button>
+
+            <button
+                id="clearChatButton"
+                class="sidebar-action"
+            >
+                Clear chat
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <div
+        id="sidebarOverlay"
+        class="sidebar-overlay"
+    ></div>
+
+
+    <!-- ==========================================
+         MAIN
+    =========================================== -->
+
+    <main class="main">
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div class="header-left">
+
+                <div class="brand-mark">
+                    M
+                </div>
+
+                <div class="brand-name">
+                    Mastercommerce
+                </div>
+
+            </div>
+
+            <button
+                id="menuButton"
+                class="menu-button"
+                aria-label="Open menu"
+            >
+
+                <svg viewBox="0 0 24 24" fill="none">
+
+                    <path
+                        d="M5 7H19M5 12H19M5 17H19"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+
+                </svg>
+
+            </button>
+
+        </header>
+
+
+        <!-- ==========================================
+             HOME / CHAT
+        =========================================== -->
+
+        <section
+            id="chatArea"
+            class="chat-area"
+        >
+
+            <div
+                id="welcomeScreen"
+                class="welcome-screen"
+            >
+
+                <div class="welcome-content">
+
+                    <div class="welcome-logo">
+                        M
+                    </div>
+
+                    <h1>
+                        What would you like to learn?
+                    </h1>
+
+                    <svg
+                        class="ink-underline"
+                        viewBox="0 0 260 14"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M4 8.5C40 3 80 3 100 8C120 13 140 3 160 6C180 9 200 3 224 7C238 9.5 248 6 256 8"
+                            stroke="url(#underlineGradient)"
+                            stroke-width="3"
+                            stroke-linecap="round"
+                        />
+
+                        <defs>
+
+                            <linearGradient
+                                id="underlineGradient"
+                                x1="0"
+                                y1="0"
+                                x2="260"
+                                y2="0"
+                            >
+
+                                <stop
+                                    offset="0%"
+                                    stop-color="var(--acc-accounting)"
+                                />
+
+                                <stop
+                                    offset="50%"
+                                    stop-color="var(--acc-economics)"
+                                />
+
+                                <stop
+                                    offset="100%"
+                                    stop-color="var(--acc-maths)"
+                                />
+
+                            </linearGradient>
+
+                        </defs>
+
+                    </svg>
+
+                    <p>
+                        Ask a question about Accounting,
+                        Economics or Mathematics.
+                    </p>
+
+
+                    <div class="subject-cards">
+
+                        <div class="subject-card">
+
+                            <div class="subject-letter">
+                                A
+                            </div>
+
+                            <div>
+
+                                <h3>Accounting</h3>
+
+                                <p>
+                                    Financial accounting,
+                                    management accounting,
+                                    tax, auditing, IFRS
+                                    and calculations.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="subject-card">
+
+                            <div class="subject-letter">
+                                E
+                            </div>
+
+                            <div>
+
+                                <h3>Economics</h3>
+
+                                <p>
+                                    Microeconomics,
+                                    macroeconomics,
+                                    policies, markets,
+                                    essays and calculations.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="subject-card">
+
+                            <div class="subject-letter">
+                                M
+                            </div>
+
+                            <div>
+
+                                <h3>Mathematics</h3>
+
+                                <p>
+                                    Algebra, functions,
+                                    statistics, probability,
+                                    calculus and problem solving.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             CALENDAR VIEW
+        =========================================== -->
+
+        <section
+            id="calendarView"
+            class="tool-view"
+            style="display:none;"
+        >
+
+            <div class="tool-container">
+
+                <div class="tool-header">
+
+                    <h1>Calendar</h1>
+
+                    <p>
+                        Plan your classes, tests, assignments,
+                        exams and important study dates.
+                    </p>
+
+                </div>
+
+
+                <div class="tool-card">
+
+                    <div class="calendar-toolbar">
+
+                        <button
+                            id="calendarToday"
+                            class="tool-button secondary"
+                        >
+                            Today
+                        </button>
+
+                        <div
+                            id="calendarTitle"
+                            class="calendar-title"
+                        ></div>
+
+                        <div class="calendar-nav">
+
+                            <button id="previousMonth">
+                                ‹
+                            </button>
+
+                            <button id="nextMonth">
+                                ›
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="calendar-weekdays">
+
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+
+                    </div>
+
+
+                    <div
+                        id="calendarGrid"
+                        class="calendar-grid"
+                    ></div>
+
+
+                    <div class="calendar-events">
+
+                        <h3>
+                            Events for
+                            <span id="selectedDateLabel">
+                                today
+                            </span>
+                        </h3>
+
+                        <div id="eventList"></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="tool-card">
+
+                    <h2>Add Event</h2>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>
+                                Date
+                            </label>
+
+                            <input
+                                id="eventDate"
+                                class="tool-input"
+                                type="date"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Event title
+                            </label>
+
+                            <input
+                                id="eventTitle"
+                                class="tool-input"
+                                type="text"
+                                placeholder="e.g. Accounting test"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Notes
+                        </label>
+
+                        <input
+                            id="eventNote"
+                            class="tool-input"
+                            type="text"
+                            placeholder="Optional notes"
+                        >
+
+                    </div>
+
+                    <br>
+
+                    <button
+                        id="addEventButton"
+                        class="tool-button"
+                    >
+                        Add Event
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             SCIENTIFIC CALCULATOR
+        =========================================== -->
+
+        <section
+            id="scientificView"
+            class="tool-view"
+            style="display:none;"
+        >
+
+            <div class="calculator-shell">
+
+                <div class="tool-header">
+
+                    <h1>Scientific Calculator</h1>
+
+                    <p>
+                        Advanced calculator for mathematics,
+                        science, statistics and university
+                        calculations.
+                    </p>
+
+                </div>
+
+
+                <div class="calc-display">
+
+                    <div
+                        id="calcExpression"
+                        class="calc-expression"
+                    ></div>
+
+                    <div
+                        id="calcResult"
+                        class="calc-result"
+                    >
+                        0
+                    </div>
+
+                    <div class="calc-status">
+
+                        <span id="angleModeLabel">
+                            DEG
+                        </span>
+
+                        <span id="memoryLabel">
+                            M: 0
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="calc-memory">
+
+                    <button data-memory="MC">
+                        MC
+                    </button>
+
+                    <button data-memory="MR">
+                        MR
+                    </button>
+
+                    <button data-memory="M+">
+                        M+
+                    </button>
+
+                    <button data-memory="M-">
+                        M−
+                    </button>
+
+                    <button id="angleButton">
+                        DEG
+                    </button>
+
+                </div>
+
+
+                <div class="calc-keypad">
+
+                    <button class="calc-key function" data-value="sin(">sin</button>
+                    <button class="calc-key function" data-value="cos(">cos</button>
+                    <button class="calc-key function" data-value="tan(">tan</button>
+                    <button class="calc-key function" data-value="asin(">sin⁻¹</button>
+                    <button class="calc-key function" data-value="acos(">cos⁻¹</button>
+                    <button class="calc-key function" data-value="atan(">tan⁻¹</button>
+
+                    <button class="calc-key function" data-value="log(">log</button>
+                    <button class="calc-key function" data-value="ln(">ln</button>
+                    <button class="calc-key function" data-value="sqrt(">√</button>
+                    <button class="calc-key function" data-value="cbrt(">∛</button>
+                    <button class="calc-key function" data-value="^2">x²</button>
+                    <button class="calc-key function" data-value="^">xʸ</button>
+
+                    <button class="calc-key function" data-value="(">(</button>
+                    <button class="calc-key function" data-value=")">)</button>
+                    <button class="calc-key function" data-value="pi">π</button>
+                    <button class="calc-key function" data-value="e">e</button>
+                    <button class="calc-key function" data-value="!">x!</button>
+                    <button class="calc-key function" data-value="%">%</button>
+
+                    <button class="calc-key" data-action="clear">AC</button>
+                    <button class="calc-key" data-action="delete">DEL</button>
+                    <button class="calc-key operator" data-value="/">÷</button>
+                    <button class="calc-key operator" data-value="*">×</button>
+                    <button class="calc-key operator" data-value="-">−</button>
+                    <button class="calc-key operator" data-value="+">+</button>
+
+                    <button class="calc-key" data-value="7">7</button>
+                    <button class="calc-key" data-value="8">8</button>
+                    <button class="calc-key" data-value="9">9</button>
+                    <button class="calc-key" data-value=".">.</button>
+                    <button class="calc-key" data-value="Ans">Ans</button>
+                    <button class="calc-key equal" data-action="calculate">=</button>
+
+                    <button class="calc-key" data-value="4">4</button>
+                    <button class="calc-key" data-value="5">5</button>
+                    <button class="calc-key" data-value="6">6</button>
+                    <button class="calc-key" data-value="00">00</button>
+                    <button class="calc-key" data-value="1e">EXP</button>
+                    <button class="calc-key operator" data-value="+">+</button>
+
+                    <button class="calc-key" data-value="1">1</button>
+                    <button class="calc-key" data-value="2">2</button>
+                    <button class="calc-key" data-value="3">3</button>
+                    <button class="calc-key wide" data-value="0">0</button>
+                    <button class="calc-key" data-action="calculate">=</button>
+
+                </div>
+
+
+                <div class="tool-card calc-history">
+
+                    <h2>Calculation History</h2>
+
+                    <div id="calcHistory">
+                        <div class="empty-state">
+                            No calculations yet.
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <button
+                        id="clearCalcHistory"
+                        class="tool-button secondary"
+                    >
+                        Clear History
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             FINANCIAL CALCULATOR
+        =========================================== -->
+
+        <section
+            id="financialView"
+            class="tool-view"
+            style="display:none;"
+        >
+
+            <div class="tool-container">
+
+                <div class="tool-header">
+
+                    <h1>Financial Calculator</h1>
+
+                    <p>
+                        Calculate loans, compound interest,
+                        present value, future value, PMT,
+                        NPV, IRR, depreciation and investment
+                        returns.
+                    </p>
+
+                </div>
+
+
+                <div class="financial-tabs">
+
+                    <button
+                        class="financial-tab active"
+                        data-finance-tab="loan"
+                    >
+                        Loan
+                    </button>
+
+                    <button
+                        class="financial-tab"
+                        data-finance-tab="interest"
+                    >
+                        Interest
+                    </button>
+
+                    <button
+                        class="financial-tab"
+                        data-finance-tab="tvm"
+                    >
+                        TVM
+                    </button>
+
+                    <button
+                        class="financial-tab"
+                        data-finance-tab="npv"
+                    >
+                        NPV / IRR
+                    </button>
+
+                    <button
+                        class="financial-tab"
+                        data-finance-tab="margin"
+                    >
+                        Profit
+                    </button>
+
+                    <button
+                        class="financial-tab"
+                        data-finance-tab="depreciation"
+                    >
+                        Depreciation
+                    </button>
+
+                </div>
+
+
+                <!-- LOAN -->
+
+                <div
+                    id="finance-loan"
+                    class="tool-card finance-panel"
+                >
+
+                    <h2>Loan Calculator</h2>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Loan amount</label>
+
+                            <input
+                                id="loanAmount"
+                                class="tool-input"
+                                type="number"
+                                value="300000"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Annual interest rate (%)</label>
+
+                            <input
+                                id="loanRate"
+                                class="tool-input"
+                                type="number"
+                                value="10"
+                                step="0.01"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Term (years)</label>
+
+                            <input
+                                id="loanYears"
+                                class="tool-input"
+                                type="number"
+                                value="5"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Payments per year</label>
+
+                            <select
+                                id="loanFrequency"
+                                class="tool-select"
+                            >
+                                <option value="12">Monthly</option>
+                                <option value="4">Quarterly</option>
+                                <option value="2">Semi-annually</option>
+                                <option value="1">Annually</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="calculateLoan"
+                        class="tool-button"
+                    >
+                        Calculate Loan
+                    </button>
+
+
+                    <div
+                        id="loanResult"
+                        class="finance-result"
+                    >
+                        Enter your values and calculate.
+                    </div>
+
+                </div>
+
+
+                <!-- INTEREST -->
+
+                <div
+                    id="finance-interest"
+                    class="tool-card finance-panel"
+                    style="display:none;"
+                >
+
+                    <h2>Simple & Compound Interest</h2>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Principal</label>
+
+                            <input
+                                id="interestPrincipal"
+                                class="tool-input"
+                                type="number"
+                                value="10000"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Annual rate (%)</label>
+
+                            <input
+                                id="interestRate"
+                                class="tool-input"
+                                type="number"
+                                value="8"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Time (years)</label>
+
+                            <input
+                                id="interestYears"
+                                class="tool-input"
+                                type="number"
+                                value="5"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Compoundings per year</label>
+
+                            <input
+                                id="compoundFrequency"
+                                class="tool-input"
+                                type="number"
+                                value="12"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="calculateInterest"
+                        class="tool-button"
+                    >
+                        Calculate Interest
+                    </button>
+
+
+                    <div
+                        id="interestResult"
+                        class="finance-result"
+                    >
+                        Enter your values and calculate.
+                    </div>
+
+                </div>
+
+
+                <!-- TVM -->
+
+                <div
+                    id="finance-tvm"
+                    class="tool-card finance-panel"
+                    style="display:none;"
+                >
+
+                    <h2>Time Value of Money</h2>
+
+                    <p>
+                        Calculate present value, future value
+                        and periodic payments.
+                    </p>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Present Value</label>
+
+                            <input
+                                id="tvmPV"
+                                class="tool-input"
+                                type="number"
+                                value="0"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Payment</label>
+
+                            <input
+                                id="tvmPMT"
+                                class="tool-input"
+                                type="number"
+                                value="1000"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Future Value</label>
+
+                            <input
+                                id="tvmFV"
+                                class="tool-input"
+                                type="number"
+                                value="0"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Annual rate (%)</label>
+
+                            <input
+                                id="tvmRate"
+                                class="tool-input"
+                                type="number"
+                                value="10"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Number of periods</label>
+
+                            <input
+                                id="tvmPeriods"
+                                class="tool-input"
+                                type="number"
+                                value="10"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Payment frequency</label>
+
+                            <select
+                                id="tvmFrequency"
+                                class="tool-select"
+                            >
+                                <option value="12">Monthly</option>
+                                <option value="4">Quarterly</option>
+                                <option value="1">Annual</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="calculateTVM"
+                        class="tool-button"
+                    >
+                        Calculate TVM
+                    </button>
+
+
+                    <div
+                        id="tvmResult"
+                        class="finance-result"
+                    >
+                        The calculator will calculate
+                        the missing TVM value.
+                    </div>
+
+                </div>
+
+
+                <!-- NPV / IRR -->
+
+                <div
+                    id="finance-npv"
+                    class="tool-card finance-panel"
+                    style="display:none;"
+                >
+
+                    <h2>NPV & IRR</h2>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Initial investment</label>
+
+                            <input
+                                id="npvInitial"
+                                class="tool-input"
+                                type="number"
+                                value="100000"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Discount rate (%)</label>
+
+                            <input
+                                id="npvRate"
+                                class="tool-input"
+                                type="number"
+                                value="10"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Cash flows
+                        </label>
+
+                        <input
+                            id="npvFlows"
+                            class="tool-input"
+                            type="text"
+                            value="30000,35000,40000,45000"
+                            placeholder="30000,35000,40000"
+                        >
+
+                    </div>
+
+                    <br>
+
+                    <button
+                        id="calculateNPV"
+                        class="tool-button"
+                    >
+                        Calculate NPV & IRR
+                    </button>
+
+
+                    <div
+                        id="npvResult"
+                        class="finance-result"
+                    >
+                        Enter the cash flows.
+                    </div>
+
+                </div>
+
+
+                <!-- PROFIT -->
+
+                <div
+                    id="finance-margin"
+                    class="tool-card finance-panel"
+                    style="display:none;"
+                >
+
+                    <h2>Profit, Margin & Markup</h2>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Cost</label>
+
+                            <input
+                                id="profitCost"
+                                class="tool-input"
+                                type="number"
+                                value="500"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Selling price</label>
+
+                            <input
+                                id="profitSelling"
+                                class="tool-input"
+                                type="number"
+                                value="750"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="calculateProfit"
+                        class="tool-button"
+                    >
+                        Calculate Profit
+                    </button>
+
+
+                    <div
+                        id="profitResult"
+                        class="finance-result"
+                    >
+                        Enter cost and selling price.
+                    </div>
+
+                </div>
+
+
+                <!-- DEPRECIATION -->
+
+                <div
+                    id="finance-depreciation"
+                    class="tool-card finance-panel"
+                    style="display:none;"
+                >
+
+                    <h2>Depreciation</h2>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Cost of asset</label>
+
+                            <input
+                                id="depCost"
+                                class="tool-input"
+                                type="number"
+                                value="100000"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Residual value</label>
+
+                            <input
+                                id="depResidual"
+                                class="tool-input"
+                                type="number"
+                                value="10000"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Useful life (years)</label>
+
+                            <input
+                                id="depLife"
+                                class="tool-input"
+                                type="number"
+                                value="5"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Method</label>
+
+                            <select
+                                id="depMethod"
+                                class="tool-select"
+                            >
+                                <option value="straight">Straight-line</option>
+                                <option value="declining">Declining balance</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="calculateDepreciation"
+                        class="tool-button"
+                    >
+                        Calculate Depreciation
+                    </button>
+
+
+                    <div
+                        id="depResult"
+                        class="finance-result"
+                    >
+                        Enter asset information.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             INPUT AREA
+        =========================================== -->
+
+        <div
+            id="inputArea"
+            class="input-area"
+        >
+
+            <div
+                id="plusMenu"
+                class="plus-menu"
+            >
+
+                <button
+                    class="plus-option"
+                    data-feature="Upload files"
+                >
+                    Upload files
+                </button>
+
+                <button
+                    class="plus-option"
+                    data-feature="Add image"
+                >
+                    Add image
+                </button>
+
+                <button
+                    class="plus-option"
+                    data-feature="Study tools"
+                >
+                    Study tools
+                </button>
+
+            </div>
+
+
+            <div class="input-wrapper">
+
+                <button
+                    id="plusButton"
+                    class="input-plus"
+                    type="button"
+                >
+                    +
+                </button>
+
+
+                <textarea
+                    id="questionInput"
+                    placeholder="Ask Mastercommerce"
+                    rows="1"
+                    autocomplete="off"
+                ></textarea>
+
+
+                <button
+                    id="sendButton"
+                    class="send-button"
+                    type="button"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M5 12H18"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M13 7L18 12L13 17"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="featureToast"
+                class="feature-toast"
+            >
+                This feature is still under development.
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- ==========================================
+     ABOUT MODAL
+========================================== -->
+
+<div
+    id="aboutModal"
+    class="modal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            data-close="aboutModal"
+        >
+            ×
+        </button>
+
+        <div class="modal-logo">
+            M
+        </div>
+
+        <h2>
+            About Mastercommerce
+        </h2>
+
+        <p>
+            Mastercommerce is an educational
+            learning platform designed to help
+            learners study Accounting, Economics
+            and Mathematics.
+        </p>
+
+        <div class="developer-info">
+
+            <p>
+                <strong>Developer</strong><br>
+                PD | Web & App Development
+            </p>
+
+            <p>
+                <strong>Founder</strong><br>
+                Phungo Dembe Vusani
+            </p>
+
+            <p>
+                <strong>Location</strong><br>
+                Limpopo, South Africa
+            </p>
+
+            <p>
+                <strong>Education</strong><br>
+                University of Venda, BCom in Accounting
+            </p>
+
+            <p>
+                <strong>Product</strong><br>
+                Mastercommerce
+            </p>
+
+            <p>
+                <strong>Version</strong><br>
+                v1.0.0
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     SETTINGS MODAL
+========================================== -->
+
+<div
+    id="settingsModal"
+    class="modal"
+>
+
+    <div class="modal-box settings-box">
+
+        <button
+            class="modal-close"
+            data-close="settingsModal"
+        >
+            ×
+        </button>
+
+        <h2>
+            Settings
+        </h2>
+
+
+        <div class="setting-group">
+
+            <label>
+                Appearance
+            </label>
+
+            <div class="setting-buttons">
+
+                <button data-theme="light">
+                    Light
+                </button>
+
+                <button data-theme="dark">
+                    Dark
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting-group">
+
+            <label>
+                Background
+            </label>
+
+            <div class="setting-buttons">
+
+                <button data-background="white">White</button>
+                <button data-background="gray">Gray</button>
+                <button data-background="pearl">Pearl</button>
+                <button data-background="slate">Slate</button>
+
+                <button data-background="warm">Warm</button>
+                <button data-background="cream">Cream</button>
+                <button data-background="sand">Sand</button>
+                <button data-background="peach">Peach</button>
+
+                <button data-background="blue">Blue</button>
+                <button data-background="sky">Sky</button>
+                <button data-background="ice">Ice</button>
+
+                <button data-background="green">Green</button>
+                <button data-background="mint">Mint</button>
+
+                <button data-background="lavender">Lavender</button>
+                <button data-background="lilac">Lilac</button>
+
+                <button data-background="rose">Rose</button>
+                <button data-background="pink">Pink</button>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting-group">
+
+            <label>
+                Font size
+            </label>
+
+            <div class="setting-buttons">
+
+                <button data-font="small">
+                    Small
+                </button>
+
+                <button data-font="medium">
+                    Medium
+                </button>
+
+                <button data-font="large">
+                    Large
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting-group">
+
+            <label>
+                Motion
+            </label>
+
+            <div class="setting-buttons">
+
+                <button id="motionButton">
+                    Reduced motion
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="resetSettingsButton"
+            class="reset-settings"
+        >
+            Reset settings
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     JAVASCRIPT
+     EVERYTHING IS INSIDE INDEX.HTML
+========================================== -->
+
+<script>
+
+"use strict";
+
+
+/* ==========================================
+   BASIC HELPERS
+========================================== */
+
+const $ = (selector) => document.querySelector(selector);
+
+const $$ = (selector) => document.querySelectorAll(selector);
+
+const body = document.body;
+
+const sidebar = $("#sidebar");
+const overlay = $("#sidebarOverlay");
+
+const chatArea = $("#chatArea");
+const calendarView = $("#calendarView");
+const scientificView = $("#scientificView");
+const financialView = $("#financialView");
+
+const inputArea = $("#inputArea");
+
+
+function openSidebar() {
+
+    sidebar.classList.add("open");
+    overlay.classList.add("show");
+
+}
+
+
+function closeSidebar() {
+
+    sidebar.classList.remove("open");
+    overlay.classList.remove("show");
+
+}
+
+
+$("#menuButton").addEventListener("click", openSidebar);
+
+$("#closeSidebar").addEventListener("click", closeSidebar);
+
+overlay.addEventListener("click", closeSidebar);
+
+
+/* ==========================================
+   VIEW MANAGEMENT
+========================================== */
+
+const navItems = $$(".nav-item");
+
+function clearActiveNavigation() {
+
+    navItems.forEach(button => {
+        button.classList.remove("active");
+    });
+
+}
+
+
+function showView(view) {
+
+    chatArea.style.display = "none";
+    calendarView.style.display = "none";
+    scientificView.style.display = "none";
+    financialView.style.display = "none";
+
+    inputArea.style.display = "none";
+
+    view.style.display = "block";
+
+}
+
+
+function showHome() {
+
+    chatArea.style.display = "block";
+
+    calendarView.style.display = "none";
+    scientificView.style.display = "none";
+    financialView.style.display = "none";
+
+    inputArea.style.display = "block";
+
+    clearActiveNavigation();
+
+    $("#homeButton").classList.add("active");
+
+}
+
+
+function showCalendar() {
+
+    showView(calendarView);
+
+    clearActiveNavigation();
+
+    $("#calendarButton").classList.add("active");
+
+    renderCalendar();
+
+}
+
+
+function showScientific() {
+
+    showView(scientificView);
+
+    clearActiveNavigation();
+
+    $("#scientificButton").classList.add("active");
+
+}
+
+
+function showFinancial() {
+
+    showView(financialView);
+
+    clearActiveNavigation();
+
+    $("#financialButton").classList.add("active");
+
+}
+
+
+/* ==========================================
+   NAVIGATION EVENTS
+========================================== */
+
+$("#homeButton").addEventListener("click", () => {
+
+    showHome();
+    closeSidebar();
+
+});
+
+
+$("#calendarButton").addEventListener("click", () => {
+
+    showCalendar();
+    closeSidebar();
+
+});
+
+
+$("#scientificButton").addEventListener("click", () => {
+
+    showScientific();
+    closeSidebar();
+
+});
+
+
+$("#financialButton").addEventListener("click", () => {
+
+    showFinancial();
+    closeSidebar();
+
+});
+
+
+$("#aboutButton").addEventListener("click", () => {
+
+    $("#aboutModal").classList.add("show");
+
+    closeSidebar();
+
+});
+
+
+$("#settingsButton").addEventListener("click", () => {
+
+    $("#settingsModal").classList.add("show");
+
+    closeSidebar();
+
+});
+
+
+/* ==========================================
+   MODALS
+========================================== */
+
+$$("[data-close]").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const id = button.dataset.close;
+
+        $("#" + id).classList.remove("show");
+
+    });
+
+});
+
+
+$$(".modal").forEach(modal => {
+
+    modal.addEventListener("click", event => {
+
+        if (event.target === modal) {
+            modal.classList.remove("show");
+        }
+
+    });
+
+});
+
+
+document.addEventListener("keydown", event => {
+
+    if (event.key === "Escape") {
+
+        $$(".modal.show").forEach(modal => {
+            modal.classList.remove("show");
+        });
+
+        closeSidebar();
+
+    }
+
+});
+
+
+/* ==========================================
+   SETTINGS
+========================================== */
+
+const backgroundNames = [
+    "white",
+    "gray",
+    "pearl",
+    "slate",
+    "warm",
+    "cream",
+    "sand",
+    "peach",
+    "blue",
+    "sky",
+    "ice",
+    "green",
+    "mint",
+    "lavender",
+    "lilac",
+    "rose",
+    "pink"
+];
+
+
+function applyBackground(name) {
+
+    backgroundNames.forEach(background => {
+
+        body.classList.remove(
+            "background-" + background
+        );
+
+    });
+
+    body.classList.add(
+        "background-" + name
+    );
+
+    localStorage.setItem(
+        "mastercommerce-background",
+        name
+    );
+
+}
+
+
+$$("[data-background]").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        applyBackground(button.dataset.background);
+
+    });
+
+});
+
+
+$$("[data-theme]").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        if (button.dataset.theme === "dark") {
+
+            body.classList.add("dark");
+
+            localStorage.setItem(
+                "mastercommerce-theme",
+                "dark"
+            );
+
+        } else {
+
+            body.classList.remove("dark");
+
+            localStorage.setItem(
+                "mastercommerce-theme",
+                "light"
+            );
+
+        }
+
+    });
+
+});
+
+
+$$("[data-font]").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        body.classList.remove(
+            "font-small",
+            "font-medium",
+            "font-large"
+        );
+
+        body.classList.add(
+            "font-" + button.dataset.font
+        );
+
+        localStorage.setItem(
+            "mastercommerce-font",
+            button.dataset.font
+        );
+
+    });
+
+});
+
+
+let reducedMotion =
+    localStorage.getItem(
+        "mastercommerce-motion"
+    ) === "true";
+
+
+function applyMotion() {
+
+    body.classList.toggle(
+        "reduced-motion",
+        reducedMotion
+    );
+
+    $("#motionButton").textContent =
+        reducedMotion
+            ? "Normal motion"
+            : "Reduced motion";
+
+}
+
+
+$("#motionButton").addEventListener("click", () => {
+
+    reducedMotion = !reducedMotion;
+
+    localStorage.setItem(
+        "mastercommerce-motion",
+        reducedMotion
+    );
+
+    applyMotion();
+
+});
+
+
+$("#resetSettingsButton").addEventListener("click", () => {
+
+    body.classList.remove("dark");
+
+    body.classList.remove(
+        "font-small",
+        "font-medium",
+        "font-large"
+    );
+
+    body.classList.add("font-medium");
+
+    applyBackground("white");
+
+    reducedMotion = false;
+
+    localStorage.setItem(
+        "mastercommerce-theme",
+        "light"
+    );
+
+    localStorage.setItem(
+        "mastercommerce-font",
+        "medium"
+    );
+
+    localStorage.setItem(
+        "mastercommerce-motion",
+        "false"
+    );
+
+    applyMotion();
+
+});
+
+
+function loadSettings() {
+
+    const savedBackground =
+        localStorage.getItem(
+            "mastercommerce-background"
+        ) || "white";
+
+    const savedTheme =
+        localStorage.getItem(
+            "mastercommerce-theme"
+        ) || "light";
+
+    const savedFont =
+        localStorage.getItem(
+            "mastercommerce-font"
+        ) || "medium";
+
+    reducedMotion =
+        localStorage.getItem(
+            "mastercommerce-motion"
+        ) === "true";
+
+    applyBackground(savedBackground);
+
+    body.classList.toggle(
+        "dark",
+        savedTheme === "dark"
+    );
+
+    body.classList.remove(
+        "font-small",
+        "font-medium",
+        "font-large"
+    );
+
+    body.classList.add(
+        "font-" + savedFont
+    );
+
+    applyMotion();
+
+}
+
+
+loadSettings();
+
+
+/* ==========================================
+   PLUS MENU
+========================================== */
+
+const plusButton = $("#plusButton");
+const plusMenu = $("#plusMenu");
+
+plusButton.addEventListener("click", event => {
+
+    event.stopPropagation();
+
+    plusMenu.classList.toggle("show");
+
+});
+
+
+document.addEventListener("click", event => {
+
+    if (
+        !plusMenu.contains(event.target) &&
+        event.target !== plusButton
+    ) {
+
+        plusMenu.classList.remove("show");
+
+    }
+
+});
+
+
+$$(".plus-option").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        plusMenu.classList.remove("show");
+
+        const toast = $("#featureToast");
+
+        toast.textContent =
+            button.dataset.feature +
+            " is still under development.";
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 2200);
+
+    });
+
+});
+
+
+/* ==========================================
+   NEW CHAT / CLEAR CHAT
+========================================== */
+
+function resetChat() {
+
+    chatArea.innerHTML = `
+        <div id="welcomeScreen" class="welcome-screen">
+
+            <div class="welcome-content">
+
+                <div class="welcome-logo">
+                    M
+                </div>
+
+                <h1>
+                    What would you like to learn?
+                </h1>
+
+                <p>
+                    Ask a question about Accounting,
+                    Economics or Mathematics.
+                </p>
+
+                <div class="subject-cards">
+
+                    <div class="subject-card">
+
+                        <div class="subject-letter">
+                            A
+                        </div>
+
+                        <div>
+
+                            <h3>Accounting</h3>
+
+                            <p>
+                                Financial accounting,
+                                management accounting,
+                                tax, auditing, IFRS
+                                and calculations.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="subject-card">
+
+                        <div class="subject-letter">
+                            E
+                        </div>
+
+                        <div>
+
+                            <h3>Economics</h3>
+
+                            <p>
+                                Microeconomics,
+                                macroeconomics,
+                                policies, markets,
+                                essays and calculations.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="subject-card">
+
+                        <div class="subject-letter">
+                            M
+                        </div>
+
+                        <div>
+
+                            <h3>Mathematics</h3>
+
+                            <p>
+                                Algebra, functions,
+                                statistics, probability,
+                                calculus and problem solving.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+$("#newChatButton").addEventListener("click", () => {
+
+    resetChat();
+
+    showHome();
+
+    closeSidebar();
+
+});
+
+
+$("#clearChatButton").addEventListener("click", () => {
+
+    resetChat();
+
+    showHome();
+
+    closeSidebar();
+
+});
+
+
+/* ==========================================
+   BASIC CHAT UI
+========================================== */
+
+function addMessage(text, type) {
+
+    const row = document.createElement("div");
+
+    row.className =
+        "message-row " +
+        type;
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message " +
+        (
+            type === "user"
+                ? "user-message"
+                : "assistant-message"
+        );
+
+    message.textContent = text;
+
+    row.appendChild(message);
+
+    chatArea.appendChild(row);
+
+    chatArea.scrollTop =
+        chatArea.scrollHeight;
+
+}
+
+
+function sendQuestion() {
+
+    const input = $("#questionInput");
+
+    const text = input.value.trim();
+
+    if (!text) {
+        return;
+    }
+
+    const welcome =
+        $("#welcomeScreen");
+
+    if (welcome) {
+        welcome.remove();
+    }
+
+    addMessage(text, "user");
+
+    input.value = "";
+
+    /*
+       The educational AI response system can
+       be connected to your Mastercommerce
+       knowledge database/backend later.
+    */
+
+    setTimeout(() => {
+
+        addMessage(
+            "Mastercommerce received your question. Your Accounting, Economics and Mathematics knowledge system can be connected here.",
+            "assistant"
+        );
+
+    }, 350);
+
+}
+
+
+$("#sendButton").addEventListener(
+    "click",
+    sendQuestion
+);
+
+
+$("#questionInput").addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
+            sendQuestion();
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   CALENDAR
+========================================== */
+
+let calendarDate = new Date();
+
+let selectedDate =
+    new Date();
+
+
+function dateKey(date) {
+
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(date.getMonth() + 1)
+            .padStart(2, "0");
+
+    const day =
+        String(date.getDate())
+            .padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+
+}
+
+
+function loadEvents() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(
+                "mastercommerce-events"
+            )
+        ) || {};
+
+    } catch {
+
+        return {};
+
+    }
+
+}
+
+
+function saveEvents(events) {
+
+    localStorage.setItem(
+        "mastercommerce-events",
+        JSON.stringify(events)
+    );
+
+}
+
+
+function renderCalendar() {
+
+    const year =
+        calendarDate.getFullYear();
+
+    const month =
+        calendarDate.getMonth();
+
+    const monthName =
+        calendarDate.toLocaleString(
+            "en-US",
+            {
+                month: "long"
+            }
+        );
+
+    $("#calendarTitle").textContent =
+        monthName + " " + year;
+
+
+    const firstDay =
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
+    const daysInMonth =
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+    const previousDays =
+        new Date(
+            year,
+            month,
+            0
+        ).getDate();
+
+    const grid =
+        $("#calendarGrid");
+
+    grid.innerHTML = "";
+
+
+    const events =
+        loadEvents();
+
+
+    for (
+        let i = 0;
+        i < 42;
+        i++
+    ) {
+
+        let dayNumber;
+        let cellDate;
+        let otherMonth = false;
+
+        if (i < firstDay) {
+
+            dayNumber =
+                previousDays -
+                firstDay +
+                i +
+                1;
+
+            cellDate =
+                new Date(
+                    year,
+                    month - 1,
+                    dayNumber
+                );
+
+            otherMonth = true;
+
+        } else if (
+            i >=
+            firstDay +
+            daysInMonth
+        ) {
+
+            dayNumber =
+                i -
+                firstDay -
+                daysInMonth +
+                1;
+
+            cellDate =
+                new Date(
+                    year,
+                    month + 1,
+                    dayNumber
+                );
+
+            otherMonth = true;
+
+        } else {
+
+            dayNumber =
+                i -
+                firstDay +
+                1;
+
+            cellDate =
+                new Date(
+                    year,
+                    month,
+                    dayNumber
+                );
+
+        }
+
+
+        const key =
+            dateKey(cellDate);
+
+        const cell =
+            document.createElement("button");
+
+        cell.className =
+            "calendar-day";
+
+        if (otherMonth) {
+
+            cell.classList.add(
+                "other-month"
+            );
+
+        }
+
+
+        if (
+            dateKey(cellDate) ===
+            dateKey(new Date())
+        ) {
+
+            cell.classList.add(
+                "today"
+            );
+
+        }
+
+
+        if (
+            dateKey(cellDate) ===
+            dateKey(selectedDate)
+        ) {
+
+            cell.classList.add(
+                "selected"
+            );
+
+        }
+
+
+        const number =
+            document.createElement("span");
+
+        number.className =
+            "calendar-number";
+
+        number.textContent =
+            dayNumber;
+
+        cell.appendChild(number);
+
+
+        if (events[key]) {
+
+            const dot =
+                document.createElement("span");
+
+            dot.className =
+                "calendar-event-dot";
+
+            cell.appendChild(dot);
+
+
+            const preview =
+                document.createElement("div");
+
+            preview.className =
+                "calendar-event-preview";
+
+            preview.textContent =
+                events[key][0].title;
+
+            cell.appendChild(preview);
+
+        }
+
+
+        cell.addEventListener(
+            "click",
+            () => {
+
+                selectedDate =
+                    cellDate;
+
+                $("#eventDate").value =
+                    dateKey(cellDate);
+
+                renderCalendar();
+
+            }
+        );
+
+
+        grid.appendChild(cell);
+
+    }
+
+
+    renderEventsForSelectedDate();
+
+}
+
+
+function renderEventsForSelectedDate() {
+
+    const events =
+        loadEvents();
+
+    const key =
+        dateKey(selectedDate);
+
+    const list =
+        $("#eventList");
+
+    list.innerHTML = "";
+
+
+    $("#selectedDateLabel").textContent =
+        selectedDate.toLocaleDateString(
+            "en-US",
+            {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+        );
+
+
+    const dayEvents =
+        events[key] || [];
+
+
+    if (!dayEvents.length) {
+
+        list.innerHTML = `
+            <div class="empty-state">
+                No events scheduled for this date.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    dayEvents.forEach(
+        (event, index) => {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "event-item";
+
+            item.innerHTML = `
+                <div>
+
+                    <div class="event-date">
+                        ${selectedDate.toLocaleDateString()}
+                    </div>
+
+                    <div class="event-title">
+                        ${escapeHTML(event.title)}
+                    </div>
+
+                    ${
+                        event.note
+                            ? `
+                            <div class="event-note">
+                                ${escapeHTML(event.note)}
+                            </div>
+                            `
+                            : ""
+                    }
+
+                </div>
+
+                <button
+                    class="event-delete"
+                    data-event-index="${index}"
+                >
+                    ×
+                </button>
+            `;
+
+
+            item
+                .querySelector(
+                    ".event-delete"
+                )
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        deleteEvent(
+                            key,
+                            index
+                        );
+
+                    }
+                );
+
+
+            list.appendChild(item);
+
+        }
+    );
+
+}
+
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function deleteEvent(key, index) {
+
+    const events =
+        loadEvents();
+
+    if (!events[key]) {
+        return;
+    }
+
+    events[key].splice(
+        index,
+        1
+    );
+
+    if (!events[key].length) {
+        delete events[key];
+    }
+
+    saveEvents(events);
+
+    renderCalendar();
+
+}
+
+
+$("#previousMonth").addEventListener(
+    "click",
+    () => {
+
+        calendarDate.setMonth(
+            calendarDate.getMonth() - 1
+        );
+
+        renderCalendar();
+
+    }
+);
+
+
+$("#nextMonth").addEventListener(
+    "click",
+    () => {
+
+        calendarDate.setMonth(
+            calendarDate.getMonth() + 1
+        );
+
+        renderCalendar();
+
+    }
+);
+
+
+$("#calendarToday").addEventListener(
+    "click",
+    () => {
+
+        calendarDate =
+            new Date();
+
+        selectedDate =
+            new Date();
+
+        $("#eventDate").value =
+            dateKey(selectedDate);
+
+        renderCalendar();
+
+    }
+);
+
+
+$("#addEventButton").addEventListener(
+    "click",
+    () => {
+
+        const date =
+            $("#eventDate").value;
+
+        const title =
+            $("#eventTitle").value.trim();
+
+        const note =
+            $("#eventNote").value.trim();
+
+
+        if (!date || !title) {
+
+            alert(
+                "Please enter a date and event title."
+            );
+
+            return;
+
+        }
+
+
+        const events =
+            loadEvents();
+
+
+        if (!events[date]) {
+            events[date] = [];
+        }
+
+
+        events[date].push({
+            title,
+            note
+        });
+
+
+        saveEvents(events);
+
+
+        const parts =
+            date.split("-");
+
+        selectedDate =
+            new Date(
+                Number(parts[0]),
+                Number(parts[1]) - 1,
+                Number(parts[2])
+            );
+
+
+        calendarDate =
+            new Date(selectedDate);
+
+
+        $("#eventTitle").value = "";
+
+        $("#eventNote").value = "";
+
+        renderCalendar();
+
+    }
+);
+
+
+$("#eventDate").value =
+    dateKey(selectedDate);
+
+renderCalendar();
+
+
+/* ==========================================
+   SCIENTIFIC CALCULATOR
+========================================== */
+
+let calcExpression = "";
+
+let calcAnswer = 0;
+
+let calcMemory = 0;
+
+let angleMode = "DEG";
+
+
+function updateCalculatorDisplay(
+    result = null
+) {
+
+    $("#calcExpression").textContent =
+        calcExpression;
+
+    $("#calcResult").textContent =
+        result !== null
+            ? result
+            : (
+                calcExpression
+                    ? calcExpression
+                    : "0"
+            );
+
+    $("#angleModeLabel").textContent =
+        angleMode;
+
+    $("#memoryLabel").textContent =
+        "M: " +
+        formatNumber(calcMemory);
+
+}
+
+
+function formatNumber(value) {
+
+    if (
+        typeof value !== "number" ||
+        !Number.isFinite(value)
+    ) {
+
+        return String(value);
+
+    }
+
+    return Number(
+        value.toPrecision(12)
+    ).toString();
+
+}
+
+
+function factorial(n) {
+
+    if (
+        !Number.isFinite(n) ||
+        n < 0 ||
+        !Number.isInteger(n)
+    ) {
+
+        throw new Error(
+            "Factorial requires a non-negative integer."
+        );
+
+    }
+
+    let result = 1;
+
+    for (
+        let i = 2;
+        i <= n;
+        i++
+    ) {
+
+        result *= i;
+
+    }
+
+    return result;
+
+}
+
+
+function evaluateExpression(expression) {
+
+    let exp =
+        expression
+            .replace(/π/g, "Math.PI")
+            .replace(/\bpi\b/gi, "Math.PI")
+            .replace(/\bAns\b/g, "(" + calcAnswer + ")")
+            .replace(/\be\b/g, "Math.E");
+
+
+    /*
+       Factorials
+    */
+
+    exp = exp.replace(
+        /(\d+(?:\.\d+)?|\([^()]+\))!/g,
+        "factorial($1)"
+    );
+
+
+    /*
+       Percent
+    */
+
+    exp = exp.replace(
+        /(\d+(?:\.\d+)?)%/g,
+        "($1/100)"
+    );
+
+
+    /*
+       Powers
+    */
+
+    exp =
+        exp.replace(
+            /\^/g,
+            "**"
+        );
+
+
+    /*
+       Trigonometry
+    */
+
+    exp =
+        exp.replace(
+            /sin\(/g,
+            "sin("
+        );
+
+    exp =
+        exp.replace(
+            /cos\(/g,
+            "cos("
+        );
+
+    exp =
+        exp.replace(
+            /tan\(/g,
+            "tan("
+        );
+
+
+    /*
+       Convert trigonometric values
+       according to DEG/RAD.
+    */
+
+    function sin(x) {
+
+        return angleMode === "DEG"
+            ? Math.sin(x * Math.PI / 180)
+            : Math.sin(x);
+
+    }
+
+
+    function cos(x) {
+
+        return angleMode === "DEG"
+            ? Math.cos(x * Math.PI / 180)
+            : Math.cos(x);
+
+    }
+
+
+    function tan(x) {
+
+        return angleMode === "DEG"
+            ? Math.tan(x * Math.PI / 180)
+            : Math.tan(x);
+
+    }
+
+
+    function asin(x) {
+
+        const value =
+            Math.asin(x);
+
+        return angleMode === "DEG"
+            ? value * 180 / Math.PI
+            : value;
+
+    }
+
+
+    function acos(x) {
+
+        const value =
+            Math.acos(x);
+
+        return angleMode === "DEG"
+            ? value * 180 / Math.PI
+            : value;
+
+    }
+
+
+    function atan(x) {
+
+        const value =
+            Math.atan(x);
+
+        return angleMode === "DEG"
+            ? value * 180 / Math.PI
+            : value;
+
+    }
+
+
+    /*
+       Logarithms
+    */
+
+    function log(x) {
+        return Math.log10(x);
+    }
+
+
+    function ln(x) {
+        return Math.log(x);
+    }
+
+
+    function sqrt(x) {
+        return Math.sqrt(x);
+    }
+
+
+    function cbrt(x) {
+        return Math.cbrt(x);
+    }
+
+
+    /*
+       Security whitelist.
+       Only calculator characters/functions
+       are accepted.
+    */
+
+    if (
+        !/^[0-9+\-*/().,\sA-Za-z_*!%^]+$/.test(
+            exp
+                .replace(/Math\.PI/g, "PI")
+                .replace(/Math\.E/g, "E")
+        )
+    ) {
+
+        throw new Error(
+            "Invalid expression."
+        );
+
+    }
+
+
+    return Function(
+        "factorial",
+        "sin",
+        "cos",
+        "tan",
+        "asin",
+        "acos",
+        "atan",
+        "log",
+        "ln",
+        "sqrt",
+        "cbrt",
+        `"use strict"; return (${exp});`
+    )(
+        factorial,
+        sin,
+        cos,
+        tan,
+        asin,
+        acos,
+        atan,
+        log,
+        ln,
+        sqrt,
+        cbrt
+    );
+
+}
+
+
+function calculateScientific() {
+
+    if (!calcExpression) {
+        return;
+    }
+
+
+    try {
+
+        const result =
+            evaluateExpression(
+                calcExpression
+            );
+
+        if (!Number.isFinite(result)) {
+            throw new Error();
+        }
+
+
+        calcAnswer =
+            result;
+
+
+        addCalculationHistory(
+            calcExpression,
+            result
+        );
+
+
+        $("#calcExpression").textContent =
+            calcExpression;
+
+        $("#calcResult").textContent =
+            formatNumber(result);
+
+
+    } catch {
+
+        $("#calcResult").textContent =
+            "Error";
+
+    }
+
+}
+
+
+$$(".calc-key").forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            const value =
+                button.dataset.value;
+
+            const action =
+                button.dataset.action;
+
+
+            if (action === "clear") {
+
+                calcExpression = "";
+
+                updateCalculatorDisplay();
+
+                return;
+
+            }
+
+
+            if (action === "delete") {
+
+                calcExpression =
+                    calcExpression.slice(
+                        0,
+                        -1
+                    );
+
+                updateCalculatorDisplay();
+
+                return;
+
+            }
+
+
+            if (
+                action === "calculate"
+            ) {
+
+                calculateScientific();
+
+                return;
+
+            }
+
+
+            if (value === "1e") {
+
+                calcExpression += "e";
+
+            } else {
+
+                calcExpression += value;
+
+            }
+
+
+            updateCalculatorDisplay();
+
+        }
+    );
+
+});
+
+
+$$("[data-memory]").forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            const action =
+                button.dataset.memory;
+
+
+            if (action === "MC") {
+
+                calcMemory = 0;
+
+            }
+
+
+            if (action === "MR") {
+
+                calcExpression +=
+                    String(calcMemory);
+
+            }
+
+
+            if (action === "M+") {
+
+                try {
+
+                    calcMemory +=
+                        Number(
+                            evaluateExpression(
+                                calcExpression ||
+                                "0"
+                            )
+                        );
+
+                } catch {}
+
+            }
+
+
+            if (action === "M-") {
+
+                try {
+
+                    calcMemory -=
+                        Number(
+                            evaluateExpression(
+                                calcExpression ||
+                                "0"
+                            )
+                        );
+
+                } catch {}
+
+            }
+
+
+            updateCalculatorDisplay();
+
+        }
+    );
+
+});
+
+
+$("#angleButton").addEventListener(
+    "click",
+    () => {
+
+        angleMode =
+            angleMode === "DEG"
+                ? "RAD"
+                : "DEG";
+
+        $("#angleButton").textContent =
+            angleMode;
+
+        updateCalculatorDisplay();
+
+    }
+);
+
+
+let calculationHistory =
+    JSON.parse(
+        localStorage.getItem(
+            "mastercommerce-calculator-history"
+        )
+    ) || [];
+
+
+function addCalculationHistory(
+    expression,
+    result
+) {
+
+    calculationHistory.unshift({
+        expression,
+        result
+    });
+
+
+    calculationHistory =
+        calculationHistory.slice(
+            0,
+            30
+        );
+
+
+    localStorage.setItem(
+        "mastercommerce-calculator-history",
+        JSON.stringify(
+            calculationHistory
+        )
+    );
+
+
+    renderCalculationHistory();
+
+}
+
+
+function renderCalculationHistory() {
+
+    const container =
+        $("#calcHistory");
+
+    container.innerHTML = "";
+
+
+    if (!calculationHistory.length) {
+
+        container.innerHTML = `
+            <div class="empty-state">
+                No calculations yet.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    calculationHistory.forEach(
+        item => {
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "history-item";
+
+            div.innerHTML = `
+                <div class="history-expression">
+                    ${escapeHTML(item.expression)}
+                </div>
+
+                <div class="history-result">
+                    ${escapeHTML(formatNumber(Number(item.result)))}
+                </div>
+            `;
+
+
+            div.addEventListener(
+                "click",
+                () => {
+
+                    calcExpression =
+                        String(item.result);
+
+                    updateCalculatorDisplay();
+
+                }
+            );
+
+
+            container.appendChild(div);
+
+        }
+    );
+
+}
+
+
+$("#clearCalcHistory").addEventListener(
+    "click",
+    () => {
+
+        calculationHistory = [];
+
+        localStorage.removeItem(
+            "mastercommerce-calculator-history"
+        );
+
+        renderCalculationHistory();
+
+    }
+);
+
+
+renderCalculationHistory();
+
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            scientificView.style.display !==
+            "none"
+        ) {
+
+            const allowed =
+                "0123456789+-*/().";
+
+            if (
+                allowed.includes(
+                    event.key
+                )
+            ) {
+
+                calcExpression +=
+                    event.key;
+
+                updateCalculatorDisplay();
+
+            }
+
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                calculateScientific();
+
+            }
+
+
+            if (
+                event.key === "Backspace"
+            ) {
+
+                calcExpression =
+                    calcExpression.slice(
+                        0,
+                        -1
+                    );
+
+                updateCalculatorDisplay();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   FINANCIAL CALCULATOR
+========================================== */
+
+$$("[data-finance-tab]").forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                $$(".financial-tab")
+                    .forEach(tab => {
+                        tab.classList.remove(
+                            "active"
+                        );
+                    });
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                $$(".finance-panel")
+                    .forEach(panel => {
+                        panel.style.display =
+                            "none";
+                    });
+
+
+                const id =
+                    "finance-" +
+                    button.dataset.financeTab;
+
+                $("#" + id).style.display =
+                    "block";
+
+            }
+        );
+
+    }
+);
+
+
+/* ==========================================
+   LOAN CALCULATOR
+========================================== */
+
+$("#calculateLoan").addEventListener(
+    "click",
+    () => {
+
+        const principal =
+            Number(
+                $("#loanAmount").value
+            );
+
+        const annualRate =
+            Number(
+                $("#loanRate").value
+            ) / 100;
+
+        const years =
+            Number(
+                $("#loanYears").value
+            );
+
+        const frequency =
+            Number(
+                $("#loanFrequency").value
+            );
+
+
+        const periods =
+            years * frequency;
+
+        const rate =
+            annualRate / frequency;
+
+
+        let payment;
+
+
+        if (rate === 0) {
+
+            payment =
+                principal / periods;
+
+        } else {
+
+            payment =
+                principal *
+                rate *
+                Math.pow(
+                    1 + rate,
+                    periods
+                ) /
+                (
+                    Math.pow(
+                        1 + rate,
+                        periods
+                    ) - 1
+                );
+
+        }
+
+
+        const total =
+            payment * periods;
+
+        const interest =
+            total - principal;
+
+
+        $("#loanResult").innerHTML = `
+
+            <strong>
+                ${formatMoney(payment)}
+                per payment
+            </strong>
+
+            <div class="finance-result-grid">
+
+                <div class="result-box">
+                    <span>Loan amount</span>
+                    <strong>
+                        ${formatMoney(principal)}
+                    </strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Total payments</span>
+                    <strong>
+                        ${formatMoney(total)}
+                    </strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Total interest</span>
+                    <strong>
+                        ${formatMoney(interest)}
+                    </strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Number of payments</span>
+                    <strong>
+                        ${periods}
+                    </strong>
+                </div>
+
+            </div>
+        `;
+
+    }
+);
+
+
+/* ==========================================
+   INTEREST
+========================================== */
+
+$("#calculateInterest").addEventListener(
+    "click",
+    () => {
+
+        const principal =
+            Number(
+                $("#interestPrincipal").value
+            );
+
+        const rate =
+            Number(
+                $("#interestRate").value
+            ) / 100;
+
+        const years =
+            Number(
+                $("#interestYears").value
+            );
+
+        const frequency =
+            Number(
+                $("#compoundFrequency").value
+            );
+
+
+        const simpleInterest =
+            principal *
+            rate *
+            years;
+
+
+        const simpleFuture =
+            principal +
+            simpleInterest;
+
+
+        const compoundFuture =
+            principal *
+            Math.pow(
+                1 + rate / frequency,
+                frequency * years
+            );
+
+
+        const compoundInterest =
+            compoundFuture -
+            principal;
+
+
+        $("#interestResult").innerHTML = `
+
+            <div class="finance-result-grid">
+
+                <div class="result-box">
+                    <span>Simple interest</span>
+                    <strong>
+                        ${formatMoney(simpleInterest)}
+                    </strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Simple future value</span>
+                    <strong>
+                        ${formatMoney(simpleFuture)}
+                    </strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Compound interest</span>
+                    <strong>
+                        ${formatMoney(compoundInterest)}
+                    </strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Compound future value</span>
+                    <strong>
+                        ${formatMoney(compoundFuture)}
+                    </strong>
+                </div>
+
+            </div>
+        `;
+
+    }
+);
+
+
+/* ==========================================
+   TVM
+========================================== */
+
+$("#calculateTVM").addEventListener(
+    "click",
+    () => {
+
+        const PV =
+            Number(
+                $("#tvmPV").value
+            );
+
+        const PMT =
+            Number(
+                $("#tvmPMT").value
+            );
+
+        const FV =
+            Number(
+                $("#tvmFV").value
+            );
+
+        const annualRate =
+            Number(
+                $("#tvmRate").value
+            ) / 100;
+
+        const periods =
+            Number(
+                $("#tvmPeriods").value
+            );
+
+        const frequency =
+            Number(
+                $("#tvmFrequency").value
+            );
+
+        const r =
+            annualRate / frequency;
+
+
+        /*
+           Future value of PV + annuity.
+        */
+
+        const futureFromPV =
+            PV *
+            Math.pow(
+                1 + r,
+                periods
+            );
+
+
+        const futureFromPayments =
+            r === 0
+                ? PMT * periods
+                : PMT *
+                  (
+                    Math.pow(
+                        1 + r,
+                        periods
+                    ) - 1
+                  ) /
+                  r;
+
+
+        const calculatedFV =
+            futureFromPV +
+            futureFromPayments;
+
+
+        const calculatedPV =
+            r === 0
+                ? FV - PMT * periods
+                : (
+                    FV -
+                    PMT *
+                    (
+                        Math.pow(
+                            1 + r,
+                            periods
+                        ) - 1
+                    ) /
+                    r
+                ) /
+                Math.pow(
+                    1 + r,
+                    periods
+                );
+
+
+        $("#tvmResult").innerHTML = `
+
+            <div class="finance-result-grid">
+
+                <div class="result-box">
+                    <span>Calculated future value</span>
+                    <strong>
+                        ${formatMoney(calculatedFV)}
+                    </strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Calculated present value</span>
+                    <strong>
+                        ${formatMoney(calculatedPV)}
+                    </strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Periodic rate</span>
+                    <strong>
+                        ${(r * 100).toFixed(4)}%
+                    </strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Total periods</span>
+                    <strong>
+                        ${periods}
+                    </strong>
+                </div>
+
+            </div>
+        `;
+
+    }
+);
+
+
+/* ==========================================
+   NPV
+========================================== */
+
+function calculateNPV(
+    rate,
+    cashFlows
+) {
+
+    let npv = 0;
+
+    for (
+        let i = 0;
+        i < cashFlows.length;
+        i++
+    ) {
+
+        npv +=
+            cashFlows[i] /
+            Math.pow(
+                1 + rate,
+                i + 1
+            );
+
+    }
+
+    return npv;
+
+}
+
+
+function calculateIRR(
+    cashFlows
+) {
+
+    let low = -0.99;
+
+    let high = 10;
+
+
+    for (
+        let i = 0;
+        i < 200;
+        i++
+    ) {
+
+        const mid =
+            (low + high) / 2;
+
+
+        let npv = cashFlows[0];
+
+
+        for (
+            let j = 1;
+            j < cashFlows.length;
+            j++
+        ) {
+
+            npv +=
+                cashFlows[j] /
+                Math.pow(
+                    1 + mid,
+                    j
+                );
+
+        }
+
+
+        if (npv > 0) {
+
+            low = mid;
+
+        } else {
+
+            high = mid;
+
+        }
+
+    }
+
+
+    return (low + high) / 2;
+
+}
+
+
+$("#calculateNPV").addEventListener(
+    "click",
+    () => {
+
+        const initial =
+            Number(
+                $("#npvInitial").value
+            );
+
+        const rate =
+            Number(
+                $("#npvRate").value
+            ) / 100;
+
+
+        const flows =
+            $("#npvFlows")
+                .value
+                .split(",")
+                .map(Number)
+                .filter(
+                    value =>
+                        Number.isFinite(value)
+                );
+
+
+        const cashFlows = [
+            -initial,
+            ...flows
+        ];
+
+
+        const npv =
+            initial === 0
+                ? calculateNPV(
+                    rate,
+                    cashFlows
+                )
+                : calculateNPV(
+                    rate,
+                    cashFlows.slice(1)
+                ) -
+                initial;
+
+
+        const irr =
+            calculateIRR(
+                cashFlows
+            );
+
+
+        $("#npvResult").innerHTML = `
+
+            <div class="finance-result-grid">
+
+                <div class="result-box">
+                    <span>NPV</span>
+                    <strong>
+                        ${formatMoney(npv)}
+                    </strong>
+                </div>
+
+                <div class="result-box">
+                    <span>IRR</span>
+                    <strong>
+                        ${(irr * 100).toFixed(4)}%
+                    </strong>
+                </div>
+
+            </div>
+        `;
+
+    }
+);
+
+
+/* ==========================================
+   PROFIT
+========================================== */
+
+$("#calculateProfit").addEventListener(
+    "click",
+    () => {
+
+        const cost =
+            Number(
+                $("#profitCost").value
+            );
+
+        const selling =
+            Number(
+                $("#profitSelling").value
+            );
+
+
+        const profit =
+            selling - cost;
+
+
+        const margin =
+            selling !== 0
+                ? profit / selling * 100
+                : 0;
+
+
+        const markup =
+            cost !== 0
+                ? profit / cost * 100
+                : 0;
+
+
+        $("#profitResult").innerHTML = `
+
+            <div class="finance-result-grid">
+
+                <div class="result-box">
+                    <span>Profit</span>
+                    <strong>
+                        ${formatMoney(profit)}
+                    </strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Profit margin</span>
+                    <strong>
+                        ${margin.toFixed(2)}%
+                    </strong>
+                </div>
+
+                <div class="result-box">
+                    <span>Markup</span>
+                    <strong>
+                        ${markup.toFixed(2)}%
+                    </strong>
+                </div>
+
+            </div>
+        `;
+
+    }
+);
+
+
+/* ==========================================
+   DEPRECIATION
+========================================== */
+
+$("#calculateDepreciation").addEventListener(
+    "click",
+    () => {
+
+        const cost =
+            Number(
+                $("#depCost").value
+            );
+
+        const residual =
+            Number(
+                $("#depResidual").value
+            );
+
+        const life =
+            Number(
+                $("#depLife").value
+            );
+
+        const method =
+            $("#depMethod").value;
+
+
+        if (
+            cost <= 0 ||
+            life <= 0 ||
+            residual > cost
+        ) {
+
+            $("#depResult").innerHTML =
+                "Please enter valid asset information.";
+
+            return;
+
+        }
+
+
+        if (
+            method ===
+            "straight"
+        ) {
+
+            const annual =
+                (
+                    cost -
+                    residual
+                ) / life;
+
+
+            let rows = "";
+
+
+            for (
+                let year = 1;
+                year <= life;
+                year++
+            ) {
+
+                const opening =
+                    cost -
+                    annual *
+                    (year - 1);
+
+                const closing =
+                    Math.max(
+                        residual,
+                        opening -
+                        annual
+                    );
+
+
+                rows += `
+
+                    <tr>
+
+                        <td>${year}</td>
+
+                        <td>
+                            ${formatMoney(opening)}
+                        </td>
+
+                        <td>
+                            ${formatMoney(annual)}
+                        </td>
+
+                        <td>
+                            ${formatMoney(closing)}
+                        </td>
+
+                    </tr>
+                `;
+
+            }
+
+
+            $("#depResult").innerHTML = `
+
+                <strong>
+                    Annual depreciation:
+                    ${formatMoney(annual)}
+                </strong>
+
+                <div class="amortization-wrapper">
+
+                    <table class="amortization-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Year</th>
+                                <th>Opening</th>
+                                <th>Depreciation</th>
+                                <th>Closing</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                            ${rows}
+                        </tbody>
+
+                    </table>
+
+                </div>
+            `;
+
+        } else {
+
+            const rate =
+                1 -
+                Math.pow(
+                    residual / cost,
+                    1 / life
+                );
+
+
+            let carrying =
+                cost;
+
+            let rows = "";
+
+
+            for (
+                let year = 1;
+                year <= life;
+                year++
+            ) {
+
+                const opening =
+                    carrying;
+
+                let depreciation =
+                    opening * rate;
+
+
+                if (
+                    opening -
+                    depreciation <
+                    residual
+                ) {
+
+                    depreciation =
+                        opening -
+                        residual;
+
+                }
+
+
+                carrying =
+                    opening -
+                    depreciation;
+
+
+                rows += `
+
+                    <tr>
+
+                        <td>${year}</td>
+
+                        <td>
+                            ${formatMoney(opening)}
+                        </td>
+
+                        <td>
+                            ${formatMoney(depreciation)}
+                        </td>
+
+                        <td>
+                            ${formatMoney(carrying)}
+                        </td>
+
+                    </tr>
+                `;
+
+            }
+
+
+            $("#depResult").innerHTML = `
+
+                <strong>
+                    Effective declining rate:
+                    ${(rate * 100).toFixed(2)}%
+                </strong>
+
+                <div class="amortization-wrapper">
+
+                    <table class="amortization-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Year</th>
+                                <th>Opening</th>
+                                <th>Depreciation</th>
+                                <th>Closing</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                            ${rows}
+                        </tbody>
+
+                    </table>
+
+                </div>
+            `;
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   MONEY FORMAT
+========================================== */
+
+function formatMoney(value) {
+
+    if (
+        !Number.isFinite(Number(value))
+    ) {
+
+        return "R0.00";
+
+    }
+
+
+    return new Intl.NumberFormat(
+        "en-ZA",
+        {
+            style: "currency",
+            currency: "ZAR",
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    ).format(Number(value));
+
+}
+
+
+/* ==========================================
+   INITIALISE
+========================================== */
+
+showHome();
+
+updateCalculatorDisplay();
+
+</script>
+
+</body>
+
+</html>
