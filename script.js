@@ -1,0 +1,7827 @@
+document.addEventListener("DOMContentLoaded", () => {
+
+    if (window.mastercommerceLoaded) return;
+    window.mastercommerceLoaded = true;
+
+
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
+
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+    const menuButton = document.getElementById("menuButton");
+    const closeSidebar = document.getElementById("closeSidebar");
+
+    const homeButton = document.getElementById("homeButton");
+    const aboutButton = document.getElementById("aboutButton");
+    const settingsButton = document.getElementById("settingsButton");
+
+    const newChatButton = document.getElementById("newChatButton");
+    const clearChatButton = document.getElementById("clearChatButton");
+
+    const chatArea = document.getElementById("chatArea");
+    const welcomeScreen = document.getElementById("welcomeScreen");
+
+    const questionInput = document.getElementById("questionInput");
+    const sendButton = document.getElementById("sendButton");
+
+    const plusButton = document.getElementById("plusButton");
+    const plusMenu = document.getElementById("plusMenu");
+    const featureToast = document.getElementById("featureToast");
+
+    const aboutModal = document.getElementById("aboutModal");
+    const settingsModal = document.getElementById("settingsModal");
+
+    const motionButton = document.getElementById("motionButton");
+    const resetSettingsButton =
+        document.getElementById("resetSettingsButton");
+
+
+    /* =========================================================
+       DEVELOPER INFORMATION
+    ========================================================= */
+
+    const developerInformation = {
+        developer: "PD | Web & App Development",
+        founder: "Phungo Dembe Vusani",
+        location: "Limpopo, South Africa",
+        education: "University of Venda, BCom in Accounting",
+        product: "Mastercommerce",
+        version: "v1.2.0 (smarter + jokes)"
+    };
+
+
+    /* =========================================================
+       CONVERSATION STATE
+    ========================================================= */
+
+    let lastConversationState = {
+        subject: null,
+        topic: null,
+        exampleIndex: 0
+    };
+
+
+    /* =========================================================
+       FUN / PERSONALITY DATA
+
+       This section exists purely to make chatting with
+       Mastercommerce more enjoyable. None of it replaces the
+       real study content below - it just sits alongside it.
+    ========================================================= */
+
+    const funGreetings = [
+        "Hello there! Ready to make some numbers behave today?",
+        "Hey! I've had my coffee (metaphorically). Let's learn something.",
+        "Howzit! Accounting, Economics or Maths - pick your fighter.",
+        "Welcome back. I promise I'm more fun than your textbook.",
+        "Hi! Warning: I may sneak in a bad joke while explaining IFRS.",
+        "Greetings, scholar. Shall we balance some books or bend some curves?",
+        "Hey hey! Let's turn 'I don't get it' into 'oh, THAT'S easy'.",
+        "Hello! Fun fact: you just made an AI's day by saying hi."
+    ];
+
+    const greetingFollowUps = [
+        "So, what's on your plate today - Accounting, Economics or Maths?",
+        "How's your day going so far? And what are we tackling together?",
+        "Are you revising for a test, or just curious about something?",
+        "What's been the trickiest topic for you lately?",
+        "Got a specific chapter giving you trouble, or just exploring for now?",
+        "Been staring at your notes for a while, or fresh off a break?",
+        "Are we doing quick revision today, or diving deep into one topic?",
+        "What grade or level are you studying at right now?",
+        "Any particular subject stressing you out this week?",
+        "Feeling good about your studies today, or need a confidence boost first?"
+    ];
+
+    const thinkingPhrases = [
+        "Thinking",
+        "Crunching numbers",
+        "Flipping through my notes",
+        "Consulting the ledger",
+        "Balancing the equation",
+        "Digging through my brain-vault",
+        "Doing the maths (carefully)",
+        "Summoning the right formula",
+        "Checking twice, answering once",
+        "Warming up the calculator"
+    ];
+
+    const encouragements = [
+        "Great question!",
+        "Ooh, good one.",
+        "Love this topic.",
+        "Solid question - let's dig in.",
+        "Nice, this one's actually kind of fun.",
+        "Here we go!",
+        "Let's sort this out together."
+    ];
+
+    const jokesKnowledge = [
+
+        /* --- Accounting --- */
+        { setup: "Why did the accountant cross the road?", punchline: "To get to the other ledger side." },
+        { setup: "Why did the accountant break up with the calculator?", punchline: "Too many mixed feelings, not enough closure entries." },
+        { setup: "Why don't accountants play hide and seek?", punchline: "Because good luck hiding when they always balance the books." },
+        { setup: "What do you call an accountant who can't do maths?", punchline: "Retired." },
+        { setup: "Why did the balance sheet go to therapy?", punchline: "It had too many unresolved issues on both sides." },
+        { setup: "Why was the ledger always calm?", punchline: "It knew how to keep things balanced." },
+        { setup: "What's an accountant's favourite dance move?", punchline: "The double entry shuffle." },
+        { setup: "Why did the VAT return blush?", punchline: "It saw its input and output getting a little too close." },
+        { setup: "Why did the depreciation schedule feel unappreciated?", punchline: "Its value just kept going down every year." },
+        { setup: "What's a partnership's favourite type of music?", punchline: "Anything with a good profit-sharing ratio." },
+        { setup: "Why did the auditor bring a magnifying glass to the party?", punchline: "To check if the fun was properly accounted for." },
+        { setup: "What do you call two accountants arguing?", punchline: "A reconciliation." },
+        { setup: "Why did the bookkeeper break up with their partner?", punchline: "Too many unexplained variances." },
+        { setup: "Why did the trial balance refuse to apologise?", punchline: "It insisted it was always right, even when it wasn't." },
+        { setup: "What did the accountant say to the messy drawer?", punchline: "This needs some serious reconciliation." },
+        { setup: "Why do accountants make great detectives?", punchline: "They always follow the paper trail." },
+        { setup: "Why did the suspense account go to a support group?", punchline: "It had too many unresolved issues to deal with alone." },
+        { setup: "Why did the inventory feel important?", punchline: "Because everyone kept counting on it." },
+        { setup: "What do you call an asset with a great personality?", punchline: "Current." },
+        { setup: "Why was the cash book always invited to parties?", punchline: "It always knew how to keep track of who owed what." },
+        { setup: "Why did the goodwill refuse to leave?", punchline: "It just couldn't be written off that easily." },
+        { setup: "What's a financial statement's favourite genre of movie?", punchline: "A balance-of-power thriller." },
+        { setup: "Why did the accrual show up before the party even started?", punchline: "It believes in recognising things when they happen, not when cash arrives." },
+        { setup: "Why did the bank reconciliation take so long?", punchline: "It had a lot of unpresented issues to work through." },
+        { setup: "Why did the debit and credit get married?", punchline: "Because together, they always balance each other out." },
+        { setup: "What did the auditor say to the nervous client?", punchline: "Relax, I'm just here to test your controls." },
+        { setup: "Why did the petty cash box stay humble?", punchline: "It knew it was never going to be a big spender." },
+        { setup: "Why did the depreciation method apply for a job?", punchline: "It wanted some straight-line stability in life." },
+        { setup: "What do you call a shy transaction?", punchline: "Understated." },
+        { setup: "Why did the financial year refuse to end on time?", punchline: "It had too many closing entries to finish." },
+
+        /* --- Economics --- */
+        { setup: "Why did the economist bring a ladder to the meeting?", punchline: "To reach the higher level of aggregate demand." },
+        { setup: "Why are economists bad at relationships?", punchline: "They always want to know the opportunity cost of staying." },
+        { setup: "How does an economist say 'I love you'?", punchline: "'Ceteris paribus, my feelings for you only increase.'" },
+        { setup: "Why did the demand curve break up with the supply curve?", punchline: "They just couldn't find equilibrium." },
+        { setup: "What do you call an economist with an opinion?", punchline: "Rare, and usually followed by 'it depends'." },
+        { setup: "Why did the GDP go to the gym?", punchline: "To work on its growth rate." },
+        { setup: "Why don't economists ever get lost?", punchline: "They always trust the market to find equilibrium eventually." },
+        { setup: "Why did the inflation rate get invited to every party?", punchline: "Because it just kept rising to the occasion." },
+        { setup: "Why did the economist stare at their coffee all morning?", punchline: "They were waiting for it to reach equilibrium temperature." },
+        { setup: "Why did the currency feel insecure?", punchline: "It kept depreciating in front of everyone." },
+        { setup: "What did the unemployed graph say to the economist?", punchline: "Please, just give me some seasonal work." },
+        { setup: "Why did the economist refuse to play cards?", punchline: "Too many sunk costs already invested in that deck." },
+        { setup: "Why did the interest rate go up the stairs slowly?", punchline: "It wanted to avoid a sudden economic shock." },
+        { setup: "What do economists call a bad relationship?", punchline: "A market failure." },
+        { setup: "Why did the export feel proud?", punchline: "It finally made it big overseas." },
+        { setup: "Why did the tariff show up uninvited?", punchline: "It just wanted to increase the cost of the party." },
+        { setup: "Why did the budget deficit apologise?", punchline: "It knew it was spending more than it should." },
+        { setup: "What's an economist's favourite type of tea?", punchline: "Equilibri-tea." },
+        { setup: "Why did the market fail its driving test?", punchline: "It couldn't find the right price signal." },
+        { setup: "Why did the multiplier get invited to every economy's birthday?", punchline: "Because it always makes things bigger." },
+        { setup: "Why did the Gini coefficient go to a party alone?", punchline: "It's used to measuring inequality, not sharing it." },
+        { setup: "Why did the recession bring an umbrella?", punchline: "It heard there was a downturn coming." },
+        { setup: "Why did the exchange rate keep changing its mind?", punchline: "It's naturally quite volatile." },
+        { setup: "What did the surplus say to the deficit?", punchline: "I've got more than enough, want some?" },
+        { setup: "Why did the elasticity get all the attention?", punchline: "It's just very responsive." },
+
+        /* --- Mathematics --- */
+        { setup: "Why did the mathematician refuse to leave the house?", punchline: "They couldn't find a reason - the sine just wasn't there." },
+        { setup: "Why do maths teachers love parks?", punchline: "Because of all the natural logs." },
+        { setup: "Why was the equation feeling insecure?", punchline: "It had too many unresolved variables." },
+        { setup: "Why did the student do maths on the floor?", punchline: "The teacher said not to use tables." },
+        { setup: "What do you call a number that can't sit still?", punchline: "A roamin' numeral." },
+        { setup: "Why was six afraid of seven?", punchline: "Because seven ate nine, and now everyone's suspicious of seven." },
+        { setup: "Why did the fraction feel out of place at the party?", punchline: "It just wasn't a whole number." },
+        { setup: "What did the triangle say to the circle?", punchline: "You're pointless." },
+        { setup: "Why don't mathematicians ever fight?", punchline: "They always prefer to find common ground first." },
+        { setup: "Why did the graph go to therapy?", punchline: "It had way too many ups and downs." },
+        { setup: "Why did the obtuse angle go to the beach?", punchline: "Because it was never a right angle to begin with." },
+        { setup: "What do you call an empty set at a party?", punchline: "Lonely, but technically still invited." },
+        { setup: "Why did the quadratic equation get anxious?", punchline: "It always had two possible outcomes to worry about." },
+        { setup: "Why did the decimal point look worried?", punchline: "It felt slightly out of place." },
+        { setup: "What did the algebra book say to the student?", punchline: "Stop trying to solve all your problems, focus on mine first." },
+        { setup: "Why did the statistician drown in the river?", punchline: "It had an average depth of one metre." },
+        { setup: "Why do circles never get invited to arguments?", punchline: "They avoid coming to a point." },
+        { setup: "Why did the calculus student stay up all night?", punchline: "They were trying to find their limit." },
+        { setup: "Why did the matrix break up with the vector?", punchline: "It felt the relationship wasn't well defined." },
+        { setup: "Why did the probability student never worry?", punchline: "They knew the odds were usually in their favour." },
+        { setup: "What did zero say to eight?", punchline: "Nice belt." },
+        { setup: "Why did the number line feel endless conversations?", punchline: "It just kept going in both directions." },
+        { setup: "Why did the exponent feel powerful?", punchline: "It always raised the stakes." },
+        { setup: "What's a mathematician's favourite season?", punchline: "Sum-mer." },
+        { setup: "Why did the geometry teacher skip the gym?", punchline: "They already had enough figures to work on." },
+        { setup: "Why did the fraction and the decimal stop talking?", punchline: "They just couldn't relate anymore." },
+        { setup: "Why was the derivative so confident?", punchline: "It always knew the rate at which things were changing." },
+        { setup: "Why did the parabola bring an umbrella?", punchline: "It heard there might be a vertex of rain." },
+        { setup: "Why did the student bring a ladder to maths class?", punchline: "To reach the higher-order terms." },
+        { setup: "What did the hypotenuse say to the other sides?", punchline: "I've got you covered - literally, I'm the longest one." },
+        { setup: "Why did the sequence feel proud of itself?", punchline: "It always knew what came next." },
+        { setup: "Why did the inequality refuse to settle down?", punchline: "It always wanted to be greater than or equal to something." },
+        { setup: "Why did the surd feel misunderstood?", punchline: "People kept trying to round it off." },
+        { setup: "What do you call a maths teacher who loves the outdoors?", punchline: "One who takes their roots seriously." },
+        { setup: "Why did the polynomial fail the interview?", punchline: "It had too many unnecessary terms." },
+        { setup: "Why was the algebra teacher's garden so tidy?", punchline: "They always kept the variables in check." },
+
+        /* --- General study / nerdy --- */
+        { setup: "Why did the student bring a pencil to the exam?", punchline: "To draw their own conclusions." },
+        { setup: "Why did the calculator apply for a job?", punchline: "It just wanted to add some value." },
+        { setup: "Why did the textbook go to the doctor?", punchline: "It had too many unresolved chapters." },
+        { setup: "Why did the exam paper feel nervous?", punchline: "It knew it was about to be graded." },
+        { setup: "Why did the laptop keep failing quizzes?", punchline: "It kept losing its train of thought - low battery." },
+        { setup: "Why did the study group meet at the bakery?", punchline: "Because they heard it had the best rolls for revision." },
+        { setup: "Why did the highlighter feel appreciated?", punchline: "It always knew how to bring out the important points." },
+        { setup: "Why do students love breaks?", punchline: "Because even equations need to rest sometimes." },
+        { setup: "Why did the clock get invited to study group?", punchline: "It always knows how to manage time." },
+        { setup: "Why did the notebook feel confident?", punchline: "It had everything written down, just in case." },
+        { setup: "Why did the deadline get chased around campus?", punchline: "Because everyone was trying to beat it." },
+        { setup: "Why did the coffee cup join the study session?", punchline: "It wanted to help everyone stay grounded." },
+        { setup: "What did the pencil say to the eraser?", punchline: "You really rub me the wrong way sometimes." },
+        { setup: "Why did the student stare at the exam so long?", punchline: "The paper said 'do not turn over' and they took it literally." },
+        { setup: "Why did the revision plan feel proud?", punchline: "It finally had structure." },
+        { setup: "Why did the flashcards break up?", punchline: "They just didn't click anymore." },
+        { setup: "Why did the printer refuse to work during exams?", punchline: "It said it needed a well-deserved break too." },
+        { setup: "Why did the library stay so quiet?", punchline: "Because everyone was busy turning pages, not making noise." },
+        { setup: "Why did the studying owl get top marks?", punchline: "It was a real night owl about revision." },
+        { setup: "Why did the app crash right before the test?", punchline: "It got too stressed trying to load everything at once." },
+        { setup: "Why did the ruler feel unappreciated in maths class?", punchline: "Everyone kept overlooking its many uses." },
+        { setup: "Why did the accountant love spreadsheets so much?", punchline: "Because everything finally had its own cell." },
+        { setup: "Why did the economist love long walks?", punchline: "They said it helped clear their head of externalities." },
+        { setup: "Why did the fraction refuse to fight the whole number?", punchline: "It knew it was already outnumbered." },
+        { setup: "Why did the fiscal year throw a party?", punchline: "It finally made it to year-end without a single error." },
+        { setup: "Why did the fraction and the percentage become best friends?", punchline: "They just always found common ground out of 100." },
+        { setup: "Why did the fixed asset refuse to move offices?", punchline: "It said it was, by definition, non-current." },
+        { setup: "Why did the number 9 feel confident before an exam?", punchline: "It knew it was almost perfect, just one away." },
+        { setup: "Why did the study timer get promoted?", punchline: "It always knew exactly how much time was left." }
+    ];
+
+    const funFactsKnowledge = [
+
+        /* --- Accounting & finance history --- */
+        "The word 'salary' comes from the Latin 'salarium', originally linked to payments Roman soldiers received - some say partly in salt.",
+        "Double-entry bookkeeping as we broadly know it today was popularised by Luca Pacioli, an Italian friar, in a 1494 mathematics text.",
+        "South Africa's standard VAT rate is 15%, but it wasn't always that way - it has changed more than once since VAT was introduced in 1991.",
+        "'Bankrupt' comes from the Italian 'banca rotta', meaning 'broken bench' - referring to a moneylender's bench being physically broken.",
+        "The South African Reserve Bank was established in 1921 and is one of the oldest central banks in Africa.",
+        "Compound interest is sometimes informally called 'the eighth wonder of the world' because of how quickly it can grow over long periods.",
+        "The trial balance doesn't actually prove there are no errors in the books - some errors, like a transaction omitted entirely, still balance perfectly.",
+        "The word 'audit' comes from the Latin 'audire', meaning 'to hear' - early audits were literally read aloud to be checked.",
+        "The oldest known accounting records are clay tokens used in Mesopotamia thousands of years ago to track goods and livestock.",
+        "IFRS (International Financial Reporting Standards) is used, in some form, in well over 100 countries around the world.",
+        "The word 'cash' likely traces back to the Old French 'casse', meaning a money box - not the actual coins themselves.",
+        "Goodwill on a balance sheet isn't a vague feeling - it's a specific, measurable intangible asset created through acquisitions.",
+        "The word 'ledger' comes from the Middle Dutch 'legger', meaning something that lies permanently in one place, like a large book.",
+        "Some of the earliest known 'auditors' in history worked for ancient Egyptian and Mesopotamian temples, checking grain stores.",
+        "Depreciation doesn't try to track an asset's market value - it simply spreads out cost over the asset's useful life.",
+        "The term 'blue chip', used for large stable companies, comes from poker, where blue chips traditionally hold the highest value.",
+        "A 'shell company' isn't necessarily illegal - it's simply a company with no significant operations or assets of its own.",
+        "The word 'fiscal' comes from the Latin 'fiscus', which referred to a basket used to hold public money.",
+        "South Africa's JSE (Johannesburg Stock Exchange) is one of the largest stock exchanges on the African continent.",
+        "Double-entry accounting means every single transaction affects at least two accounts - which is exactly why the books balance.",
+        "The word 'dividend' comes from the Latin 'dividendum', meaning 'a thing to be divided'.",
+        "A company's financial year doesn't have to match the calendar year - many businesses choose a different year-end for practical reasons.",
+        "The word 'budget' comes from the Old French 'bougette', meaning a small leather bag once used to carry money and documents.",
+        "Early forms of insurance can be traced back thousands of years, including merchants in ancient China spreading cargo across boats to manage risk.",
+        "The term 'red tape' referring to bureaucracy comes from the red ribbon once used to bind official government documents.",
+
+        /* --- Economics --- */
+        "The term 'inflation' was originally used to describe an increase in the money supply before it came to mean rising prices generally.",
+        "The Great Depression of the 1930s is one of the key historical events that shaped modern macroeconomic theory, including Keynesian economics.",
+        "Adam Smith's 'The Wealth of Nations' (1776) is often treated as a foundational text of modern economics.",
+        "The word 'economics' comes from the Greek 'oikonomia', meaning household management.",
+        "The Nobel Prize in Economic Sciences wasn't part of Alfred Nobel's original will - it was established later, in 1968, by Sweden's central bank.",
+        "Hyperinflation has occurred in various countries throughout history, sometimes causing prices to double in a matter of days.",
+        "The 'invisible hand', a famous economic metaphor, was used by Adam Smith to describe how individual self-interest can benefit society overall.",
+        "GDP was developed largely in the 1930s and 1940s, partly to help track economic activity during the Great Depression and World War II.",
+        "Opportunity cost applies to time as much as money - every hour spent on one activity is an hour not spent on the next best alternative.",
+        "The term 'stagflation' combines 'stagnation' and 'inflation' to describe the unusual combination of slow growth and rising prices.",
+        "Many central banks around the world target a specific inflation rate, often around 2 to 6%, rather than aiming for zero inflation.",
+        "The Bretton Woods conference in 1944 helped shape the modern international monetary system after World War II.",
+        "Barter systems predate money, but they require what's called a 'double coincidence of wants' to work smoothly.",
+        "The law of diminishing marginal utility suggests the tenth slice of pizza rarely brings as much joy as the first.",
+        "Some economists distinguish between 'positive economics' (what is) and 'normative economics' (what should be).",
+        "The term 'black market' refers to trade that happens outside official, legal channels, often to avoid taxes or restrictions.",
+        "South Africa's economy is often described as one of the more diversified and industrialised economies on the African continent.",
+        "The concept of comparative advantage, developed by David Ricardo, shows that trade can benefit both parties even if one is better at everything.",
+        "The word 'recession' is often informally defined as two consecutive quarters of negative real GDP growth, though definitions can vary.",
+        "Game theory, used to study strategic decision-making in economics, was significantly developed by mathematician John von Neumann.",
+
+        /* --- Mathematics --- */
+        "The number zero as a placeholder and number in its own right developed independently in places including ancient India.",
+        "The Fibonacci sequence (1, 1, 2, 3, 5, 8...) shows up in surprising places in nature, like sunflower seed spirals and pinecones.",
+        "Pi (π) has been calculated to trillions of digits, but only about 40 digits are needed for most practical physics calculations.",
+        "The word 'algebra' comes from the Arabic 'al-jabr', part of the title of a 9th-century mathematical text.",
+        "A googol is the number 1 followed by 100 zeros - and it's smaller than the number of possible chess games.",
+        "The symbol for 'equals' (=) was introduced by Welsh mathematician Robert Recorde in 1557, because 'no two things can be more equal'.",
+        "Prime numbers have no positive divisors other than 1 and themselves - and mathematicians still search for the largest ones today.",
+        "The Pythagorean theorem was known and used in some form by several ancient civilisations well before Pythagoras.",
+        "A 'perfect number' equals the sum of its own positive divisors (excluding itself) - 6 is the smallest example (1 + 2 + 3 = 6).",
+        "The concept of negative numbers was used in ancient China and India long before it became widely accepted in Europe.",
+        "Calculus was developed independently by both Isaac Newton and Gottfried Wilhelm Leibniz in the late 17th century.",
+        "The golden ratio, roughly 1.618, appears in art, architecture and nature, and is closely linked to the Fibonacci sequence.",
+        "There are infinitely many prime numbers - a fact proven by the ancient Greek mathematician Euclid over 2 000 years ago.",
+        "A 'palindrome number' reads the same forwards and backwards, like 121 or 3 443.",
+        "The word 'geometry' comes from the Greek words for 'earth' and 'measurement'.",
+        "Chess has more possible unique game sequences than there are atoms in the observable universe.",
+        "The number system most of the world uses today (0-9, base 10) is often called the 'Hindu-Arabic numeral system'.",
+        "A 'Mobius strip' is a surface with only one side and one edge, created by giving a strip of paper a half twist before joining the ends.",
+        "The word 'trigonometry' comes from Greek words meaning 'triangle' and 'measure'.",
+        "The 'butterfly effect' in chaos theory illustrates how small changes in initial conditions can lead to vastly different outcomes.",
+        "Statisticians distinguish correlation from causation - two things moving together doesn't prove one causes the other.",
+        "A standard deck of 52 playing cards can be shuffled into more unique orders than there are seconds since the universe began.",
+        "The number e (approximately 2.71828) shows up naturally in growth and decay problems, much like compound interest calculations.",
+        "Binary code, used throughout computing, works with only two digits - 0 and 1 - to represent all data.",
+        "The word 'hypotenuse' comes from Greek, roughly meaning 'stretching under', referring to the side opposite the right angle.",
+
+        /* --- General study / science trivia --- */
+        "Short, spaced-out study sessions are generally more effective for long-term memory than one long cramming session.",
+        "Writing notes by hand, rather than typing them, has been linked in some studies to better retention of information.",
+        "The 'forgetting curve', described by psychologist Hermann Ebbinghaus, shows how quickly memory can fade without review.",
+        "Taking short breaks during study sessions can actually improve overall focus and information retention.",
+        "Explaining a concept out loud to someone else (or even to yourself) is a well-known way to test how well you actually understand it.",
+        "Sleep plays an important role in memory consolidation, which is part of why an all-nighter before an exam can backfire.",
+        "The 'Pomodoro Technique' - working in focused sprints with short breaks - is a popular time-management method among students.",
+        "Practice questions and self-testing are generally more effective for learning than simply re-reading notes.",
+        "Mixing up topics during a study session (sometimes called 'interleaving') can improve long-term understanding compared to studying one topic at a time.",
+        "Background noise levels that work for one person can be distracting for another - there's no single 'best' study environment for everyone."
+    ];
+
+    const motivationalLines = [
+        "You're one question closer to understanding this properly - keep going!",
+        "Every expert was once confused by exactly this. You're doing fine.",
+        "Small steps. This concept will click before you know it.",
+        "If it feels hard, that usually means you're actually learning.",
+        "Take a breath, re-read it once - it'll make more sense the second time."
+    ];
+
+    function pickRandom(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
+
+    /* =========================================================
+       MASTERCOMMERCE KNOWLEDGE ENGINE
+       
+       Everything below is stored directly inside script.js.
+       
+       Each topic contains:
+       - topic
+       - keywords
+       - relatedKeywords
+       - information
+       - formulas
+       - rules
+       - examples
+    ========================================================= */
+
+
+    /* =========================================================
+       ACCOUNTING KNOWLEDGE
+    ========================================================= */
+
+    const accountingKnowledge = [
+
+        {
+            topic: "Accounting Basics",
+
+            keywords: [
+                "accounting",
+                "accounting definition",
+                "what is accounting",
+                "bookkeeping",
+                "financial information",
+                "accounting equation"
+            ],
+
+            relatedKeywords: [
+                "business",
+                "transactions",
+                "records",
+                "financial statements",
+                "assets",
+                "liabilities",
+                "equity"
+            ],
+
+            information:
+                "Accounting is the process of identifying, recording, classifying, summarising and communicating financial information to users so that they can make informed decisions.",
+
+            formulas: [
+                "Assets = Equity + Liabilities"
+            ],
+
+            rules: [
+                "Assets are resources controlled by the business.",
+                "Liabilities are obligations owed to other parties.",
+                "Equity is the owner's residual interest in the assets after liabilities.",
+                "Income increases equity.",
+                "Expenses decrease equity."
+            ],
+
+            examples: [
+                "If a business has assets of R100 000 and liabilities of R40 000, equity is R60 000."
+            ]
+        },
+
+
+        {
+            topic: "Accounting Equation",
+
+            keywords: [
+                "accounting equation",
+                "assets liabilities equity",
+                "assets equals liabilities",
+                "equity formula",
+                "capital formula"
+            ],
+
+            relatedKeywords: [
+                "assets",
+                "liabilities",
+                "capital",
+                "drawings",
+                "profit",
+                "loss"
+            ],
+
+            information:
+                "The accounting equation shows the relationship between what a business owns, what it owes and the owner's interest.",
+
+            formulas: [
+                "Assets = Equity + Liabilities",
+                "Equity = Assets - Liabilities",
+                "Equity = Capital + Profit - Drawings"
+            ],
+
+            rules: [
+                "Every transaction must keep the accounting equation balanced."
+            ],
+
+            examples: [
+                "Assets = R500 000 and liabilities = R200 000. Equity = R500 000 - R200 000 = R300 000."
+            ]
+        },
+
+
+        {
+            topic: "Debit and Credit",
+
+            keywords: [
+                "debit",
+                "credit",
+                "debit credit",
+                "debit rules",
+                "credit rules",
+                "double entry"
+            ],
+
+            relatedKeywords: [
+                "asset",
+                "liability",
+                "equity",
+                "income",
+                "expense",
+                "capital",
+                "drawings"
+            ],
+
+            information:
+                "Debit and credit are the two sides used in double-entry accounting. Every transaction normally has at least one debit and one credit of equal amounts.",
+
+            formulas: [],
+
+            rules: [
+                "Assets increase with a debit and decrease with a credit.",
+                "Expenses increase with a debit and decrease with a credit.",
+                "Drawings increase with a debit.",
+                "Liabilities increase with a credit and decrease with a debit.",
+                "Equity increases with a credit.",
+                "Income increases with a credit."
+            ],
+
+            examples: [
+                "Buying equipment for cash: Debit Equipment and Credit Bank/Cash."
+            ]
+        },
+
+
+        {
+            topic: "Gross Profit and Net Profit",
+
+            keywords: [
+                "gross profit",
+                "gross profit formula",
+                "net profit",
+                "gross profit percentage",
+                "net profit percentage",
+                "profit"
+            ],
+
+            relatedKeywords: [
+                "sales",
+                "cost of sales",
+                "expenses",
+                "income",
+                "mark up"
+            ],
+
+            information:
+                "Gross profit is the profit made from buying and selling trading stock before operating expenses. Net profit is the remaining profit after other income and expenses are considered.",
+
+            formulas: [
+                "Gross Profit = Sales - Cost of Sales",
+                "Net Profit = Gross Profit + Other Income - Expenses",
+                "Gross Profit % = Gross Profit / Sales × 100",
+                "Net Profit % = Net Profit / Sales × 100"
+            ],
+
+            rules: [
+                "A higher gross profit percentage generally means more gross profit is earned from each rand of sales.",
+                "Net profit takes operating expenses and other income into account."
+            ],
+
+            examples: [
+                "Sales = R100 000 and cost of sales = R60 000. Gross profit = R40 000."
+            ]
+        },
+
+
+        {
+            topic: "Cost of Sales",
+
+            keywords: [
+                "cost of sales",
+                "cost of goods sold",
+                "cos",
+                "opening stock",
+                "closing stock",
+                "purchases",
+                "carriage on purchases"
+            ],
+
+            relatedKeywords: [
+                "inventory",
+                "stock",
+                "gross profit",
+                "sales"
+            ],
+
+            information:
+                "Cost of sales measures the cost of inventory that was sold during the accounting period.",
+
+            formulas: [
+                "Cost of Sales = Opening Stock + Net Purchases + Carriage on Purchases - Closing Stock",
+                "Gross Profit = Sales - Cost of Sales"
+            ],
+
+            rules: [
+                "Closing stock is deducted because it was not sold during the period."
+            ],
+
+            examples: [
+                "Opening stock R20 000 + purchases R60 000 + carriage R5 000 - closing stock R15 000 = cost of sales R70 000."
+            ]
+        },
+
+
+        {
+            topic: "Inventory",
+
+            keywords: [
+                "inventory",
+                "stock",
+                "trading stock",
+                "inventory valuation",
+                "fifo",
+                "weighted average",
+                "periodic inventory",
+                "perpetual inventory"
+            ],
+
+            relatedKeywords: [
+                "cost",
+                "net realisable value",
+                "nrV",
+                "cost of sales",
+                "closing stock"
+            ],
+
+            information:
+                "Inventory consists of assets held for sale in the ordinary course of business, or materials used in producing goods or services.",
+
+            formulas: [
+                "NRV = Estimated Selling Price - Costs of Completion - Costs Necessary to Make the Sale"
+            ],
+
+            rules: [
+                "Under IAS 2, inventory is generally measured at the lower of cost and net realisable value.",
+                "FIFO assumes the earliest goods purchased are sold first.",
+                "Weighted average assigns an average cost per unit."
+            ],
+
+            examples: [
+                "Cost = R900 000 and NRV = R820 000. Inventory is written down to R820 000, giving an R80 000 write-down."
+            ]
+        },
+
+
+        {
+            topic: "VAT",
+
+            keywords: [
+                "vat",
+                "value added tax",
+                "input vat",
+                "output vat",
+                "vat inclusive",
+                "vat exclusive",
+                "vat 15 percent"
+            ],
+
+            relatedKeywords: [
+                "south africa",
+                "tax",
+                "sales",
+                "purchases"
+            ],
+
+            information:
+                "VAT is an indirect consumption tax charged on taxable supplies. In South Africa, the standard VAT rate is 15%.",
+
+            formulas: [
+                "VAT = VAT-exclusive amount × 15%",
+                "VAT-inclusive amount = VAT-exclusive amount × 1.15",
+                "VAT-exclusive amount = VAT-inclusive amount ÷ 1.15",
+                "VAT payable = Output VAT - Input VAT"
+            ],
+
+            rules: [
+                "Output VAT is generally VAT charged on taxable sales.",
+                "Input VAT is generally VAT incurred on qualifying business purchases.",
+                "The net amount payable is output VAT less allowable input VAT."
+            ],
+
+            examples: [
+                "R10 000 excluding VAT × 15% = R1 500 VAT. Inclusive amount = R11 500."
+            ]
+        },
+
+
+        {
+            topic: "Depreciation",
+
+            keywords: [
+                "depreciation",
+                "straight line depreciation",
+                "diminishing balance",
+                "carrying amount",
+                "residual value",
+                "useful life"
+            ],
+
+            relatedKeywords: [
+                "asset",
+                "ppe",
+                "property plant equipment",
+                "non current asset"
+            ],
+
+            information:
+                "Depreciation is the systematic allocation of the depreciable amount of an asset over its useful life.",
+
+            formulas: [
+                "Straight-line depreciation = (Cost - Residual Value) / Useful Life",
+                "Carrying Amount = Cost - Accumulated Depreciation - Accumulated Impairment"
+            ],
+
+            rules: [
+                "Depreciation is an expense unless included in another asset's cost.",
+                "Useful life and residual value should be reviewed where required."
+            ],
+
+            examples: [
+                "Straight-line: Cost R850 000, residual value R50 000, useful life 8 years. Annual depreciation = (850 000 - 50 000) ÷ 8 = R100 000 per year.",
+                "Diminishing balance: Carrying amount R400 000 and a diminishing-balance rate of 20%. Depreciation for the year = R400 000 × 20% = R80 000, so the new carrying amount is R320 000.",
+                "Partial year: An asset costing R120 000 (no residual value, 5-year useful life) is bought on 1 April, but the financial year ends on 31 December (9 months). Annual depreciation would be R24 000, so depreciation for the 9 months = R24 000 × 9/12 = R18 000.",
+                "Change in estimate: An asset with a carrying amount of R60 000 has its remaining useful life revised from 4 years to 2 years. Going forward, annual depreciation becomes R60 000 ÷ 2 = R30 000 per year (applied prospectively, not restated).",
+                "Disposal: An asset with a cost of R200 000 and accumulated depreciation of R150 000 has a carrying amount of R50 000. If it is sold for R70 000, the business records a profit on sale of R20 000 (R70 000 - R50 000)."
+            ]
+        },
+
+
+        {
+            topic: "IAS 16 - Property Plant and Equipment",
+
+            keywords: [
+                "ias 16",
+                "property plant equipment",
+                "ppe",
+                "property plant and equipment",
+                "depreciation",
+                "residual value",
+                "useful life",
+                "carrying amount",
+                "revaluation",
+                "disposal"
+            ],
+
+            relatedKeywords: [
+                "asset",
+                "recognition",
+                "cost model",
+                "revaluation model",
+                "component accounting"
+            ],
+
+            information:
+                "IAS 16 deals with property, plant and equipment. PPE is recognised when it is probable that future economic benefits will flow to the entity and the cost can be measured reliably.",
+
+            formulas: [
+                "Initial cost = Purchase price + Directly attributable costs",
+                "Depreciable amount = Cost - Residual value",
+                "Straight-line depreciation = (Cost - Residual value) / Useful life",
+                "Carrying amount = Cost - Accumulated depreciation - Accumulated impairment"
+            ],
+
+            rules: [
+                "Directly attributable costs necessary to bring the asset to the location and condition necessary for operation can form part of cost.",
+                "Training costs are normally expensed.",
+                "An entity may use the cost model or revaluation model as permitted by IAS 16.",
+                "Significant components with different useful lives may need separate depreciation.",
+                "Depreciation begins when the asset is available for use.",
+                "An asset is derecognised on disposal or when no future economic benefits are expected."
+            ],
+
+            examples: [
+                "Purchase price R800 000 + installation R20 000 + delivery R30 000 = R850 000 capitalised cost. Training of R15 000 is normally expensed."
+            ]
+        },
+
+
+        {
+            topic: "IAS 2 - Inventories",
+
+            keywords: [
+                "ias 2",
+                "ias2",
+                "inventories",
+                "inventory",
+                "net realisable value",
+                "nrv",
+                "fifo",
+                "weighted average"
+            ],
+
+            relatedKeywords: [
+                "cost",
+                "closing stock",
+                "cost of sales",
+                "write down"
+            ],
+
+            information:
+                "IAS 2 prescribes accounting for inventories. Inventory is measured at the lower of cost and net realisable value.",
+
+            formulas: [
+                "NRV = Estimated selling price - costs of completion - costs necessary to make the sale"
+            ],
+
+            rules: [
+                "Inventory cost includes purchase costs, conversion costs and other costs incurred to bring inventory to its present location and condition.",
+                "Inventory is written down when NRV is below cost."
+            ],
+
+            examples: [
+                "Inventory cost R700 000, selling price R750 000, completion costs R30 000 and selling costs R20 000. NRV = R700 000, so there is no write-down."
+            ]
+        },
+
+
+        {
+            topic: "IAS 7 - Statement of Cash Flows",
+
+            keywords: [
+                "ias 7",
+                "cash flow",
+                "cash flows",
+                "operating activities",
+                "investing activities",
+                "financing activities",
+                "cash equivalents"
+            ],
+
+            relatedKeywords: [
+                "cash",
+                "bank",
+                "investment",
+                "financing"
+            ],
+
+            information:
+                "IAS 7 requires information about changes in cash and cash equivalents through operating, investing and financing activities.",
+
+            formulas: [],
+
+            rules: [
+                "Operating activities relate to the main revenue-producing activities.",
+                "Investing activities relate mainly to acquiring and disposing of long-term assets and investments.",
+                "Financing activities relate to changes in contributed equity and borrowings."
+            ],
+
+            examples: [
+                "Cash received from customers is generally an operating cash flow.",
+                "Cash paid to buy equipment is generally an investing cash flow.",
+                "Cash received from issuing shares is generally a financing cash flow."
+            ]
+        },
+
+
+        {
+            topic: "IAS 8 - Accounting Policies Estimates and Errors",
+
+            keywords: [
+                "ias 8",
+                "accounting policies",
+                "accounting estimates",
+                "errors",
+                "retrospective",
+                "prospective"
+            ],
+
+            relatedKeywords: [
+                "prior period",
+                "financial statements",
+                "correction"
+            ],
+
+            information:
+                "IAS 8 deals with accounting policies, changes in accounting estimates and errors.",
+
+            formulas: [],
+
+            rules: [
+                "Changes in accounting policies are generally applied retrospectively unless impracticable or another standard provides specific transitional requirements.",
+                "Changes in accounting estimates are generally recognised prospectively.",
+                "Material prior-period errors are generally corrected retrospectively."
+            ],
+
+            examples: [
+                "Changing the estimated useful life of an asset is normally a change in estimate and therefore affects the current and future periods."
+            ]
+        },
+
+
+        {
+            topic: "IAS 10 - Events After Reporting Period",
+
+            keywords: [
+                "ias 10",
+                "events after reporting period",
+                "adjusting event",
+                "non adjusting event",
+                "adjusting events"
+            ],
+
+            relatedKeywords: [
+                "reporting date",
+                "financial statements",
+                "year end"
+            ],
+
+            information:
+                "IAS 10 deals with events occurring between the reporting date and the date the financial statements are authorised for issue.",
+
+            formulas: [],
+
+            rules: [
+                "Adjusting events provide evidence of conditions existing at the reporting date.",
+                "Non-adjusting events relate to conditions arising after the reporting date.",
+                "Material non-adjusting events may require disclosure."
+            ],
+
+            examples: [
+                "A customer bankruptcy shortly after year-end may provide evidence that the receivable was impaired at year-end."
+            ]
+        },
+
+
+        {
+            topic: "IAS 12 - Income Taxes",
+
+            keywords: [
+                "ias 12",
+                "income tax",
+                "deferred tax",
+                "current tax",
+                "tax base",
+                "temporary difference",
+                "dtl",
+                "dta"
+            ],
+
+            relatedKeywords: [
+                "deferred tax liability",
+                "deferred tax asset",
+                "carrying amount",
+                "taxable temporary difference",
+                "deductible temporary difference"
+            ],
+
+            information:
+                "IAS 12 deals with current and deferred income tax. Deferred tax arises from temporary differences between the carrying amount of an asset or liability and its tax base.",
+
+            formulas: [
+                "Temporary difference = Carrying amount - Tax base",
+                "Deferred tax = Temporary difference × Applicable tax rate"
+            ],
+
+            rules: [
+                "A taxable temporary difference generally gives rise to a deferred tax liability, subject to exceptions.",
+                "A deductible temporary difference may give rise to a deferred tax asset when recognition criteria are met.",
+                "Permanent differences do not create deferred tax."
+            ],
+
+            examples: [
+                "Carrying amount R500 000, tax base R350 000 and tax rate 27%. Taxable temporary difference = R150 000. DTL = R40 500."
+            ]
+        },
+
+
+        {
+            topic: "IAS 21 - Foreign Exchange",
+
+            keywords: [
+                "ias 21",
+                "foreign exchange",
+                "foreign currency",
+                "exchange rate",
+                "functional currency",
+                "monetary items",
+                "exchange difference"
+            ],
+
+            relatedKeywords: [
+                "rand",
+                "dollar",
+                "euro",
+                "closing rate",
+                "spot rate"
+            ],
+
+            information:
+                "IAS 21 deals with foreign currency transactions, translation of foreign operations and determination of functional currency.",
+
+            formulas: [
+                "Foreign currency amount × Exchange rate = Functional currency amount"
+            ],
+
+            rules: [
+                "A foreign currency transaction is initially recorded using the spot exchange rate at the transaction date.",
+                "Foreign currency monetary items are generally translated at the closing rate at reporting date.",
+                "Exchange differences are generally recognised in profit or loss unless another requirement applies."
+            ],
+
+            examples: [
+                "$10 000 at R18/$ = R180 000. If the closing rate becomes R19/$, the monetary item becomes R190 000, creating a R10 000 exchange difference."
+            ]
+        },
+
+
+        {
+            topic: "IAS 23 - Borrowing Costs",
+
+            keywords: [
+                "ias 23",
+                "borrowing costs",
+                "qualifying asset",
+                "capitalised interest",
+                "interest"
+            ],
+
+            relatedKeywords: [
+                "construction",
+                "loan",
+                "capitalisation"
+            ],
+
+            information:
+                "IAS 23 requires borrowing costs directly attributable to the acquisition, construction or production of a qualifying asset to be capitalised as part of that asset's cost.",
+
+            formulas: [
+                "Borrowing cost = Principal × Interest rate × Time"
+            ],
+
+            rules: [
+                "Capitalisation starts when expenditure is incurred, borrowing costs are incurred and activities necessary to prepare the asset are in progress.",
+                "Capitalisation stops when substantially all activities necessary to prepare the asset are complete."
+            ],
+
+            examples: [
+                "R5 million borrowed at 10% for a qualifying asset for a full year gives R500 000 borrowing cost before considering specific adjustments."
+            ]
+        },
+
+
+        {
+            topic: "IAS 24 - Related Parties",
+
+            keywords: [
+                "ias 24",
+                "related parties",
+                "related party",
+                "key management personnel",
+                "related party transaction"
+            ],
+
+            relatedKeywords: [
+                "director",
+                "parent",
+                "subsidiary",
+                "associate",
+                "family"
+            ],
+
+            information:
+                "IAS 24 requires disclosure of related-party relationships, transactions and outstanding balances in specified circumstances.",
+
+            formulas: [],
+
+            rules: [
+                "Related parties can include parents, subsidiaries, associates, joint ventures, key management personnel and certain close family members.",
+                "The purpose is to provide users with information about relationships and transactions that could affect financial statements."
+            ],
+
+            examples: []
+        },
+
+
+        {
+            topic: "IAS 28 - Associates and Joint Ventures",
+
+            keywords: [
+                "ias 28",
+                "associate",
+                "significant influence",
+                "equity method",
+                "joint venture",
+                "investment in associate",
+                "board representation"
+            ],
+
+            relatedKeywords: [
+                "20 percent",
+                "20%",
+                "voting power",
+                "equity method",
+                "goodwill",
+                "dividend",
+                "net investment"
+            ],
+
+            information:
+                "IAS 28 governs investments in associates and joint ventures. Significant influence is the power to participate in financial and operating policy decisions without having control or joint control.",
+
+            formulas: [
+                "Investor's share of profit = Ownership percentage × Associate profit",
+                "Investment carrying amount = Opening carrying amount + Share of profit - Dividends - Impairment ± other required adjustments"
+            ],
+
+            rules: [
+                "Holding 20% or more of voting power creates a rebuttable presumption of significant influence.",
+                "Board representation and participation in policy-making can provide evidence of significant influence.",
+                "Goodwill arising on acquiring an associate is included in the carrying amount of the investment.",
+                "Dividends received reduce the carrying amount of the investment under the equity method.",
+                "The investor recognises its share of the associate's profit or loss."
+            ],
+
+            examples: [
+                "If an investor owns 30% of an associate that earns R1 million, the investor's share of profit is R300 000.",
+                "If the associate pays a R500 000 dividend, the investor's 30% share is R150 000 and this reduces the investment carrying amount."
+            ]
+        },
+
+
+        {
+            topic: "IFRS 7 - Financial Instruments Disclosures",
+
+            keywords: [
+                "ifrs 7",
+                "financial instruments disclosures",
+                "financial risk",
+                "credit risk",
+                "liquidity risk",
+                "market risk"
+            ],
+
+            relatedKeywords: [
+                "risk",
+                "disclosure",
+                "financial asset",
+                "financial liability"
+            ],
+
+            information:
+                "IFRS 7 requires disclosures that enable users to evaluate the significance of financial instruments and the nature and extent of risks arising from them.",
+
+            formulas: [],
+
+            rules: [
+                "Important financial risks include credit risk, liquidity risk and market risk.",
+                "Disclosures include information about risk exposures and how those risks are managed."
+            ],
+
+            examples: []
+        },
+
+
+        {
+            topic: "IFRS 9 - Financial Instruments",
+
+            keywords: [
+                "ifrs 9",
+                "financial instruments",
+                "financial asset",
+                "amortised cost",
+                "fvoci",
+                "fvtpl",
+                "fair value through profit or loss",
+                "expected credit loss",
+                "ecl",
+                "sppi"
+            ],
+
+            relatedKeywords: [
+                "interest",
+                "credit loss",
+                "business model",
+                "cash flows",
+                "financial liability"
+            ],
+
+            information:
+                "IFRS 9 deals with classification and measurement of financial assets and liabilities, impairment and hedge accounting.",
+
+            formulas: [
+                "Expected Credit Loss = Exposure × Probability of Default × Loss Given Default"
+            ],
+
+            rules: [
+                "Financial assets may be measured at amortised cost, FVOCI or FVTPL depending on classification requirements.",
+                "Amortised cost classification generally requires a hold-to-collect business model and cash flows that pass the SPPI test.",
+                "The effective interest method is used for amortised cost.",
+                "The expected credit loss model is used for impairment."
+            ],
+
+            examples: [
+                "A loan of R500 000 with an estimated loss rate of 4% and recovery factor represented by 60% exposure gives a simplified expected loss of R12 000."
+            ]
+        },
+
+
+        {
+            topic: "IFRS 10 - Consolidated Financial Statements",
+
+            keywords: [
+                "ifrs 10",
+                "consolidation",
+                "consolidated financial statements",
+                "control",
+                "subsidiary",
+                "parent",
+                "nci",
+                "non controlling interest",
+                "intragroup"
+            ],
+
+            relatedKeywords: [
+                "85%",
+                "elimination",
+                "goodwill",
+                "pre acquisition",
+                "post acquisition",
+                "intragroup profit"
+            ],
+
+            information:
+                "IFRS 10 establishes principles for presenting consolidated financial statements when an entity controls one or more other entities.",
+
+            formulas: [
+                "Goodwill = Consideration transferred + NCI + Fair value of previous interest - Fair value of identifiable net assets acquired"
+            ],
+
+            rules: [
+                "Control exists when the investor has power over the investee, exposure or rights to variable returns and the ability to use power to affect those returns.",
+                "Intragroup balances and transactions are eliminated on consolidation.",
+                "Unrealised intragroup profits are eliminated to the extent required.",
+                "NCI is presented separately within equity."
+            ],
+
+            examples: [
+                "Parent consideration R10 million + NCI R2 million - identifiable net assets R9 million = goodwill of R3 million.",
+                "If NCI is 20% and relevant net assets are R3 million, NCI is R600 000."
+            ]
+        },
+
+
+        {
+            topic: "IFRS 15 - Revenue",
+
+            keywords: [
+                "ifrs 15",
+                "revenue",
+                "five step model",
+                "performance obligation",
+                "contract asset",
+                "contract liability",
+                "variable consideration",
+                "principal agent"
+            ],
+
+            relatedKeywords: [
+                "customer",
+                "contract",
+                "transaction price",
+                "standalone selling price"
+            ],
+
+            information:
+                "IFRS 15 establishes a five-step model for recognising revenue from contracts with customers.",
+
+            formulas: [
+                "Allocated transaction price = Transaction price × Standalone selling price / Total standalone selling prices"
+            ],
+
+            rules: [
+                "Identify the contract with a customer.",
+                "Identify the performance obligations.",
+                "Determine the transaction price.",
+                "Allocate the transaction price to performance obligations.",
+                "Recognise revenue when or as each performance obligation is satisfied."
+            ],
+
+            examples: [
+                "A contract price of R12 000 is allocated between goods with standalone selling prices of R10 000 and R5 000. The allocations are R8 000 and R4 000."
+            ]
+        },
+
+
+        {
+            topic: "IFRS 16 - Leases",
+
+            keywords: [
+                "ifrs 16",
+                "lease",
+                "right of use asset",
+                "rou asset",
+                "lease liability",
+                "lessee"
+            ],
+
+            relatedKeywords: [
+                "rent",
+                "present value",
+                "interest",
+                "depreciation"
+            ],
+
+            information:
+                "IFRS 16 requires a lessee to recognise a right-of-use asset and lease liability for most leases, subject to exemptions.",
+
+            formulas: [
+                "Lease liability = Present value of lease payments",
+                "Interest expense = Opening lease liability × Interest rate",
+                "Closing liability = Opening liability + Interest - Lease payment"
+            ],
+
+            rules: [
+                "The right-of-use asset is generally depreciated over the relevant period.",
+                "The lease liability is subsequently measured using the effective interest method."
+            ],
+
+            examples: [
+                "Opening lease liability R379 000, interest R37 900 and payment R100 000 gives closing liability of R316 900."
+            ]
+        },
+
+
+        {
+            topic: "IFRS 3 - Business Combinations",
+
+            keywords: [
+                "ifrs 3",
+                "business combination",
+                "acquisition method",
+                "goodwill",
+                "bargain purchase",
+                "acquirer"
+            ],
+
+            relatedKeywords: [
+                "subsidiary",
+                "consideration",
+                "fair value",
+                "nci",
+                "net assets"
+            ],
+
+            information:
+                "IFRS 3 establishes accounting requirements for business combinations using the acquisition method.",
+
+            formulas: [
+                "Goodwill = Consideration + NCI + Previous interest - Fair value of identifiable net assets"
+            ],
+
+            rules: [
+                "Identify the acquirer.",
+                "Determine the acquisition date.",
+                "Recognise identifiable assets acquired and liabilities assumed at acquisition-date fair values, subject to specific requirements.",
+                "Recognise goodwill or a bargain purchase gain."
+            ],
+
+            examples: [
+                "Consideration R10m + NCI R2m - net identifiable assets R9m = goodwill R3m."
+            ]
+        },
+
+
+        {
+            topic: "IAS 36 - Impairment of Assets",
+
+            keywords: [
+                "ias 36",
+                "impairment",
+                "recoverable amount",
+                "value in use",
+                "fair value less costs of disposal",
+                "fvlcd",
+                "carrying amount"
+            ],
+
+            relatedKeywords: [
+                "asset",
+                "loss",
+                "recoverable amount",
+                "cash generating unit",
+                "cgu"
+            ],
+
+            information:
+                "IAS 36 requires assets not to be carried above their recoverable amount.",
+
+            formulas: [
+                "Recoverable amount = Higher of Value in Use and Fair Value Less Costs of Disposal",
+                "Impairment loss = Carrying Amount - Recoverable Amount"
+            ],
+
+            rules: [
+                "An impairment loss is recognised when carrying amount exceeds recoverable amount.",
+                "Cash-generating units are used where an individual asset does not generate largely independent cash inflows."
+            ],
+
+            examples: [
+                "Carrying amount R1.5m, FVLCD R1.2m and VIU R1.35m. Recoverable amount = R1.35m. Impairment loss = R150 000."
+            ]
+        },
+
+
+        {
+            topic: "IAS 37 - Provisions",
+
+            keywords: [
+                "ias 37",
+                "provision",
+                "contingent liability",
+                "contingent asset",
+                "present obligation",
+                "probable",
+                "best estimate"
+            ],
+
+            relatedKeywords: [
+                "lawsuit",
+                "obligation",
+                "uncertain",
+                "discount",
+                "expected value"
+            ],
+
+            information:
+                "IAS 37 deals with provisions, contingent liabilities and contingent assets.",
+
+            formulas: [
+                "Expected value = Σ Probability × Possible outcome"
+            ],
+
+            rules: [
+                "A provision is recognised when there is a present obligation from a past event, a probable outflow of resources and a reliable estimate can be made.",
+                "A contingent liability is generally disclosed rather than recognised unless the probability and other recognition requirements are met.",
+                "Long-term provisions may require discounting."
+            ],
+
+            examples: [
+                "Possible outcomes: 60% probability of R0, 30% of R1m and 10% of R3m. Expected value = R600 000."
+            ]
+        },
+
+
+        {
+            topic: "IAS 33 - Earnings Per Share",
+
+            keywords: [
+                "ias 33",
+                "earnings per share",
+                "eps",
+                "weighted average shares",
+                "basic eps"
+            ],
+
+            relatedKeywords: [
+                "profit",
+                "ordinary shares",
+                "shareholders"
+            ],
+
+            information:
+                "IAS 33 prescribes principles for calculating and presenting earnings per share for entities whose ordinary shares are publicly traded or are in the process of issuing such shares.",
+
+            formulas: [
+                "Basic EPS = Profit attributable to ordinary equity holders / Weighted average number of ordinary shares"
+            ],
+
+            rules: [
+                "The weighted average number of ordinary shares reflects changes in shares during the period."
+            ],
+
+            examples: [
+                "Profit R10m and weighted average shares of 5m gives EPS of R2.00."
+            ]
+        },
+
+
+        {
+            topic: "Bank Reconciliation",
+
+            keywords: [
+                "bank reconciliation",
+                "bank recon",
+                "cash book",
+                "bank statement",
+                "unpresented cheque",
+                "outstanding deposit"
+            ],
+
+            relatedKeywords: [
+                "bank",
+                "cash",
+                "cheque",
+                "deposit"
+            ],
+
+            information:
+                "A bank reconciliation compares the business's cash records with the bank statement and explains differences between the two balances.",
+
+            formulas: [],
+
+            rules: [
+                "Unpresented cheques may appear in the cash book but not yet in the bank statement.",
+                "Outstanding deposits may appear in the cash book but not yet in the bank statement.",
+                "Bank charges appearing only on the bank statement normally need recording in the cash book."
+            ],
+
+            examples: []
+        },
+
+
+        {
+            topic: "Accounting Ratios",
+
+            keywords: [
+                "accounting ratios",
+                "ratios",
+                "current ratio",
+                "acid test",
+                "debt ratio",
+                "inventory turnover",
+                "debtors collection",
+                "creditors payment",
+                "gross profit percentage",
+                "net profit percentage",
+                "roe",
+                "roa"
+            ],
+
+            relatedKeywords: [
+                "liquidity",
+                "solvency",
+                "profitability",
+                "efficiency"
+            ],
+
+            information:
+                "Accounting ratios are used to analyse liquidity, profitability, solvency and operating efficiency.",
+
+            formulas: [
+                "Current ratio = Current Assets / Current Liabilities",
+                "Acid test = (Current Assets - Inventory) / Current Liabilities",
+                "Debt ratio = Total Liabilities / Total Assets × 100",
+                "Gross profit % = Gross Profit / Sales × 100",
+                "Net profit % = Net Profit / Sales × 100",
+                "ROE = Net Profit / Average Equity × 100",
+                "ROA = Net Profit / Average Assets × 100",
+                "Inventory turnover = Cost of Sales / Average Inventory",
+                "Debtors collection period = Average Receivables / Credit Sales × 365",
+                "Creditors payment period = Average Payables / Credit Purchases × 365"
+            ],
+
+            rules: [
+                "Liquidity ratios measure the ability to meet short-term obligations.",
+                "Profitability ratios measure profit performance.",
+                "Solvency ratios examine long-term financial risk.",
+                "Efficiency ratios examine how effectively assets and working capital are used."
+            ],
+
+            examples: [
+                "Current assets R200 000 and current liabilities R100 000 gives a current ratio of 2:1."
+            ]
+        },
+
+
+        {
+            topic: "Partnerships",
+
+            keywords: [
+                "partnership",
+                "partnerships",
+                "partnership agreement",
+                "current account partner",
+                "capital account partner",
+                "profit sharing ratio",
+                "appropriation account"
+            ],
+
+            relatedKeywords: [
+                "partner",
+                "salary",
+                "bonus",
+                "interest on capital",
+                "drawings",
+                "dissolution"
+            ],
+
+            information:
+                "A partnership is a business owned by two or more partners who share profits, losses and responsibilities according to a partnership agreement.",
+
+            formulas: [
+                "Partner's share of profit = Profit sharing ratio × Net profit after appropriations",
+                "Interest on capital = Capital balance × Interest rate",
+                "Closing current account = Opening balance + Salary + Interest on capital + Bonus + Share of profit - Drawings - Interest on drawings"
+            ],
+
+            rules: [
+                "In the absence of a partnership agreement, profits and losses are often shared equally, subject to applicable law.",
+                "Partner salaries, bonuses and interest on capital are appropriations of profit, not expenses in determining net profit.",
+                "Each partner usually has a separate capital account and current account.",
+                "The capital account generally remains fixed unless there is a permanent change in capital contributed.",
+                "The current account records day-to-day movements such as salary, interest, share of profit and drawings."
+            ],
+
+            examples: [
+                "Net profit R200 000 shared equally between two partners gives each partner R100 000 before other appropriations.",
+                "A partner with capital of R300 000 and interest on capital of 10% receives R30 000 interest on capital."
+            ]
+        },
+
+
+        {
+            topic: "Companies and Share Capital",
+
+            keywords: [
+                "company",
+                "companies",
+                "share capital",
+                "ordinary shares",
+                "preference shares",
+                "dividends",
+                "retained earnings",
+                "shares issued",
+                "authorised shares"
+            ],
+
+            relatedKeywords: [
+                "shareholders",
+                "equity",
+                "directors",
+                "public company",
+                "private company"
+            ],
+
+            information:
+                "A company is a separate legal entity whose equity is divided into shares held by shareholders. Companies raise capital by issuing shares and may distribute profits as dividends.",
+
+            formulas: [
+                "Dividends per share = Total dividends declared / Number of shares in issue",
+                "Retained earnings closing balance = Opening balance + Net profit for the year - Dividends declared",
+                "Shares issued during year × Issue price = Proceeds from share issue"
+            ],
+
+            rules: [
+                "A company has a legal identity separate from its shareholders.",
+                "Ordinary shareholders generally carry the main voting and residual profit rights, while preference shareholders often receive a fixed dividend preference.",
+                "Dividends are a distribution of profit and are not treated as an expense in determining net profit.",
+                "Retained earnings accumulate undistributed profits over time."
+            ],
+
+            examples: [
+                "A company declares total dividends of R500 000 on 1 000 000 shares in issue, giving dividends per share of R0.50."
+            ]
+        },
+
+
+        {
+            topic: "Manufacturing Accounts",
+
+            keywords: [
+                "manufacturing account",
+                "manufacturing accounts",
+                "cost of production",
+                "direct material",
+                "direct labour",
+                "factory overheads",
+                "prime cost",
+                "work in progress"
+            ],
+
+            relatedKeywords: [
+                "factory",
+                "production",
+                "finished goods",
+                "raw materials",
+                "cost accounting"
+            ],
+
+            information:
+                "Manufacturing accounts calculate the total cost of producing finished goods, distinguishing direct costs from indirect factory overheads.",
+
+            formulas: [
+                "Prime cost = Direct materials + Direct labour",
+                "Cost of production = Prime cost + Factory overheads + Opening WIP - Closing WIP",
+                "Direct materials used = Opening raw materials + Purchases - Closing raw materials"
+            ],
+
+            rules: [
+                "Direct materials and direct labour are directly traceable to units produced.",
+                "Factory overheads are indirect production costs, such as factory rent and indirect labour.",
+                "Work in progress represents partly completed units at the start or end of a period.",
+                "Non-manufacturing costs, such as administration and selling expenses, are excluded from cost of production."
+            ],
+
+            examples: [
+                "Direct materials R150 000 + direct labour R100 000 = prime cost of R250 000. Adding factory overheads of R60 000 gives a cost of production of R310 000 before adjusting for work in progress."
+            ]
+        },
+
+
+        {
+            topic: "Budgeting",
+
+            keywords: [
+                "budget",
+                "budgeting",
+                "cash budget",
+                "projected income statement",
+                "variance",
+                "favourable variance",
+                "unfavourable variance"
+            ],
+
+            relatedKeywords: [
+                "forecast",
+                "planning",
+                "control",
+                "actual",
+                "cash flow"
+            ],
+
+            information:
+                "Budgeting involves preparing financial plans, such as a cash budget or projected income statement, and comparing budgeted figures with actual results.",
+
+            formulas: [
+                "Variance = Actual amount - Budgeted amount",
+                "Closing cash balance = Opening cash balance + Total receipts - Total payments"
+            ],
+
+            rules: [
+                "A cash budget projects expected cash receipts and payments over a future period.",
+                "A favourable variance generally means results were better than budgeted; an unfavourable variance means results were worse.",
+                "Budgets support planning, decision-making and performance evaluation."
+            ],
+
+            examples: [
+                "Budgeted sales of R80 000 and actual sales of R95 000 gives a favourable sales variance of R15 000."
+            ]
+        },
+
+
+        {
+            topic: "Internal Control and Internal Audit",
+
+            keywords: [
+                "internal control",
+                "internal audit",
+                "segregation of duties",
+                "authorisation",
+                "control measures",
+                "fraud prevention"
+            ],
+
+            relatedKeywords: [
+                "risk",
+                "policy",
+                "procedure",
+                "safeguard",
+                "cash control",
+                "stock control"
+            ],
+
+            information:
+                "Internal control refers to the policies and procedures a business implements to safeguard assets, ensure accurate records and promote operational efficiency.",
+
+            formulas: [],
+
+            rules: [
+                "Segregation of duties reduces the risk that one person can commit and conceal an error or fraud.",
+                "Proper authorisation procedures help ensure transactions are valid and approved.",
+                "Physical controls, such as locked storerooms, help safeguard assets.",
+                "Regular reconciliations, such as bank reconciliations and stock counts, help detect errors and irregularities."
+            ],
+
+            examples: [
+                "Separating the roles of receiving cash, recording cash and reconciling the bank account is an example of segregation of duties."
+            ]
+        },
+
+
+        {
+            topic: "Non-Profit Organisations",
+
+            keywords: [
+                "non profit organisation",
+                "non profit organisations",
+                "npo",
+                "receipts and payments",
+                "income and expenditure account",
+                "accumulated fund",
+                "subscriptions"
+            ],
+
+            relatedKeywords: [
+                "club",
+                "society",
+                "surplus",
+                "deficit",
+                "members"
+            ],
+
+            information:
+                "Non-profit organisations, such as clubs and societies, prepare financial statements such as an income and expenditure account rather than an income statement, since the entity is not operated for profit.",
+
+            formulas: [
+                "Surplus or deficit = Total income - Total expenditure",
+                "Closing accumulated fund = Opening accumulated fund + Surplus - Deficit"
+            ],
+
+            rules: [
+                "The accumulated fund is broadly equivalent to the equity of a non-profit organisation.",
+                "Subscriptions received in advance or still outstanding often require adjustment when calculating subscription income for the period.",
+                "A surplus increases the accumulated fund and a deficit decreases it."
+            ],
+
+            examples: [
+                "Total income of R120 000 and total expenditure of R95 000 gives a surplus of R25 000 for the period."
+            ]
+        },
+
+
+        {
+            topic: "Cash Flow Statement Adjustments",
+
+            keywords: [
+                "cash flow adjustments",
+                "indirect method",
+                "reconciliation of profit to cash",
+                "non cash items",
+                "working capital changes"
+            ],
+
+            relatedKeywords: [
+                "depreciation",
+                "profit before tax",
+                "receivables",
+                "payables"
+            ],
+
+            information:
+                "The indirect method starts with profit before tax and adjusts for non-cash items and changes in working capital to arrive at cash generated from operations.",
+
+            formulas: [
+                "Cash generated from operations = Profit before tax + Depreciation - Profit on sale of assets ± Working capital changes"
+            ],
+
+            rules: [
+                "Depreciation is added back because it is a non-cash expense.",
+                "An increase in receivables reduces cash generated; a decrease increases it.",
+                "An increase in payables increases cash generated; a decrease reduces it."
+            ],
+
+            examples: [
+                "Profit before tax R400 000 + depreciation R60 000 - increase in receivables R20 000 = R440 000 cash generated before further adjustments."
+            ]
+        },
+
+
+        {
+            topic: "Errors and Correction of Errors",
+
+            keywords: [
+                "errors in accounting",
+                "correction of errors",
+                "suspense account",
+                "error of omission",
+                "error of commission",
+                "error of principle",
+                "compensating error"
+            ],
+
+            relatedKeywords: [
+                "trial balance",
+                "journal entry",
+                "ledger"
+            ],
+
+            information:
+                "Accounting errors are mistakes made in recording transactions. Some errors cause the trial balance not to balance, while others do not.",
+
+            formulas: [],
+
+            rules: [
+                "An error of omission occurs when a transaction is left out entirely and does not affect the trial balance.",
+                "An error of principle occurs when a transaction is recorded against the wrong class of account.",
+                "A compensating error occurs when two unrelated errors happen to cancel each other out.",
+                "A suspense account is a temporary account used to make a trial balance agree while the underlying error is investigated."
+            ],
+
+            examples: [
+                "Recording the purchase of equipment as a repairs expense is an error of principle."
+            ]
+        },
+
+
+        {
+            topic: "Petty Cash",
+
+            keywords: [
+                "petty cash",
+                "petty cash book",
+                "imprest system",
+                "petty cash voucher"
+            ],
+
+            relatedKeywords: [
+                "cash",
+                "float",
+                "reimbursement"
+            ],
+
+            information:
+                "Petty cash is a small amount of cash kept on hand to pay for minor day-to-day business expenses.",
+
+            formulas: [
+                "Amount to reimburse = Imprest float - Cash remaining on hand"
+            ],
+
+            rules: [
+                "Under the imprest system, the float is topped up back to a fixed amount at the end of each period.",
+                "Petty cash vouchers support each payment made from petty cash."
+            ],
+
+            examples: [
+                "An imprest float of R1 000 with R350 remaining means R650 needs to be reimbursed to restore the float."
+            ]
+        },
+
+
+        {
+            topic: "Financial Statement Analysis and Interpretation",
+
+            keywords: [
+                "financial statement analysis",
+                "interpretation of financial statements",
+                "trend analysis",
+                "comparative analysis",
+                "common size statements"
+            ],
+
+            relatedKeywords: [
+                "ratios",
+                "performance",
+                "users of financial statements"
+            ],
+
+            information:
+                "Financial statement analysis involves examining financial statements, often using ratios and trends, to assess performance, liquidity and financial position.",
+
+            formulas: [],
+
+            rules: [
+                "Comparing figures over several years can reveal trends that a single year's figures may hide.",
+                "Ratios are often more meaningful when compared with prior periods or with similar businesses.",
+                "Users of financial statements include owners, lenders, employees, government and potential investors."
+            ],
+
+            examples: [
+                "A steadily declining gross profit percentage over three years may prompt further investigation into pricing or cost control."
+            ]
+        },
+
+
+        {
+            topic: "Code of Professional Ethics for Accountants",
+
+            keywords: [
+                "accounting ethics",
+                "professional ethics",
+                "code of ethics",
+                "integrity",
+                "objectivity",
+                "professional competence",
+                "confidentiality"
+            ],
+
+            relatedKeywords: [
+                "accountant",
+                "auditor",
+                "professional conduct"
+            ],
+
+            information:
+                "Professional accountants are generally expected to follow fundamental ethical principles when carrying out their work.",
+
+            formulas: [],
+
+            rules: [
+                "Integrity requires being straightforward and honest in professional relationships.",
+                "Objectivity requires not allowing bias, conflict of interest or undue influence to override professional judgement.",
+                "Professional competence and due care require maintaining knowledge and skill and acting diligently.",
+                "Confidentiality requires respecting the confidentiality of information acquired through professional work.",
+                "Professional behaviour requires complying with relevant laws and avoiding conduct that discredits the profession."
+            ],
+
+            examples: []
+        }
+
+    ];
+
+
+    /* =========================================================
+       ECONOMICS KNOWLEDGE
+    ========================================================= */
+
+    const economicsKnowledge = [
+
+        {
+            topic: "Economics",
+            keywords: ["economics", "what is economics", "definition of economics", "economic problem"],
+            relatedKeywords: ["scarcity", "choice", "resources", "needs", "wants", "opportunity cost"],
+            information: "Economics is the study of how individuals, businesses, governments and societies allocate scarce resources that have alternative uses.",
+            formulas: [],
+            rules: [
+                "Resources are scarce.",
+                "Human wants are unlimited relative to available resources.",
+                "Scarcity creates the need for choice.",
+                "Every choice can involve an opportunity cost."
+            ],
+            examples: [
+                "If a student spends three hours studying Accounting instead of working, the income that could have been earned from working is an opportunity cost."
+            ]
+        },
+
+        {
+            topic: "Scarcity and Opportunity Cost",
+            keywords: ["scarcity", "opportunity cost", "choice", "economic problem", "limited resources", "unlimited wants"],
+            relatedKeywords: ["resources", "needs", "wants", "trade off"],
+            information: "Scarcity means resources are limited while wants are unlimited. Opportunity cost is the value of the next best alternative forgone when a choice is made.",
+            formulas: ["Opportunity cost = Value of the next best alternative forgone"],
+            rules: [
+                "Opportunity cost is not necessarily money.",
+                "The next best alternative is important; it is not every alternative."
+            ],
+            examples: [
+                "If R1 000 is spent on a phone instead of textbooks, the textbooks are the relevant opportunity cost if they were the next best alternative."
+            ]
+        },
+
+        {
+            topic: "Factors of Production",
+            keywords: ["factors of production", "land labour capital entrepreneurship", "land", "labour", "capital", "entrepreneurship"],
+            relatedKeywords: ["rent", "wages", "interest", "profit", "resources"],
+            information: "The four main factors of production are land, labour, capital and entrepreneurship.",
+            formulas: [],
+            rules: [
+                "Land is rewarded by rent.",
+                "Labour is rewarded by wages.",
+                "Capital is rewarded by interest.",
+                "Entrepreneurship is rewarded by profit."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Demand",
+            keywords: ["demand", "law of demand", "demand curve", "quantity demanded", "change in demand", "movement along demand"],
+            relatedKeywords: ["price", "consumer", "income", "substitute", "complement"],
+            information: "Demand refers to the quantities of a good or service that consumers are willing and able to buy at different prices during a particular period.",
+            formulas: [],
+            rules: [
+                "The law of demand generally states that, ceteris paribus, quantity demanded falls when price rises and rises when price falls.",
+                "A movement along the demand curve is caused by a change in the good's own price.",
+                "A shift of the demand curve is caused by other determinants such as income, tastes and prices of related goods."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Supply",
+            keywords: ["supply", "law of supply", "supply curve", "quantity supplied", "change in supply", "movement along supply"],
+            relatedKeywords: ["price", "producer", "cost", "technology", "tax"],
+            information: "Supply refers to the quantities of a good or service that producers are willing and able to offer for sale at different prices during a period.",
+            formulas: [],
+            rules: [
+                "The law of supply generally states that quantity supplied rises as price rises, ceteris paribus.",
+                "A change in own price causes movement along the supply curve.",
+                "Changes in production costs, technology, taxes or subsidies can shift supply."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Market Equilibrium",
+            keywords: ["equilibrium", "market equilibrium", "equilibrium price", "equilibrium quantity", "shortage", "surplus"],
+            relatedKeywords: ["demand", "supply", "market", "price"],
+            information: "Market equilibrium occurs where quantity demanded equals quantity supplied.",
+            formulas: ["Equilibrium condition: Qd = Qs"],
+            rules: [
+                "A shortage occurs when quantity demanded exceeds quantity supplied.",
+                "A surplus occurs when quantity supplied exceeds quantity demanded.",
+                "Market price tends to adjust through the interaction of demand and supply."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Elasticity",
+            keywords: ["elasticity", "price elasticity", "ped", "pes", "income elasticity", "yed", "cross elasticity", "xed"],
+            relatedKeywords: ["demand", "supply", "percentage change", "elastic", "inelastic", "substitute", "complement"],
+            information: "Elasticity measures the responsiveness of one economic variable to a change in another variable.",
+            formulas: [
+                "PED = % change in quantity demanded / % change in price",
+                "PES = % change in quantity supplied / % change in price",
+                "YED = % change in quantity demanded / % change in income",
+                "XED = % change in quantity demanded of good A / % change in price of good B"
+            ],
+            rules: [
+                "PED greater than 1 in absolute value indicates elastic demand.",
+                "PED less than 1 in absolute value indicates inelastic demand.",
+                "XED is positive for substitutes and negative for complements.",
+                "YED is generally positive for normal goods and negative for inferior goods."
+            ],
+            examples: [
+                "If price rises by 10% and quantity demanded falls by 20%, PED = -2. Demand is elastic."
+            ]
+        },
+
+        {
+            topic: "Market Structures",
+            keywords: ["market structure", "perfect competition", "monopoly", "oligopoly", "monopolistic competition"],
+            relatedKeywords: ["firms", "competition", "barriers to entry", "price taker", "price maker", "market power"],
+            information: "Market structures describe the characteristics of markets, including the number of firms, product differentiation, barriers to entry and degree of market power.",
+            formulas: [
+                "TR = Price × Quantity",
+                "Profit = Total Revenue - Total Cost",
+                "AR = Total Revenue / Quantity",
+                "AC = Total Cost / Quantity",
+                "MC = Change in Total Cost / Change in Quantity"
+            ],
+            rules: [
+                "Perfect competition has many firms, homogeneous products and relatively free entry and exit.",
+                "A monopoly has a single dominant seller with significant barriers to entry.",
+                "An oligopoly has a small number of significant firms.",
+                "Monopolistic competition has many firms selling differentiated products."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Inflation",
+            keywords: ["inflation", "consumer price index", "cpi", "demand pull", "cost push", "imported inflation", "deflation", "disinflation", "hyperinflation", "stagflation"],
+            relatedKeywords: ["prices", "purchasing power", "cost of living", "interest rate", "money"],
+            information: "Inflation is a sustained increase in the general price level of goods and services over time, which reduces the purchasing power of money.",
+            formulas: ["Inflation rate = (CPI current - CPI previous) / CPI previous × 100"],
+            rules: [
+                "Demand-pull inflation can occur when aggregate demand grows faster than productive capacity.",
+                "Cost-push inflation can arise from rising production costs.",
+                "Imported inflation can result from higher import prices or currency depreciation.",
+                "Deflation is a sustained fall in the general price level.",
+                "Disinflation means the inflation rate is falling, not necessarily that prices are falling."
+            ],
+            examples: [
+                "If CPI rises from 120 to 126 over a year, the inflation rate = (126 - 120) / 120 × 100 = 5%.",
+                "A sharp increase in global oil prices raising local fuel and transport costs is an example of imported/cost-push inflation.",
+                "A rand depreciation that makes imported electronics more expensive for South African consumers is an example of imported inflation.",
+                "Wage increases that are not matched by productivity gains, forcing employers to raise prices, illustrate cost-push inflation.",
+                "A period where the inflation rate falls from 7% to 4% (still positive, just slower) is disinflation, not deflation."
+            ]
+        },
+
+        {
+            topic: "Unemployment",
+            keywords: ["unemployment", "unemployment rate", "frictional unemployment", "structural unemployment", "cyclical unemployment", "seasonal unemployment", "labour force"],
+            relatedKeywords: ["employment", "workers", "jobs", "labour market", "wages"],
+            information: "Unemployment occurs when people who are part of the labour force are without work but are available for work and seeking employment.",
+            formulas: [
+                "Unemployment rate = Unemployed / Labour force × 100",
+                "Labour force participation rate = Labour force / Working-age population × 100"
+            ],
+            rules: [
+                "Frictional unemployment is associated with people moving between jobs.",
+                "Structural unemployment results from a mismatch between workers' skills and available jobs.",
+                "Cyclical unemployment is linked to fluctuations in economic activity.",
+                "Seasonal unemployment occurs because some jobs are available only during particular seasons."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "GDP and Economic Growth",
+            keywords: ["gdp", "gross domestic product", "economic growth", "real gdp", "nominal gdp", "gdp per capita", "growth rate"],
+            relatedKeywords: ["output", "production", "income", "population", "economy"],
+            information: "GDP measures the market value of final goods and services produced within an economy during a specified period. Economic growth refers to an increase in real output over time.",
+            formulas: [
+                "GDP = C + I + G + (X - M)",
+                "GDP per capita = GDP / Population",
+                "Growth rate = (New value - Old value) / Old value × 100"
+            ],
+            rules: [
+                "Real GDP removes the effect of price changes more effectively than nominal GDP.",
+                "GDP per capita divides GDP by population.",
+                "Economic growth is not the same as economic development."
+            ],
+            examples: ["If GDP rises from R1 trillion to R1.05 trillion, growth = 5%."]
+        },
+
+        {
+            topic: "Aggregate Demand",
+            keywords: ["aggregate demand", "ad", "consumption", "investment", "government spending", "net exports", "c i g x m"],
+            relatedKeywords: ["gdp", "macroeconomics", "economy", "spending"],
+            information: "Aggregate demand is the total planned expenditure on domestically produced final goods and services at different price levels.",
+            formulas: ["AD = C + I + G + (X - M)"],
+            rules: [
+                "Consumption is household spending.",
+                "Investment is spending on capital goods and inventories.",
+                "Government spending is expenditure by government.",
+                "Net exports equal exports minus imports."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Fiscal Policy",
+            keywords: ["fiscal policy", "government spending", "taxation", "budget deficit", "budget surplus", "expansionary fiscal policy", "contractionary fiscal policy"],
+            relatedKeywords: ["government", "tax", "spending", "economy", "aggregate demand"],
+            information: "Fiscal policy refers to government decisions about taxation and expenditure used to influence economic activity and pursue public objectives.",
+            formulas: ["Budget balance = Government revenue - Government expenditure"],
+            rules: [
+                "Expansionary fiscal policy can involve higher government spending or lower taxes.",
+                "Contractionary fiscal policy can involve lower government spending or higher taxes.",
+                "A deficit occurs when expenditure exceeds revenue.",
+                "A surplus occurs when revenue exceeds expenditure."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Monetary Policy",
+            keywords: ["monetary policy", "repo rate", "interest rate", "sarb", "south african reserve bank", "inflation targeting"],
+            relatedKeywords: ["money", "credit", "borrowing", "lending", "inflation"],
+            information: "Monetary policy is the process through which a central bank influences financial conditions, particularly interest rates and liquidity, to achieve macroeconomic objectives.",
+            formulas: ["Approximate real interest rate = Nominal interest rate - Inflation rate"],
+            rules: [
+                "The South African Reserve Bank conducts monetary policy in South Africa.",
+                "Higher interest rates can reduce borrowing and interest-sensitive spending.",
+                "Lower interest rates can encourage borrowing and spending.",
+                "The effects of monetary policy occur through transmission mechanisms and may involve time lags."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Multiplier",
+            keywords: ["multiplier", "economic multiplier", "mps", "mpc", "marginal propensity to consume", "marginal propensity to save"],
+            relatedKeywords: ["consumption", "saving", "income", "investment", "government spending"],
+            information: "The Keynesian multiplier shows how an initial change in autonomous expenditure can produce a larger eventual change in aggregate income.",
+            formulas: [
+                "MPC = Change in Consumption / Change in Income",
+                "MPS = Change in Saving / Change in Income",
+                "MPC + MPS = 1",
+                "Multiplier = 1 / (1 - MPC)",
+                "Multiplier = 1 / MPS"
+            ],
+            rules: [
+                "A higher MPC generally produces a larger simple spending multiplier.",
+                "Leakages such as saving, taxation and imports reduce the overall multiplier effect."
+            ],
+            examples: ["If MPC = 0.8, multiplier = 1 / (1 - 0.8) = 5."]
+        },
+
+        {
+            topic: "Business Cycles",
+            keywords: ["business cycle", "expansion", "peak", "contraction", "trough", "recovery", "recession"],
+            relatedKeywords: ["gdp", "economic activity", "output", "employment"],
+            information: "The business cycle describes fluctuations in economic activity around the economy's long-run growth path.",
+            formulas: [],
+            rules: [
+                "Expansion is a period of rising economic activity.",
+                "Peak is the high point before contraction.",
+                "Contraction is a decline in economic activity.",
+                "Trough is the low point.",
+                "Recovery is the movement from a trough toward expansion."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Externalities",
+            keywords: ["externalities", "externality", "positive externality", "negative externality", "social cost", "social benefit", "pollution"],
+            relatedKeywords: ["market failure", "private cost", "external cost", "government", "environment"],
+            information: "An externality occurs when an economic activity affects third parties who are not fully reflected in the market transaction.",
+            formulas: ["Social Cost = Private Cost + External Cost", "Social Benefit = Private Benefit + External Benefit"],
+            rules: [
+                "Negative externalities impose external costs on third parties.",
+                "Positive externalities create external benefits for third parties.",
+                "Externalities are one source of market failure."
+            ],
+            examples: ["Factory pollution can impose health and environmental costs on nearby residents."]
+        },
+
+        {
+            topic: "International Trade",
+            keywords: ["international trade", "trade", "exports", "imports", "tariff", "quota", "protectionism", "comparative advantage"],
+            relatedKeywords: ["wto", "globalisation", "foreign exchange", "terms of trade"],
+            information: "International trade involves exchange of goods and services between countries. Countries may trade because of differences in resources, technology, productivity and opportunity costs.",
+            formulas: ["Trade balance = Exports - Imports", "Terms of trade = Export price index / Import price index × 100"],
+            rules: [
+                "A tariff is a tax on imports.",
+                "A quota is a quantitative restriction on imports.",
+                "Protectionism refers to policies that restrict or influence international competition."
+            ],
+            examples: [
+                "South Africa exporting wine and citrus to the UK while importing machinery from Germany illustrates trade based on comparative advantage.",
+                "A country rich in minerals, such as South Africa, tends to export gold and platinum while importing manufactured electronics.",
+                "A 20% tariff on imported vehicles raises their local price, protecting domestic vehicle manufacturers from cheaper foreign competition.",
+                "A quota limiting sugar imports to 50 000 tonnes a year is a quantitative restriction rather than a price-based one like a tariff.",
+                "When the rand depreciates against the US dollar, South African exports become relatively cheaper for foreign buyers, while imports become more expensive locally."
+            ]
+        },
+
+        {
+            topic: "Foreign Exchange",
+            keywords: ["foreign exchange", "exchange rate", "currency", "appreciation", "depreciation", "rand", "dollar"],
+            relatedKeywords: ["exports", "imports", "forex", "international trade"],
+            information: "The foreign exchange market is where currencies are bought and sold. An exchange rate expresses the value of one currency in terms of another.",
+            formulas: [],
+            rules: [
+                "Currency appreciation means a currency becomes more valuable relative to another currency.",
+                "Currency depreciation means it becomes less valuable.",
+                "A weaker domestic currency can make exports cheaper for foreign buyers and imports more expensive for domestic buyers, all else equal."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Circular Flow of Income",
+            keywords: ["circular flow of income", "circular flow", "households firms government", "leakages injections", "leakage", "injection"],
+            relatedKeywords: ["income", "spending", "savings", "taxation", "investment", "exports"],
+            information: "The circular flow of income model shows how income and spending flow between households, firms, government and the foreign sector in an economy.",
+            formulas: [],
+            rules: [
+                "Households supply factors of production to firms and receive income in return.",
+                "Firms supply goods and services to households in return for spending.",
+                "Leakages, such as savings, taxation and imports, withdraw money from the circular flow.",
+                "Injections, such as investment, government spending and exports, add money to the circular flow.",
+                "The circular flow is in equilibrium when total leakages equal total injections."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Market Failure and Public Goods",
+            keywords: ["market failure", "public good", "public goods", "private good", "free rider", "non excludable", "non rivalrous", "merit good", "demerit good"],
+            relatedKeywords: ["externality", "government intervention", "information failure", "monopoly power"],
+            information: "Market failure occurs when the free market fails to allocate resources efficiently. Public goods are one cause of market failure because they are non-excludable and non-rivalrous.",
+            formulas: [],
+            rules: [
+                "A public good is non-excludable, meaning people cannot easily be prevented from using it once it is provided.",
+                "A public good is non-rivalrous, meaning one person's use does not reduce its availability to others.",
+                "The free-rider problem can lead to public goods being under-provided by the private market.",
+                "Merit goods tend to be under-consumed and demerit goods tend to be over-consumed relative to the socially optimal level.",
+                "Other causes of market failure include externalities, information failure and market power."
+            ],
+            examples: [
+                "Public goods: national defence and street lighting are non-excludable and non-rivalrous, so private firms won't supply them (free-rider problem).",
+                "Negative externality: a mine pollutes a river, and the nearby community bears health and clean-up costs that the mine doesn't pay.",
+                "Positive externality: when people get vaccinated or educated, society benefits from fewer diseases and a more skilled workforce, but the individual doesn't get paid for it.",
+                "Monopoly power: a sole supplier such as Eskom or Transnet can restrict output and charge above marginal cost.",
+                "Information failure: a used-car seller knows more than the buyer, or smokers underestimate health risks, so resources are misallocated.",
+                "Immobility of factors: a retrenched mineworker in Limpopo cannot easily move to a tech job in Cape Town because of skills and location barriers.",
+                "Demerit goods: cigarettes and alcohol are over-consumed, which is why government uses sin taxes. Merit goods like education are under-consumed, so government subsidises them."
+            ]
+        },
+
+        {
+            topic: "Income Distribution and Poverty",
+            keywords: ["income distribution", "poverty", "gini coefficient", "lorenz curve", "inequality", "poverty line", "redistribution"],
+            relatedKeywords: ["income", "wealth", "social grants", "unemployment", "welfare"],
+            information: "Income distribution describes how income is shared among individuals or households in an economy. The Gini coefficient and Lorenz curve are common tools used to measure income inequality.",
+            formulas: ["Gini coefficient ranges from 0 (perfect equality) to 1 (perfect inequality)"],
+            rules: [
+                "A Lorenz curve plots the cumulative share of income against the cumulative share of the population.",
+                "A Gini coefficient closer to 0 indicates a more equal income distribution, while a value closer to 1 indicates greater inequality.",
+                "Governments can use taxation, social grants and other redistribution policies to reduce income inequality."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Balance of Payments",
+            keywords: ["balance of payments", "current account", "capital account", "financial account", "trade balance", "bop"],
+            relatedKeywords: ["exports", "imports", "foreign investment", "reserves"],
+            information: "The balance of payments is a record of all economic transactions between residents of a country and the rest of the world over a specific period.",
+            formulas: ["Current account balance = Trade balance + Net income + Net current transfers"],
+            rules: [
+                "The current account mainly records trade in goods and services, income and current transfers.",
+                "The financial account mainly records cross-border investment flows.",
+                "A current account deficit means a country is generally a net borrower from the rest of the world over that period."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Economic Systems",
+            keywords: ["economic system", "economic systems", "market economy", "command economy", "mixed economy", "planned economy", "traditional economy"],
+            relatedKeywords: ["resource allocation", "government", "private sector", "central planning"],
+            information: "An economic system describes how a society organises the production, distribution and allocation of goods, services and resources.",
+            formulas: [],
+            rules: [
+                "In a market economy, resource allocation is mainly determined by the price mechanism through decentralised decisions.",
+                "In a command economy, resource allocation is mainly determined by central government planning.",
+                "A mixed economy combines features of both market and command economies.",
+                "A traditional economy relies mainly on custom, culture and historical practice to allocate resources."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Economic Indicators",
+            keywords: ["economic indicators", "leading indicator", "lagging indicator", "coincident indicator", "composite leading business cycle indicator"],
+            relatedKeywords: ["gdp", "inflation", "unemployment", "forecast"],
+            information: "Economic indicators are statistics used to assess current economic conditions and help forecast future economic activity.",
+            formulas: [],
+            rules: [
+                "Leading indicators tend to change before the overall economy changes.",
+                "Lagging indicators tend to change after the overall economy has already changed.",
+                "Coincident indicators tend to move at roughly the same time as the overall economy."
+            ],
+            examples: ["Building plans passed are often treated as a leading indicator, while the unemployment rate is often treated as a lagging indicator."]
+        },
+
+        {
+            topic: "Consumer and Producer Behaviour",
+            keywords: ["utility", "marginal utility", "consumer behaviour", "producer behaviour", "diminishing marginal utility", "profit maximisation"],
+            relatedKeywords: ["satisfaction", "consumption", "production", "cost"],
+            information: "Consumer behaviour theory looks at how consumers make choices to maximise satisfaction (utility), while producer behaviour theory looks at how firms make production decisions, often to maximise profit.",
+            formulas: [
+                "Marginal utility = Change in total utility / Change in quantity consumed",
+                "Profit-maximising condition (commonly used approximation): Marginal Revenue = Marginal Cost"
+            ],
+            rules: [
+                "The law of diminishing marginal utility suggests that, ceteris paribus, each additional unit consumed tends to add less satisfaction than the previous unit.",
+                "Firms are often assumed to aim to maximise profit, though this is a simplifying assumption."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Money and Banking",
+            keywords: ["money", "functions of money", "medium of exchange", "store of value", "unit of account", "commercial bank", "central bank"],
+            relatedKeywords: ["currency", "deposits", "credit creation", "reserve bank"],
+            information: "Money performs several functions in an economy, and the banking system channels funds between savers and borrowers.",
+            formulas: [],
+            rules: [
+                "Money commonly serves as a medium of exchange, a unit of account, a store of value and a standard of deferred payment.",
+                "Commercial banks generally accept deposits and extend loans, which can contribute to credit creation in the economy.",
+                "A central bank generally oversees monetary policy and financial system stability for a country."
+            ],
+            examples: []
+        }
+
+    ];
+
+
+    /* =========================================================
+       MATHEMATICS KNOWLEDGE
+    ========================================================= */
+
+    const mathematicsKnowledge = [
+
+        {
+            topic: "Basic Arithmetic",
+            keywords: ["arithmetic", "addition", "subtraction", "multiplication", "division", "order of operations", "bodmas", "pemdas"],
+            relatedKeywords: ["numbers", "calculation", "brackets"],
+            information: "Arithmetic is the study of basic numerical operations such as addition, subtraction, multiplication and division.",
+            formulas: ["BODMAS: Brackets, Orders, Division/Multiplication, Addition/Subtraction"],
+            rules: ["Multiplication and division are performed before addition and subtraction unless brackets change the order."],
+            examples: ["2 + 3 × 4 = 2 + 12 = 14."]
+        },
+
+        {
+            topic: "Fractions Percentages and Ratios",
+            keywords: ["fraction", "fractions", "percentage", "percent", "ratio", "proportion", "decimal"],
+            relatedKeywords: ["numerator", "denominator", "increase", "decrease"],
+            information: "Fractions represent parts of a whole, percentages express quantities out of 100 and ratios compare quantities.",
+            formulas: ["Percentage = Part / Whole × 100", "Percentage change = (New - Old) / Old × 100"],
+            rules: [
+                "To add fractions, use a common denominator.",
+                "To multiply fractions, multiply numerators and denominators.",
+                "To divide by a fraction, multiply by its reciprocal."
+            ],
+            examples: ["25% of 200 = 0.25 × 200 = 50."]
+        },
+
+        {
+            topic: "Algebra",
+            keywords: ["algebra", "variable", "coefficient", "constant", "like terms", "expression", "simplify"],
+            relatedKeywords: ["x", "y", "equation", "terms"],
+            information: "Algebra uses symbols and variables to represent numbers and relationships.",
+            formulas: ["a(x + y) = ax + ay"],
+            rules: [
+                "Like terms can be combined.",
+                "A coefficient multiplies a variable.",
+                "A constant has no variable attached to it."
+            ],
+            examples: ["3x + 2x - 4 = 5x - 4."]
+        },
+
+        {
+            topic: "Linear Equations",
+            keywords: ["linear equation", "solve equation", "equation", "simultaneous equation", "linear equations"],
+            relatedKeywords: ["x", "unknown", "variable", "solve"],
+            information: "A linear equation is an equation in which the highest power of the variable is 1.",
+            formulas: ["ax + b = c", "x = (c - b) / a"],
+            rules: [
+                "Perform the same valid operation on both sides of an equation.",
+                "The goal is to isolate the unknown variable."
+            ],
+            examples: ["2x + 6 = 14. Subtract 6: 2x = 8. Divide by 2: x = 4."]
+        },
+
+        {
+            topic: "Quadratic Equations",
+            keywords: ["quadratic", "quadratic equation", "quadratic formula", "factorisation", "discriminant", "parabola"],
+            relatedKeywords: ["x squared", "roots", "solutions"],
+            information: "A quadratic equation is an equation of the form ax² + bx + c = 0 where a is not zero.",
+            formulas: ["x = [-b ± √(b² - 4ac)] / 2a", "Discriminant = b² - 4ac"],
+            rules: [
+                "If the discriminant is positive, there are two distinct real roots.",
+                "If the discriminant is zero, there is one repeated real root.",
+                "If the discriminant is negative, there are no real roots."
+            ],
+            examples: [
+                "For x² - 5x + 6 = 0, factorisation gives (x - 2)(x - 3) = 0, so x = 2 or x = 3.",
+                "For x² - 2x - 8 = 0, factorisation gives (x - 4)(x + 2) = 0, so x = 4 or x = -2.",
+                "For 2x² + 3x - 5 = 0, using the quadratic formula: x = [-3 ± √(9 + 40)] / 4 = [-3 ± 7] / 4, giving x = 1 or x = -2.5.",
+                "For x² + 4x + 4 = 0, the discriminant = 16 - 16 = 0, so there is one repeated root: x = -2.",
+                "For x² + x + 1 = 0, the discriminant = 1 - 4 = -3, which is negative, so there are no real roots."
+            ]
+        },
+
+        {
+            topic: "Sequences",
+            keywords: ["sequence", "arithmetic sequence", "geometric sequence", "series", "common difference", "common ratio"],
+            relatedKeywords: ["nth term", "sum", "term"],
+            information: "A sequence is an ordered list of numbers following a particular pattern.",
+            formulas: [
+                "Arithmetic nth term: an = a + (n - 1)d",
+                "Arithmetic sum: Sn = n/2[2a + (n - 1)d]",
+                "Geometric nth term: an = ar^(n - 1)",
+                "Geometric sum: Sn = a(r^n - 1)/(r - 1), r ≠ 1"
+            ],
+            rules: [
+                "An arithmetic sequence has a constant difference.",
+                "A geometric sequence has a constant ratio."
+            ],
+            examples: ["2, 5, 8, 11 has common difference 3."]
+        },
+
+        {
+            topic: "Functions",
+            keywords: ["function", "functions", "domain", "range", "f x", "f(x)", "composite function", "inverse function"],
+            relatedKeywords: ["input", "output", "mapping", "graph"],
+            information: "A function is a rule that assigns each permitted input exactly one output.",
+            formulas: ["f(x) = output produced by applying function f to x"],
+            rules: [
+                "The domain is the set of allowed inputs.",
+                "The range is the set of resulting outputs.",
+                "An inverse function reverses the mapping where an inverse exists."
+            ],
+            examples: ["If f(x) = 2x + 1, then f(3) = 7."]
+        },
+
+        {
+            topic: "Straight Lines",
+            keywords: ["straight line", "gradient", "slope", "y intercept", "x intercept", "point slope", "equation of a line"],
+            relatedKeywords: ["coordinate", "parallel", "perpendicular", "graph"],
+            information: "A straight-line graph has a constant gradient.",
+            formulas: ["Gradient m = (y2 - y1) / (x2 - x1)", "y = mx + c", "y - y1 = m(x - x1)"],
+            rules: [
+                "Parallel lines have equal gradients.",
+                "Perpendicular non-vertical lines have gradients whose product is -1."
+            ],
+            examples: ["For points (1,2) and (3,6), gradient = (6-2)/(3-1) = 2."]
+        },
+
+        {
+            topic: "Pythagoras Theorem",
+            keywords: ["pythagoras", "pythagorean theorem", "right triangle", "right angled triangle"],
+            relatedKeywords: ["hypotenuse", "triangle", "geometry"],
+            information: "Pythagoras' theorem applies to right-angled triangles.",
+            formulas: ["a² + b² = c²"],
+            rules: [
+                "c is the hypotenuse, which is opposite the right angle.",
+                "The theorem should only be applied directly to right-angled triangles."
+            ],
+            examples: [
+                "If the legs are 3 and 4, c² = 9 + 16 = 25, so c = 5.",
+                "If the legs are 6 and 8, c² = 36 + 64 = 100, so c = 10.",
+                "If the hypotenuse is 13 and one leg is 5, the other leg = √(169 - 25) = √144 = 12.",
+                "A ladder 5 m long leans against a wall with its base 3 m from the wall; it reaches √(25 - 9) = √16 = 4 m up the wall.",
+                "A TV screen advertised as 'diagonal 24 inches' with width 19.2 inches and height 14.4 inches checks out because 19.2² + 14.4² = 24²."
+            ]
+        },
+
+        {
+            topic: "Trigonometry",
+            keywords: ["trigonometry", "trig", "sin", "cos", "tan", "sohcahtoa", "sine rule", "cosine rule"],
+            relatedKeywords: ["triangle", "angle", "opposite", "adjacent", "hypotenuse"],
+            information: "Trigonometry studies relationships between angles and sides of triangles.",
+            formulas: [
+                "sin θ = Opposite / Hypotenuse",
+                "cos θ = Adjacent / Hypotenuse",
+                "tan θ = Opposite / Adjacent",
+                "Sine Rule: a/sin A = b/sin B = c/sin C",
+                "Cosine Rule: a² = b² + c² - 2bc cos A"
+            ],
+            rules: [
+                "SOHCAHTOA is useful for right-angled triangles.",
+                "The sine and cosine rules can be used for non-right-angled triangles."
+            ],
+            examples: ["If opposite = 3 and hypotenuse = 5, sin θ = 3/5."]
+        },
+
+        {
+            topic: "Statistics",
+            keywords: ["statistics", "mean", "median", "mode", "range", "variance", "standard deviation", "quartile", "iqr"],
+            relatedKeywords: ["data", "average", "distribution", "dataset"],
+            information: "Statistics involves collecting, organising, analysing and interpreting data.",
+            formulas: ["Mean = Sum of observations / Number of observations", "Range = Maximum - Minimum", "IQR = Q3 - Q1", "Population variance = Σ(x - μ)² / N"],
+            rules: [
+                "The median is the middle value after sorting the data.",
+                "The mode is the most frequently occurring value.",
+                "Standard deviation measures spread around the mean."
+            ],
+            examples: ["For 2, 4, 6, the mean is 4."]
+        },
+
+        {
+            topic: "Probability",
+            keywords: ["probability", "probabilities", "conditional probability", "independent events", "bayes", "permutation", "combination"],
+            relatedKeywords: ["event", "sample space", "outcome", "chance"],
+            information: "Probability measures how likely an event is to occur.",
+            formulas: [
+                "P(A) = Number of favourable outcomes / Total number of equally likely outcomes",
+                "P(A') = 1 - P(A)",
+                "P(A and B) = P(A)P(B) for independent events",
+                "P(A|B) = P(A and B) / P(B)",
+                "nPr = n! / (n-r)!",
+                "nCr = n! / [r!(n-r)!]"
+            ],
+            rules: [
+                "Probability lies between 0 and 1.",
+                "An impossible event has probability 0.",
+                "A certain event has probability 1."
+            ],
+            examples: ["For a fair six-sided die, P(rolling a 4) = 1/6."]
+        },
+
+        {
+            topic: "Financial Mathematics",
+            keywords: ["financial mathematics", "simple interest", "compound interest", "interest", "present value", "future value", "depreciation", "compound growth"],
+            relatedKeywords: ["principal", "rate", "time", "investment", "loan"],
+            information: "Financial mathematics applies mathematical formulas to interest, investment, loans, growth and depreciation.",
+            formulas: ["Simple interest: I = Prt", "Simple amount: A = P(1 + rt)", "Compound amount: A = P(1 + r)^n", "Compound interest: I = A - P"],
+            rules: ["r must be expressed as a decimal in formulas.", "n represents the number of compounding periods."],
+            examples: [
+                "R10 000 invested at 10% compound interest for 2 years: A = 10 000(1.10)^2 = R12 100.",
+                "R5 000 invested at 8% simple interest for 3 years: I = 5 000 × 0.08 × 3 = R1 200, so A = R6 200.",
+                "R20 000 invested at 6% compounded annually for 5 years: A = 20 000(1.06)^5 ≈ R26 764.51.",
+                "A car costing R300 000 depreciates at 15% per year on the reducing-balance method; after 2 years its value ≈ 300 000(0.85)^2 = R216 750.",
+                "R15 000 borrowed at 12% simple interest per year must be repaid with R1 800 interest after 1 year, giving a total repayment of R16 800."
+            ]
+        },
+
+        {
+            topic: "Differentiation",
+            keywords: ["differentiation", "derivative", "differentiate", "calculus", "gradient", "stationary point", "chain rule", "product rule", "quotient rule"],
+            relatedKeywords: ["function", "maximum", "minimum", "rate of change"],
+            information: "Differentiation measures the instantaneous rate of change of a function.",
+            formulas: ["d/dx(x^n) = nx^(n-1)", "Product rule: (uv)' = u'v + uv'", "Quotient rule: (u/v)' = (u'v - uv') / v²", "Chain rule: d/dx[f(g(x))] = f'(g(x))g'(x)"],
+            rules: [
+                "A stationary point occurs where the first derivative is zero.",
+                "The second derivative can help classify stationary points."
+            ],
+            examples: ["If y = x², dy/dx = 2x."]
+        },
+
+        {
+            topic: "Integration",
+            keywords: ["integration", "integral", "integrate", "antiderivative", "area under curve", "definite integral"],
+            relatedKeywords: ["calculus", "area", "function", "constant"],
+            information: "Integration is the reverse process of differentiation and can be used to calculate accumulated quantities such as area under a curve.",
+            formulas: ["∫x^n dx = x^(n+1)/(n+1) + C, n ≠ -1", "∫a dx = ax + C"],
+            rules: [
+                "An indefinite integral includes a constant of integration C.",
+                "A definite integral has upper and lower limits."
+            ],
+            examples: ["∫2x dx = x² + C."]
+        },
+
+        {
+            topic: "Matrices",
+            keywords: ["matrix", "matrices", "determinant", "inverse matrix", "matrix multiplication"],
+            relatedKeywords: ["linear algebra", "rows", "columns", "identity matrix"],
+            information: "A matrix is a rectangular arrangement of numbers or expressions.",
+            formulas: ["For a 2×2 matrix [[a,b],[c,d]], determinant = ad - bc", "Inverse = 1/(ad-bc) [[d,-b],[-c,a]] when determinant ≠ 0"],
+            rules: [
+                "Matrix multiplication requires compatible dimensions.",
+                "A square matrix is invertible only if its determinant is non-zero."
+            ],
+            examples: []
+        },
+
+        {
+            topic: "Sets",
+            keywords: ["set", "sets", "set theory", "union", "intersection", "subset", "venn diagram", "complement of a set"],
+            relatedKeywords: ["element", "universal set", "empty set", "real numbers"],
+            information: "A set is a well-defined collection of distinct objects, called elements. Set theory provides notation for describing relationships between collections of objects.",
+            formulas: ["n(A ∪ B) = n(A) + n(B) - n(A ∩ B)"],
+            rules: [
+                "The union of two sets contains all elements that are in either set.",
+                "The intersection of two sets contains only elements that are in both sets.",
+                "A subset contains only elements that also belong to the larger set.",
+                "A Venn diagram is a visual way to represent sets and their relationships."
+            ],
+            examples: ["If A = {1,2,3} and B = {2,3,4}, then A ∩ B = {2,3} and A ∪ B = {1,2,3,4}."]
+        },
+
+        {
+            topic: "Exponents and Surds",
+            keywords: ["exponent", "exponents", "surd", "surds", "law of exponents", "index", "indices", "rational exponent", "simplify surds"],
+            relatedKeywords: ["power", "root", "square root", "cube root"],
+            information: "Exponents represent repeated multiplication of a base number, while surds are irrational roots that cannot be simplified to a rational number.",
+            formulas: ["a^m × a^n = a^(m+n)", "a^m ÷ a^n = a^(m-n)", "(a^m)^n = a^(mn)", "a^0 = 1, a ≠ 0", "a^(-n) = 1/a^n", "a^(m/n) = ⁿ√(a^m)"],
+            rules: [
+                "The laws of exponents apply only when the bases are the same for multiplication and division of powers.",
+                "A surd is a root that results in an irrational number, such as √2.",
+                "Surds can sometimes be simplified by factoring out perfect squares or cubes."
+            ],
+            examples: ["√50 = √(25 × 2) = 5√2."]
+        },
+
+        {
+            topic: "Inequalities",
+            keywords: ["inequality", "inequalities", "linear inequality", "quadratic inequality", "solve inequality", "number line"],
+            relatedKeywords: ["greater than", "less than", "interval notation", "solution set"],
+            information: "An inequality compares two expressions using symbols such as <, >, ≤ or ≥, and its solution is usually a range of values rather than a single value.",
+            formulas: [],
+            rules: [
+                "Adding or subtracting the same value from both sides of an inequality keeps the inequality sign unchanged.",
+                "Multiplying or dividing both sides by a negative number reverses the inequality sign.",
+                "The solution to a quadratic inequality is often found by first solving the related quadratic equation."
+            ],
+            examples: ["Solve 2x + 4 > 10: 2x > 6, so x > 3."]
+        },
+
+        {
+            topic: "Vectors",
+            keywords: ["vector", "vectors", "magnitude", "direction", "vector addition", "resultant vector", "unit vector", "dot product"],
+            relatedKeywords: ["displacement", "scalar", "components"],
+            information: "A vector is a quantity that has both magnitude and direction, in contrast to a scalar, which has magnitude only.",
+            formulas: ["Magnitude of vector (x, y) = √(x² + y²)", "Resultant vector = Sum of the components of the individual vectors", "Dot product: a · b = |a||b| cos θ"],
+            rules: [
+                "Vectors can be added using the head-to-tail method or by adding their respective components.",
+                "A unit vector has a magnitude of 1 and indicates direction only."
+            ],
+            examples: ["For vector (3, 4), magnitude = √(3² + 4²) = √25 = 5."]
+        },
+
+        {
+            topic: "Coordinate Geometry and Circles",
+            keywords: ["coordinate geometry", "equation of a circle", "circle geometry", "midpoint", "distance formula", "centre radius"],
+            relatedKeywords: ["coordinate", "graph", "tangent", "analytical geometry"],
+            information: "Coordinate geometry uses algebraic methods to study geometric figures on a coordinate plane, including the equation of a circle.",
+            formulas: ["Distance = √[(x2-x1)² + (y2-y1)²]", "Midpoint = ((x1+x2)/2, (y1+y2)/2)", "Equation of a circle centred at origin: x² + y² = r²", "Equation of a circle centred at (a,b): (x-a)² + (y-b)² = r²"],
+            rules: [
+                "The radius of a circle is the distance from the centre to any point on the circle.",
+                "A tangent to a circle touches the circle at exactly one point and is perpendicular to the radius at that point."
+            ],
+            examples: ["A circle centred at (2,3) with radius 5 has the equation (x-2)² + (y-3)² = 25."]
+        },
+
+        {
+            topic: "Mensuration: Area, Perimeter and Volume",
+            keywords: ["mensuration", "area", "perimeter", "volume", "surface area", "circumference", "area of a triangle", "area of a circle", "volume of a cylinder", "volume of a sphere"],
+            relatedKeywords: ["shape", "geometry", "rectangle", "cube", "prism"],
+            information: "Mensuration deals with calculating the measurements of geometric shapes, such as area, perimeter, surface area and volume.",
+            formulas: [
+                "Area of a rectangle = Length × Width",
+                "Area of a triangle = 1/2 × Base × Height",
+                "Circumference of a circle = 2πr",
+                "Area of a circle = πr²",
+                "Volume of a cuboid = Length × Width × Height",
+                "Volume of a cylinder = πr²h",
+                "Volume of a sphere = 4/3 πr³"
+            ],
+            rules: [
+                "Perimeter and circumference measure the distance around a shape.",
+                "Area measures the space enclosed by a two-dimensional shape.",
+                "Volume measures the space occupied by a three-dimensional object."
+            ],
+            examples: ["A rectangle with length 8 and width 5 has an area of 40 square units."]
+        },
+
+        {
+            topic: "Number Patterns",
+            keywords: ["number pattern", "number patterns", "quadratic sequence", "second difference", "general term"],
+            relatedKeywords: ["sequence", "term", "pattern"],
+            information: "Number patterns are sequences of numbers that follow an identifiable rule, which can sometimes be described by a general (nth) term formula.",
+            formulas: ["Quadratic sequence general term: Tn = an² + bn + c"],
+            rules: [
+                "A constant first difference indicates a linear (arithmetic) pattern.",
+                "A constant second difference indicates a quadratic pattern."
+            ],
+            examples: ["1, 4, 9, 16, 25 has first differences 3, 5, 7, 9 and a constant second difference of 2, indicating a quadratic pattern (n²)."]
+        },
+
+        {
+            topic: "Logarithms",
+            keywords: ["logarithm", "logarithms", "log", "natural log", "ln", "log laws"],
+            relatedKeywords: ["exponent", "base", "power"],
+            information: "A logarithm is the inverse operation of exponentiation; it answers the question of what power a base must be raised to in order to produce a given number.",
+            formulas: ["If a^x = b, then log_a(b) = x", "log(mn) = log(m) + log(n)", "log(m/n) = log(m) - log(n)", "log(m^n) = n log(m)"],
+            rules: [
+                "The base of a logarithm must be positive and not equal to 1.",
+                "Logarithms are only defined for positive numbers when working with real numbers."
+            ],
+            examples: ["log_2(8) = 3, because 2³ = 8."]
+        },
+
+        {
+            topic: "Rounding and Estimation",
+            keywords: ["rounding", "round off", "significant figures", "decimal places", "estimation", "approximation"],
+            relatedKeywords: ["number", "accuracy"],
+            information: "Rounding and estimation are used to express numbers to a suitable level of accuracy or to quickly approximate a calculation.",
+            formulas: [],
+            rules: [
+                "When rounding, a digit of 5 or more generally rounds the preceding digit up.",
+                "Significant figures count all meaningful digits in a number, starting from the first non-zero digit.",
+                "Estimation can be used to quickly check whether a calculated answer is reasonable."
+            ],
+            examples: ["3.14159 rounded to two decimal places is 3.14."]
+        }
+
+    ];
+
+
+    /* =========================================================
+       SUBJECT KEYWORDS
+    ========================================================= */
+
+    const subjectWords = {
+
+        Accounting: [
+            "accounting", "account", "ifrs", "ias", "audit", "auditing", "tax", "vat", "ledger", "debit", "credit",
+            "inventory", "stock", "asset", "liability", "equity", "profit", "loss", "depreciation", "cash flow",
+            "financial statement", "balance sheet", "income statement", "journal", "trial balance", "consolidation",
+            "associate", "subsidiary", "revenue", "lease", "partnership", "partner", "company", "companies",
+            "share capital", "shares", "dividend", "manufacturing account", "prime cost", "factory overheads",
+            "budget", "budgeting", "cash budget", "internal control", "internal audit", "segregation of duties",
+            "non profit", "npo", "accumulated fund", "subscriptions", "petty cash", "suspense account",
+            "error of principle", "ethics", "code of ethics", "integrity"
+        ],
+
+        Economics: [
+            "economics", "economy", "scarcity", "opportunity cost", "demand", "supply", "equilibrium", "market",
+            "inflation", "unemployment", "gdp", "fiscal", "monetary", "sarb", "repo", "elasticity", "elastic",
+            "trade", "export", "import", "tariff", "quota", "exchange rate", "externality", "aggregate demand",
+            "aggregate supply", "multiplier", "circular flow", "leakage", "injection", "market failure",
+            "public good", "free rider", "merit good", "demerit good", "income distribution", "poverty", "gini",
+            "lorenz curve", "inequality", "balance of payments", "current account", "economic system",
+            "command economy", "mixed economy", "economic indicator", "utility", "marginal utility", "money",
+            "central bank", "commercial bank"
+        ],
+
+        Mathematics: [
+            "mathematics", "math", "maths", "algebra", "equation", "quadratic", "linear", "calculus", "derivative",
+            "differentiation", "integration", "integral", "trigonometry", "sin", "cos", "tan", "statistics",
+            "probability", "matrix", "matrices", "sequence", "function", "gradient", "pythagoras", "percentage",
+            "fraction", "set", "sets", "venn diagram", "union", "intersection", "subset", "exponent", "exponents",
+            "surd", "surds", "indices", "inequality", "inequalities", "vector", "vectors", "coordinate geometry",
+            "equation of a circle", "midpoint", "distance formula", "mensuration", "area", "perimeter", "volume",
+            "circumference", "number pattern", "logarithm", "logarithms", "log", "rounding", "significant figures"
+        ]
+
+    };
+
+
+    /* =========================================================
+       ECONOMICS ESSAYS (full essay memoranda, given only
+       when the person explicitly asks for an "essay")
+    ========================================================= */
+
+    const economicsEssays = [
+        {
+            id: "circular-flow",
+            title: "The Four-Sector Circular Flow Model and its Markets",
+            keywords: ["circular flow", "four sector model", "four-sector model", "circular flow of income essay"],
+            sections: [
+                { heading: "Product / Goods Market", points: [
+                    "Goods and services are traded on the product market, bought by households, government and the foreign sector from firms.",
+                    "Goods are tangible (consumer goods, capital goods, durable, semi-durable and non-durable); services are intangible actions such as those offered by accountants, teachers and doctors.",
+                    "The forces of demand and supply determine the equilibrium price and quantity.",
+                    "Non-durable goods cannot be re-used (e.g. an apple); semi-durable goods last a short time but can be used more than once (e.g. chalk); durable goods last more than a year (e.g. a chalkboard)."
+                ]},
+                { heading: "Factor / Resources Market", points: [
+                    "The four factors of production (land, labour, capital and entrepreneurship) are traded here for wages/salaries, interest, rent and profit.",
+                    "Price and quantity traded are again determined by demand and supply."
+                ]},
+                { heading: "Money Market", points: [
+                    "Used for short-term borrowing and lending, from a few days up to just under 3 years.",
+                    "Instruments traded include treasury bills, Reserve Bank debentures, banker's acceptances and short-term government/company debentures."
+                ]},
+                { heading: "Financial Market", points: [
+                    "Consists of banks, pension funds, insurance companies and the JSE, and channels funds from surplus units (savers) to deficit units (borrowers).",
+                    "The SARB is a key institution operating in this market."
+                ]},
+                { heading: "Capital Market", points: [
+                    "Handles long-term deposits and borrowings of 3 years and above, such as mortgage bonds.",
+                    "The Johannesburg Securities (Stock) Exchange (JSE) is the key institution here."
+                ]},
+                { heading: "Foreign Exchange Market", points: [
+                    "Facilitates the exchange of one currency for another so international transactions can take place in an open economy.",
+                    "The exchange rate, usually set by demand and supply (and sometimes influenced by the central bank), determines how much is received on exchange.",
+                    "Foreign currency can be obtained through commercial banks such as FNB, ABSA, Nedbank and Standard Bank."
+                ]}
+            ]
+        },
+        {
+            id: "business-cycles-policy",
+            title: "The New Economic Paradigm and Smoothing of Business Cycles",
+            keywords: ["business cycle policy essay", "new economic paradigm", "smoothing of cycles", "demand side supply side policy essay"],
+            sections: [
+                { heading: "The New Economic Paradigm", points: [
+                    "Government focuses less on fine-tuning and more on eliminating uncertainty in fiscal and monetary policy.",
+                    "Output can be increased by combining demand-side and supply-side policies."
+                ]},
+                { heading: "Demand-Side Policies", points: [
+                    "Aim to increase aggregate demand, mainly during a recession or below-trend growth when there is spare capacity (a negative output gap).",
+                    "If the economy is already near full capacity, a further rise in AD mainly causes inflation rather than growth.",
+                    "Monetary policy (SARB): can lower interest rates and increase the money supply to boost consumer spending.",
+                    "Fiscal policy (Minister of Finance): can increase government spending (triggering the multiplier effect) and cut taxes (raising disposable income).",
+                    "If aggregate demand grows faster than aggregate supply, the result is demand-pull inflation."
+                ]},
+                { heading: "Supply-Side Policies", points: [
+                    "Increase market efficiency and competition: deregulation, enforcing the Competition Act, and privatisation.",
+                    "Decrease production costs: subsidies and reduced administrative red tape.",
+                    "Improve efficiency of inputs: lower tax rates, encourage modern technology, improve human resources through skills development, and provide free advisory services."
+                ]}
+            ]
+        },
+        {
+            id: "business-cycle-forecasting",
+            title: "Features Underpinning Business Cycle Forecasting",
+            keywords: ["forecasting essay", "leading lagging coincident indicators", "business cycle indicators essay", "length amplitude trend line essay"],
+            sections: [
+                { heading: "Leading, Lagging, Coincident and Composite Indicators", points: [
+                    "Leading indicators change before the economy as a whole and are useful short-term predictors (e.g. share prices, building permits, money supply).",
+                    "Lagging indicators change after the economy has already turned, typically a few quarters later (e.g. the unemployment rate, average prime lending rate).",
+                    "Coincident indicators move at roughly the same time as the economy and help identify current peaks/troughs (e.g. industrial production, real retail sales).",
+                    "A composite indicator combines several indicators of the same type into one index to benchmark overall economic performance."
+                ]},
+                { heading: "Length and Amplitude", points: [
+                    "Length is the time for one complete cycle, measured peak-to-peak or trough-to-trough; it can be measured via crisis-to-crisis comparisons, historical records or business consensus.",
+                    "Amplitude is the intensity (height) of the upswing and downswing and reflects the strength of underlying forces; a larger amplitude means more extreme changes."
+                ]},
+                { heading: "Trend Line, Extrapolation and Moving Averages", points: [
+                    "The trend line shows the general long-term direction of the economy and usually slopes upward as productive capacity grows over time.",
+                    "Extrapolation uses past data/trends to predict the future, assuming the trend continues.",
+                    "Moving averages repeatedly calculate average values along a time series (arithmetic, median, mode or geometric) to smooth out short-term fluctuations."
+                ]}
+            ]
+        },
+        {
+            id: "public-sector-problems",
+            title: "Problems in the Provision of Public Sector Goods and Services",
+            keywords: ["public sector problems essay", "poor public sector provisioning", "accountability efficiency pricing policy essay"],
+            sections: [
+                { heading: "Accountability", points: [
+                    "Public servants may act in self-interest rather than the public interest, so mechanisms exist to keep them accountable.",
+                    "Key elements include participation, transparency, ministerial responsibility, parliamentary questioning, National Treasury control and Auditor-General reporting."
+                ]},
+                { heading: "Privatisation and Parastatals", points: [
+                    "Privatisation is selling more than 50% of state-owned shares to the private sector to shrink the public sector, but private owners may ignore public interest, undersupplying merit goods and possibly abandoning unprofitable rural services.",
+                    "Parastatals (SOEs) undertake commercial activities on the government's behalf but often focus on profit/cost at the expense of some groups' needs (e.g. Eskom, Transnet, SAA)."
+                ]},
+                { heading: "Efficiency", points: [
+                    "Efficient provisioning requires Pareto efficiency; inefficiency arises from bureaucracy (red tape), incompetence and corruption."
+                ]},
+                { heading: "Assessing Needs and Pricing Policy", points: [
+                    "Since SOEs don't operate purely on demand and supply, assessing needs is difficult; census/survey data and local government structures help.",
+                    "Government pricing does not simply maximise profit; it balances free-of-charge services, community goods, collective goods, user charges, subsidies and price discrimination."
+                ]}
+            ]
+        },
+        {
+            id: "public-sector-objectives",
+            title: "The Main Macro-Economic Objectives of the Public Sector",
+            keywords: ["public sector objectives essay", "befepe", "macroeconomic objectives essay"],
+            sections: [
+                { heading: "Balance of Payments Equilibrium", points: [
+                    "Government aims for a satisfactory balance of payments position, particularly in the current account, though a deficit is not always alarming if it reflects rising competitiveness."
+                ]},
+                { heading: "Economic Growth", points: [
+                    "South Africa targets roughly 4–5% growth, aiming for growth that raises living standards sustainably without depleting non-renewable resources or damaging the environment."
+                ]},
+                { heading: "Full Employment", points: [
+                    "The goal is for everyone willing and able to work at the going wage rate to find employment, raising productive potential and reducing state benefit costs."
+                ]},
+                { heading: "Exchange Rate Stability", points: [
+                    "Stable exchange rates attract foreign capital; the central bank may adjust the money supply to help maintain this."
+                ]},
+                { heading: "Price Stability", points: [
+                    "SARB targets inflation between 3% and 6% - low and stable rather than zero - which helps firms avoid constantly raising wages and prices."
+                ]},
+                { heading: "Economic Equity", points: [
+                    "Government redistributes income through tax and benefits to ensure access to basic necessities, while trying not to discourage work incentives."
+                ]}
+            ]
+        },
+        {
+            id: "protectionism-trade",
+            title: "Export Promotion and Import Substitution",
+            keywords: ["international trade essay", "protectionism essay", "export promotion essay", "import substitution essay", "free trade essay"],
+            sections: [
+                { heading: "Export Promotion: Definition and Methods", points: [
+                    "Export promotion covers policies and interventions to improve a country's trade performance, mainly by increasing exports relative to imports.",
+                    "Methods include incentives (market information, transport concessions, export credit), subsidies (direct cash payments or indirect tariff refunds/tax rebates), and trade neutrality (offsetting protection costs, including through Export Processing Zones)."
+                ]},
+                { heading: "Export Promotion: Advantages and Disadvantages", points: [
+                    "Advantages: large markets with no scale limits, production based on cost/efficiency, more realistic exchange rates, added value to natural resources, employment creation, and improved balance of payments.",
+                    "Disadvantages: subsidies can artificially lower real production costs, reduce competition, invite retaliatory tariffs/quotas from trading partners, and cause job losses if incentives are withdrawn."
+                ]},
+                { heading: "Import Substitution: Definition and Reasons", points: [
+                    "Import substitution replaces some imports with local production for local consumption rather than for export, aiming to generate employment, save foreign exchange and build self-reliance.",
+                    "Reasons include diversifying away from dependence on natural-resource exports, creating jobs, establishing domestic industries, correcting balance of payments problems and building national independence."
+                ]},
+                { heading: "Import Substitution: Methods, Advantages and Disadvantages", points: [
+                    "Methods: tariffs (ad valorem, specific or composite), quotas, subsidies, exchange control, physical bans/embargoes, and voluntary or forced substitution (e.g. due to sanctions).",
+                    "Advantages: increased employment and GDP, a broader industrial base, improved balance of payments and easy implementation via tariffs/quotas.",
+                    "Disadvantages: draws resources away from areas of comparative advantage, relies on borrowed technology, can overvalue the exchange rate (discouraging exports), and often means higher domestic prices for consumers."
+                ]}
+            ]
+        },
+        {
+            id: "perfect-market-structures",
+            title: "Comparing the Four Market Structures",
+            keywords: ["market structures essay", "perfect competition essay", "monopoly essay comparison", "oligopoly essay comparison", "monopolistic competition essay"],
+            sections: [
+                { heading: "Number of Firms, Product and Entry", points: [
+                    "Perfect competition: so many firms that none can influence price; homogeneous product; completely free entry.",
+                    "Monopolistic competition: many firms, each acting as if others won't notice; differentiated product; free entry.",
+                    "Oligopoly: few firms that must consider rivals' reactions; homogeneous or differentiated product; entry varies from free to restricted.",
+                    "Monopoly: one seller; unique product; entry completely blocked."
+                ]},
+                { heading: "Price Control, Information and Collusion", points: [
+                    "Perfect competition: firms are price takers with complete information; collusion is impossible.",
+                    "Monopolistic competition: firms have little price control (mostly price makers) with incomplete information; collusion is impossible.",
+                    "Oligopoly: considerable price-making power (less than monopoly), incomplete information, and collusion is possible (though illegal under the Competition Act).",
+                    "Monopoly: considerable price-making power limited by market demand, complete information, and collusion is impossible (only one firm)."
+                ]},
+                { heading: "Profit, Output and Examples", points: [
+                    "Perfect competition and monopolistic competition earn only normal profit in the long run; oligopoly and monopoly can earn economic profit in the long run.",
+                    "Output is highest and most varied under perfect and monopolistic competition, and lowest under oligopoly and monopoly.",
+                    "Examples: perfect competition - maize/tomato farmers, gold on the JSE; monopolistic competition - fast food, clothing; oligopoly - banking, cellphone networks, cement; monopoly - Eskom, Transnet."
+                ]}
+            ]
+        },
+        {
+            id: "perfect-market-equilibrium",
+            title: "Equilibrium Positions in Perfect Markets",
+            keywords: ["normal profit essay", "economic profit essay", "shutdown point essay", "long run equilibrium perfect competition essay"],
+            sections: [
+                { heading: "Normal Profit", points: [
+                    "Occurs where economic profit is zero, i.e. AC = AR (TR = TC), at the break-even point.",
+                    "It's the minimum profit needed to keep entrepreneurs in the industry, accounting for opportunity cost - it doesn't mean zero accounting profit."
+                ]},
+                { heading: "Economic Profit and Long-Run Adjustment", points: [
+                    "Economic profit occurs when AC is less than price (AR), so TR exceeds TC after deducting opportunity costs.",
+                    "Economic profit attracts new entrants; supply shifts right, price falls until only normal profit remains, restoring long-run equilibrium at the minimum point of the LAC curve.",
+                    "Losses work in reverse: firms exit until price rises back to the level of normal profit."
+                ]},
+                { heading: "The Shutdown Rule", points: [
+                    "In the short run a firm should keep operating if price exceeds average variable cost (P > AVC), because fixed costs must be paid regardless.",
+                    "If total revenue exceeds total variable cost, the surplus ('contribution') helps cover fixed costs; if TVC exceeds TR, the firm should shut down immediately.",
+                    "The shutdown point is where price just covers AVC; below this point, the firm closes rather than trade at a bigger loss."
+                ]}
+            ]
+        },
+        {
+            id: "monopoly-essay",
+            title: "The Monopoly Market Structure",
+            keywords: ["monopoly essay", "discuss monopoly in detail"],
+            sections: [
+                { heading: "Characteristics", points: [
+                    "One seller of a good/service with no close substitute and completely blocked entry; size is not what defines a monopoly.",
+                    "Barriers to entry include patents, licences, sole rights, import restrictions and exclusive ownership of raw materials, though globalisation increasingly limits local monopoly power.",
+                    "Collusion is impossible (only one firm); information is complete for both buyers and sellers."
+                ]},
+                { heading: "Price, Output and Profit", points: [
+                    "The monopolist is a price maker, limited by market demand and profit-maximisation goals, and faces the downward-sloping market demand curve.",
+                    "Because entry is blocked, economic profit can persist in the long run for as long as demand for the product holds.",
+                    "Output is low with no consumer choice, and there is no non-price competition."
+                ]},
+                { heading: "Sources of Monopoly Power and Regulation", points: [
+                    "Sources include economies of scale, capital requirements, technological superiority, lack of substitutes, control of natural resources and legal barriers.",
+                    "Because monopolists can exploit consumers, government intervenes through legislation such as the Competition Act 89 of 1998."
+                ]}
+            ]
+        },
+        {
+            id: "oligopoly-essay",
+            title: "The Oligopoly Market Structure",
+            keywords: ["oligopoly essay", "examine oligopoly in detail"],
+            sections: [
+                { heading: "Characteristics", points: [
+                    "A small number of large firms ('oligopolists') supply most or all of the market; each is aware of, and influenced by, rivals' decisions.",
+                    "Products may be homogeneous (pure oligopoly, e.g. petrol) or differentiated (e.g. banking services); entry faces significant barriers such as high capital requirements.",
+                    "Collusion is possible and common, though illegal under South Africa's Competition Act - colluding firms effectively behave like a cartel/monopoly."
+                ]},
+                { heading: "Price, Output and Competition", points: [
+                    "Oligopolists are price makers with less control than a monopolist; the demand curve is typically kinked and price changes occur more frequently.",
+                    "Output is low with limited choice; economic profit is possible in the long run.",
+                    "Non-price competition is common: advertising, after-sales service, brand loyalty, extended hours and product differentiation.",
+                    "Examples: banking, cellphone networks, cigarettes and vehicle manufacturing."
+                ]}
+            ]
+        },
+        {
+            id: "market-failure-causes",
+            title: "Causes of Market Failure (Misallocation of Resources)",
+            keywords: ["market failure essay", "mielii", "causes of market failure essay"],
+            sections: [
+                { heading: "Missing Markets and Public Goods", points: [
+                    "Some goods are needed/wanted but markets fail to form for them - most extremely, pure public goods like national defence, policing and street lighting.",
+                    "Public goods are non-excludable (no one can be denied access) and non-rivalrous (one person's use doesn't reduce availability to others), so entrepreneurs can't charge users and won't supply them."
+                ]},
+                { heading: "Imperfect Competition and Lack of Information", points: [
+                    "Imperfect markets (monopoly, oligopoly) restrict output and raise prices above marginal cost, causing both allocative and technical inefficiency.",
+                    "When producers or consumers lack complete, accurate information, they make wrong production/consumption decisions and resources are wasted."
+                ]},
+                { heading: "Externalities", points: [
+                    "Externalities occur when production or consumption affects third parties not part of the transaction, and can be positive or negative.",
+                    "Social cost = private cost + external cost; social benefit = private benefit + external benefit.",
+                    "Example: a factory's negative production externality is pollution; a positive consumption externality is the wider benefit society gains from an individual's education."
+                ]},
+                { heading: "Immobility of Factors and Unequal Income Distribution", points: [
+                    "Labour immobility (geographic or institutional, e.g. pension ties, family circumstances) and specific/heavy capital slow the market's ability to adjust to changes in demand and supply.",
+                    "Unequal income and wealth distribution arises from discrimination, differences in market power, and unequal access to markets and education."
+                ]}
+            ]
+        },
+        {
+            id: "market-failure-intervention",
+            title: "State Intervention as a Consequence of Market Failure",
+            keywords: ["state intervention essay", "market failure intervention essay", "minimum wage maximum price essay"],
+            sections: [
+                { heading: "Direct Control of Externalities", points: [
+                    "For negative externalities (e.g. pollution), government can tax the good so consumers pay the full social cost, reducing consumption to a more efficient level (e.g. sin tax on cigarettes).",
+                    "For positive externalities (e.g. education), government can subsidise consumption to close the gap between private and social benefit."
+                ]},
+                { heading: "Imperfect Markets, Minimum Wages and Price Controls", points: [
+                    "Government can strengthen competition policy, impose price controls, or license new entrants to challenge a state monopoly.",
+                    "A minimum wage set above the market wage increases the quantity of labour supplied but reduces quantity demanded, potentially causing unemployment.",
+                    "A minimum price (price floor) set above market price usually creates a surplus; a maximum price (price ceiling) set below market price usually creates a shortage."
+                ]},
+                { heading: "Taxes, Subsidies and Redistribution", points: [
+                    "Progressive taxation charges higher earners more, and taxes can recover external costs by raising prices to reduce harmful production/consumption.",
+                    "Subsidies lower production costs and prices, encouraging supply of merit goods.",
+                    "Government redistributes wealth via taxing/spending powers and redress mechanisms (e.g. BEE, affirmative action, land restitution) and may directly produce merit/public goods itself."
+                ]}
+            ]
+        },
+        {
+            id: "growth-demand-side",
+            title: "The Demand-Side Approach to Growth and Development",
+            keywords: ["demand side approach essay", "growth demand side essay", "monetary fiscal policy growth essay"],
+            sections: [
+                { heading: "Overview", points: [
+                    "Focuses on the aggregate demand created by households, businesses, government and the foreign sector as a driving force for growth.",
+                    "There must be adequate and growing demand for domestically produced goods and services: ΔGDP = ΔC + ΔI + ΔG + Δ(X - M)."
+                ]},
+                { heading: "Monetary Policy", points: [
+                    "The SARB influences interest rates and money supply via open market transactions, cash reserve requirements (currently 5% in SA) and moral persuasion with commercial banks."
+                ]},
+                { heading: "Fiscal Policy", points: [
+                    "Government varies taxes and spending to stimulate or restrain demand, funding training, infrastructure, export promotion and new businesses to support growth.",
+                    "Development-oriented fiscal tools include progressive taxation, welfare grants, tax reductions, land/home ownership support and benefits in kind."
+                ]}
+            ]
+        },
+        {
+            id: "growth-supply-side",
+            title: "The Supply-Side Approach to Growth and Development",
+            keywords: ["supply side approach essay", "growth supply side essay", "south africa supply side policy essay"],
+            sections: [
+                { heading: "Overview", points: [
+                    "Focuses on expanding the economy's production capacity by increasing the quantity or quality of natural resources, labour, capital, entrepreneurship and technology."
+                ]},
+                { heading: "South Africa's Supply-Side Measures", points: [
+                    "Education and training: SETAs promote work-related training for different sectors as skilled-labour demand grows.",
+                    "SMME support: funding through Khula, the National Empowerment Fund, IDC and Business Partners, plus free advisory centres.",
+                    "Fiscal policy: reduced tax rates and targeted incentives to encourage investment.",
+                    "Competition and deregulation: the Competition Act (1998), Competition Commission/Tribunal, and removal of unnecessary trade barriers boost competition.",
+                    "Labour legislation, R&D support, privatisation and infrastructure development (transport, energy, telecommunications) round out the supply-side toolkit."
+                ]}
+            ]
+        },
+        {
+            id: "industrial-development-sa",
+            title: "South Africa's Regional Development Initiatives",
+            keywords: ["regional development essay", "industrial development policy essay", "sdi idz sez essay"],
+            sections: [
+                { heading: "Background", points: [
+                    "About 80% of SA's GDP comes from four industrialised areas: Johannesburg-Pretoria-Tshwane, Durban-Pinetown, Cape Town and Port Elizabeth-Coega-Uitenhage, mainly due to unequal spending and resource distribution.",
+                    "Regional policy aims to spread industries more evenly so capital and labour move toward under-developed areas."
+                ]},
+                { heading: "Spatial Development Initiatives, IDZs and SEZs", points: [
+                    "SDIs link economic hubs to poorer regions to stimulate growth and employment (e.g. the Platinum SDI for mining/agri-tourism, the Maputo Development Corridor for industry/agri-processing).",
+                    "Industrial Development Zones (IDZs) are export-focused industrial estates linked to ports/airports, such as Coega and Richards Bay.",
+                    "Special Economic Zones (SEZs) are demarcated areas offering tax relief and infrastructure to enable industrial clustering."
+                ]},
+                { heading: "Incentive Programmes", points: [
+                    "Financial incentives include duty-free import concessions, the Small Business Support Programme, the Skills Development Programme, the Critical Infrastructure Programme and foreign investment grants."
+                ]}
+            ]
+        },
+        {
+            id: "industrial-development-benchmarks",
+            title: "International Best-Practice Benchmarks for Regional Development",
+            keywords: ["regional development benchmark essay", "good governance sustainability essay", "regional development criteria essay"],
+            sections: [
+                { heading: "Governance and Partnerships", points: [
+                    "Good governance requires democratic decision-making, transparency and effective, corruption-free financial management.",
+                    "Integration ensures benefits spill over between regions and industries; partnerships should link central government, local authorities, civil society and the private sector."
+                ]},
+                { heading: "Resources, Competitiveness and Sustainability", points: [
+                    "Sufficient resources (infrastructure, human resources) must be provided in resource-poor areas.",
+                    "Businesses created through regional policy should be competitive and not need ongoing government support.",
+                    "Sustainability means the region's own resources support development without compromising future employment."
+                ]},
+                { heading: "People-Centred and Free-Market Principles", points: [
+                    "Development should be by, for and from the people, starting at grassroots level and treated as a multi-dimensional process (education, health, nutrition).",
+                    "A free-market orientation keeps government intervention minimal so supply, demand and profit motives can allocate resources efficiently, alongside investment in social capital such as education and healthcare."
+                ]}
+            ]
+        },
+        {
+            id: "economic-indicators-essay",
+            title: "Key Economic Indicators",
+            keywords: ["economic indicators essay", "production price employment productivity indicators essay"],
+            sections: [
+                { heading: "Production and Price Indicators", points: [
+                    "Real GDP removes the effect of inflation to measure genuine growth; nominal GDP uses current prices; GDP per capita (Real GDP ÷ population) reflects living standards and is used to compare countries or groups.",
+                    "The CPI tracks a representative basket of consumer goods/services and is South Africa's official inflation-targeting index; the PPI tracks production (not consumption) costs, excludes VAT and shows import prices explicitly."
+                ]},
+                { heading: "Monetary and Foreign Trade Indicators", points: [
+                    "The SARB tracks money supply in three aggregates: M1 (notes, coins and demand deposits), M2 (M1 plus short/medium-term deposits) and M3 (M2 plus long-term deposits).",
+                    "The repo rate is what SARB charges commercial banks and anchors other interest rates; the prime rate (charged to customers) is always higher.",
+                    "The terms of trade is the ratio of export prices to import prices; the exchange rate is the price of one currency in terms of another, monitored closely by importers/exporters."
+                ]},
+                { heading: "Employment and Productivity Indicators", points: [
+                    "The Economically Active Population (EAP) is people aged roughly 15-65 who are willing and able to work; the unemployment rate expresses those seeking work but without a job as a percentage of the EAP.",
+                    "The employment rate is the percentage of the EAP that is working, useful for spotting sector trends and measuring productivity.",
+                    "Labour productivity measures real GDP produced per hour of labour, driven by investment/saving in capital, new technology and human capital."
+                ]}
+            ]
+        },
+        {
+            id: "social-indicators-essay",
+            title: "Key Social Indicators",
+            keywords: ["social indicators essay", "demographic nutrition health education housing indicators essay"],
+            sections: [
+                { heading: "Demographic and Income Indicators", points: [
+                    "Population growth (measured via census) matters for service delivery and the tax base; high population growth with low economic growth strains living standards and government finances.",
+                    "Life expectancy is the expected years a newborn will live; South Africa's has historically lagged well behind developed countries like the USA.",
+                    "The Gini coefficient (0 to 1) measures income inequality; progressive taxation and BEE are used to try to lower it."
+                ]},
+                { heading: "Education, Housing and Services", points: [
+                    "A higher literacy rate reflects more effective education and training, ultimately raising productivity and living standards; education spending is a top priority in the SA budget.",
+                    "Housing delivery is hindered by unemployment and unequal income distribution, so government uses subsidies and loans to promote ownership.",
+                    "Access to services such as electricity, refuse removal, water supply and sanitation are used in surveys (e.g. the General Household Survey) to track development."
+                ]},
+                { heading: "Nutrition and Health Indicators", points: [
+                    "Infant mortality and under-five mortality (deaths per 1 000 live births) indicate a population's basic health and wellbeing.",
+                    "Health expenditure as a percentage of GDP, and access to safe drinking water and sanitation, are used to compare South Africa's health infrastructure internationally.",
+                    "Child malnutrition (underweight/stunting) and childhood obesity are both monitored, since either can seriously affect a child's development."
+                ]}
+            ]
+        },
+        {
+            id: "demand-pull-inflation",
+            title: "Causes of Demand-Pull Inflation",
+            keywords: ["demand pull inflation essay", "causes of demand inflation essay"],
+            sections: [
+                { heading: "Consumption, Credit and Investment", points: [
+                    "An increase in the money supply without a matching increase in output leaves more money chasing the same goods, pushing prices up.",
+                    "Rising household consumption - through declining savings, tax reductions, or easier access to credit as interest rates fall - increases demand faster than supply.",
+                    "Lower interest rates improve business profit expectations, encouraging more investment spending on goods such as cement and bricks, adding further demand."
+                ]},
+                { heading: "Government Spending and Exports", points: [
+                    "Government spending that rises without a matching increase in aggregate supply, especially if funded by borrowing (which increases money in circulation), adds to demand-pull pressure.",
+                    "Rising export earnings channel more money into the domestic economy; if exports rise without a matching rise in domestic production, fewer goods remain available locally, pushing prices up."
+                ]}
+            ]
+        },
+        {
+            id: "cost-push-inflation",
+            title: "Causes of Cost-Push Inflation",
+            keywords: ["cost push inflation essay", "causes of cost inflation essay"],
+            sections: [
+                { heading: "Wages, Inputs and the Exchange Rate", points: [
+                    "Rising wages increase the cost of production, which businesses pass on as higher prices.",
+                    "Higher prices for key imported inputs (like oil or machinery) raise domestic production costs directly.",
+                    "A depreciating exchange rate makes imported goods and inputs more expensive in rand terms."
+                ]},
+                { heading: "Profit Margins, Productivity and Shocks", points: [
+                    "Businesses increasing profit margins to recover higher costs push prices up further.",
+                    "A decrease in productivity means each unit costs more to produce if remuneration stays the same.",
+                    "Natural disasters (droughts, floods) and supply shocks (like sudden oil price spikes) raise costs and disrupt supply, feeding a wage-price spiral of rising costs, prices and living expenses."
+                ]}
+            ]
+        },
+        {
+            id: "tourism-effects",
+            title: "The Effects of Tourism",
+            keywords: ["tourism effects essay", "effects of tourism essay"],
+            sections: [
+                { heading: "Positive Effects: GDP, Employment and Poverty", points: [
+                    "Tourism contributes strongly to the services sector, directly and indirectly, and is one of the world's largest generators of jobs across all skill levels.",
+                    "Because prime tourist attractions are often in rural areas, tourism can be a fast, effective way to spread income sources, empower communities and reduce poverty."
+                ]},
+                { heading: "Infrastructure and Externalities", points: [
+                    "Tourism requires adequate transport, communication, energy and basic-services infrastructure; a lack of this prevents growth, and seasonality complicates planning.",
+                    "Tourism has both positive externalities (revenue, poverty alleviation, conservation) and negative ones (environmental damage, resource strain) if growth isn't managed sustainably."
+                ]},
+                { heading: "Negative Effects: Environment and Society", points: [
+                    "Rapid, short-term-focused tourism growth can degrade traditions/culture and damage natural sites through pollution and waste.",
+                    "Environmental stress includes permanent restructuring (e.g. roads, airports), waste generation, direct habitat destruction and shifts in population dynamics.",
+                    "Other risks include disrespect for local heritage, spread of disease, and concentrating development funds at tourist hubs at the expense of other areas."
+                ]}
+            ]
+        },
+        {
+            id: "tourism-benefits",
+            title: "The Benefits of Tourism",
+            keywords: ["tourism benefits essay", "benefits of tourism essay"],
+            sections: [
+                { heading: "Households and Government", points: [
+                    "Households benefit through income (wages from tourism-related work), improved infrastructure, and the variety of skills tourism jobs demand and develop.",
+                    "Government benefits mainly through taxation (VAT, excise duties, airport and hotel taxes), which recovers external costs and treats tourists as part of the tax base."
+                ]},
+                { heading: "Businesses and Infrastructure", points: [
+                    "Private businesses (accommodation, transport, retail, recreation) form the profit-generating 'superstructure' of tourism, supported by public-sector infrastructure and financial incentives.",
+                    "Tourism also stimulates entrepreneurship, BEE and SMME development, including informal opportunities such as car rentals and craft sales.",
+                    "Both economic infrastructure (beach/lake/river access) and social infrastructure (ambulance services, information services) are prioritised to support tourist destinations."
+                ]}
+            ]
+        },
+        {
+            id: "environmental-government-measures",
+            title: "Government Measures to Ensure Environmental Sustainability",
+            keywords: ["environmental sustainability essay", "government environmental measures essay", "environmental tax subsidy essay"],
+            sections: [
+                { heading: "Property Rights, Charges and Taxes", points: [
+                    "Granting property rights encourages people to look after what belongs to them (e.g. the Kyoto Protocol's principle of developed countries paying for pollution rights).",
+                    "Government can charge for environmental use (emission charges rising with pollution levels) or impose environmental (green) taxes on outputs that cause external costs."
+                ]},
+                { heading: "Subsidies and Marketable Permits", points: [
+                    "Environmental subsidies, funded from taxation, reduce environmentally damaging activities and encourage recycling or cleaner technology.",
+                    "Marketable permits let government cap pollution and allow businesses to trade permits/credits amongst themselves in a permit market."
+                ]},
+                { heading: "Direct Control, Agreements and Education", points: [
+                    "Command and Control (CAC) sets legal maximum pollution levels that must be observed.",
+                    "Voluntary agreements are negotiated between government and businesses to cut pollution without formal regulation.",
+                    "Education changes attitudes toward the environment, for example through community wildlife reserve initiatives."
+                ]}
+            ]
+        },
+        {
+            id: "environmental-international-measures",
+            title: "International Measures for Sustainable Development",
+            keywords: ["international environmental measures essay", "sustainable development international essay", "kyoto protocol essay"],
+            sections: [
+                { heading: "Biodiversity, Chemical and Hazardous Waste", points: [
+                    "Species extinction is irreversible; CITES sets policies to curb biodiversity loss.",
+                    "The Stockholm Protocol limits toxic chemical waste; the Basel Convention (which South Africa has signed) manages highly hazardous waste, including radioactive waste."
+                ]},
+                { heading: "Climate Change and Indigenous Knowledge", points: [
+                    "Climate change, driven mainly by global warming, is addressed through international cooperation such as sharing weather data and limiting greenhouse gases.",
+                    "The Kyoto Protocol (1997) set binding obligations for industrialised countries to cut six greenhouse gases after voluntary reductions failed.",
+                    "As indigenous communities lose their habitats or urbanise, valuable traditional environmental knowledge is being lost, making local capacity-building important."
+                ]},
+                { heading: "Major International Summits", points: [
+                    "Rio de Janeiro (UNCED, 1992): established sustainable development as a global objective, including the 'polluter pays' principle.",
+                    "Johannesburg Summit (WSSD, 2002): focused on poverty eradication and unsustainable consumption patterns.",
+                    "Rio+20 (2012): promoted the 'green economy' as a tool for sustainable growth and poverty eradication.",
+                    "COP 17 (Durban): reaffirmed the Kyoto Protocol and established a Green Climate Fund plus an Adaptation Committee to help vulnerable countries."
+                ]}
+            ]
+        }
+    ];
+
+
+    /* =========================================================
+       FINANCIAL STATEMENT TEMPLATES (full worked examples,
+       given only when the person explicitly asks to prepare
+       or see a financial statement)
+    ========================================================= */
+
+    const financialStatementTemplates = {
+
+        pnl: `
+            <h2>Statement of Profit or Loss (Income Statement)</h2>
+            <p><em>Comfy Furniture Traders - for the year ended 28 February 2026 (illustrative figures)</em></p>
+            <table style="width:100%; border-collapse:collapse; font-size:0.95em;">
+                <tr><td>Sales</td><td style="text-align:right;">850 000</td></tr>
+                <tr><td>Cost of sales</td><td style="text-align:right;">(510 000)</td></tr>
+                <tr><td><strong>Gross profit</strong></td><td style="text-align:right;"><strong>340 000</strong></td></tr>
+                <tr><td>Other income (rent income)</td><td style="text-align:right;">18 000</td></tr>
+                <tr><td><strong>Subtotal</strong></td><td style="text-align:right;"><strong>358 000</strong></td></tr>
+                <tr><td colspan="2"><em>Operating expenses</em></td></tr>
+                <tr><td>&nbsp;&nbsp;Salaries and wages</td><td style="text-align:right;">(120 000)</td></tr>
+                <tr><td>&nbsp;&nbsp;Rent expense</td><td style="text-align:right;">(24 000)</td></tr>
+                <tr><td>&nbsp;&nbsp;Water and electricity</td><td style="text-align:right;">(15 000)</td></tr>
+                <tr><td>&nbsp;&nbsp;Depreciation</td><td style="text-align:right;">(20 000)</td></tr>
+                <tr><td>&nbsp;&nbsp;Sundry expenses</td><td style="text-align:right;">(9 000)</td></tr>
+                <tr><td><strong>Operating profit</strong></td><td style="text-align:right;"><strong>170 000</strong></td></tr>
+                <tr><td>Interest expense</td><td style="text-align:right;">(10 000)</td></tr>
+                <tr><td><strong>Profit before tax</strong></td><td style="text-align:right;"><strong>160 000</strong></td></tr>
+                <tr><td>Income tax expense (28%)</td><td style="text-align:right;">(44 800)</td></tr>
+                <tr><td><strong>Profit for the year</strong></td><td style="text-align:right;"><strong>115 200</strong></td></tr>
+            </table>
+            <p><em>Figures are illustrative. Swap in your own trial balance amounts to prepare a real statement - happy to help with that too.</em></p>
+        `,
+
+        sofp: `
+            <h2>Statement of Financial Position (Balance Sheet)</h2>
+            <p><em>Comfy Furniture Traders - as at 28 February 2026 (illustrative figures)</em></p>
+            <table style="width:100%; border-collapse:collapse; font-size:0.95em;">
+                <tr><td colspan="2"><strong>ASSETS</strong></td></tr>
+                <tr><td>Non-current assets</td><td></td></tr>
+                <tr><td>&nbsp;&nbsp;Property, plant and equipment</td><td style="text-align:right;">480 000</td></tr>
+                <tr><td>Current assets</td><td></td></tr>
+                <tr><td>&nbsp;&nbsp;Inventory</td><td style="text-align:right;">95 000</td></tr>
+                <tr><td>&nbsp;&nbsp;Trade receivables</td><td style="text-align:right;">60 000</td></tr>
+                <tr><td>&nbsp;&nbsp;Cash and cash equivalents</td><td style="text-align:right;">35 000</td></tr>
+                <tr><td><strong>Total assets</strong></td><td style="text-align:right;"><strong>670 000</strong></td></tr>
+                <tr><td colspan="2">&nbsp;</td></tr>
+                <tr><td colspan="2"><strong>EQUITY AND LIABILITIES</strong></td></tr>
+                <tr><td>Capital (opening)</td><td style="text-align:right;">300 000</td></tr>
+                <tr><td>Add: Net profit for the year</td><td style="text-align:right;">115 200</td></tr>
+                <tr><td>Less: Drawings</td><td style="text-align:right;">(40 000)</td></tr>
+                <tr><td><strong>Capital (closing)</strong></td><td style="text-align:right;"><strong>375 200</strong></td></tr>
+                <tr><td>Non-current liabilities</td><td></td></tr>
+                <tr><td>&nbsp;&nbsp;Long-term loan</td><td style="text-align:right;">150 000</td></tr>
+                <tr><td>Current liabilities</td><td></td></tr>
+                <tr><td>&nbsp;&nbsp;Trade payables</td><td style="text-align:right;">100 000</td></tr>
+                <tr><td>&nbsp;&nbsp;Bank overdraft</td><td style="text-align:right;">44 800</td></tr>
+                <tr><td><strong>Total equity and liabilities</strong></td><td style="text-align:right;"><strong>670 000</strong></td></tr>
+            </table>
+            <p><em>Figures are illustrative and are set up to balance (Total assets = Total equity and liabilities).</em></p>
+        `,
+
+        cashflow: `
+            <h2>Statement of Cash Flows</h2>
+            <p><em>Comfy Furniture Traders - for the year ended 28 February 2026 (indirect method, illustrative figures)</em></p>
+            <table style="width:100%; border-collapse:collapse; font-size:0.95em;">
+                <tr><td colspan="2"><strong>Cash flows from operating activities</strong></td></tr>
+                <tr><td>Profit before tax</td><td style="text-align:right;">160 000</td></tr>
+                <tr><td>Adjustments: Depreciation</td><td style="text-align:right;">20 000</td></tr>
+                <tr><td>Adjustments: Interest expense</td><td style="text-align:right;">10 000</td></tr>
+                <tr><td><strong>Operating profit before working capital changes</strong></td><td style="text-align:right;"><strong>190 000</strong></td></tr>
+                <tr><td>Increase in inventory</td><td style="text-align:right;">(15 000)</td></tr>
+                <tr><td>Increase in trade receivables</td><td style="text-align:right;">(10 000)</td></tr>
+                <tr><td>Increase in trade payables</td><td style="text-align:right;">20 000</td></tr>
+                <tr><td><strong>Cash generated from operations</strong></td><td style="text-align:right;"><strong>185 000</strong></td></tr>
+                <tr><td>Interest paid</td><td style="text-align:right;">(10 000)</td></tr>
+                <tr><td>Tax paid</td><td style="text-align:right;">(44 800)</td></tr>
+                <tr><td><strong>Net cash from operating activities</strong></td><td style="text-align:right;"><strong>130 200</strong></td></tr>
+                <tr><td colspan="2">&nbsp;</td></tr>
+                <tr><td colspan="2"><strong>Cash flows from investing activities</strong></td></tr>
+                <tr><td>Purchase of property, plant and equipment</td><td style="text-align:right;">(60 000)</td></tr>
+                <tr><td><strong>Net cash used in investing activities</strong></td><td style="text-align:right;"><strong>(60 000)</strong></td></tr>
+                <tr><td colspan="2">&nbsp;</td></tr>
+                <tr><td colspan="2"><strong>Cash flows from financing activities</strong></td></tr>
+                <tr><td>Proceeds from long-term loan</td><td style="text-align:right;">50 000</td></tr>
+                <tr><td>Drawings</td><td style="text-align:right;">(40 000)</td></tr>
+                <tr><td><strong>Net cash from financing activities</strong></td><td style="text-align:right;"><strong>10 000</strong></td></tr>
+                <tr><td colspan="2">&nbsp;</td></tr>
+                <tr><td><strong>Net increase in cash and cash equivalents</strong></td><td style="text-align:right;"><strong>80 200</strong></td></tr>
+                <tr><td>Cash and cash equivalents at beginning of year</td><td style="text-align:right;">(45 200)</td></tr>
+                <tr><td><strong>Cash and cash equivalents at end of year</strong></td><td style="text-align:right;"><strong>35 000</strong></td></tr>
+            </table>
+            <p><em>Figures are illustrative and use the indirect method starting from profit before tax.</em></p>
+        `
+
+    };
+
+
+    /* =========================================================
+       TEXT NORMALISATION
+    ========================================================= */
+
+    function normalizeText(text) {
+        return String(text || "")
+            .toLowerCase()
+            .replace(/[’']/g, "")
+            .replace(/[^a-z0-9%²^.\-\s]/gi, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+
+    /* =========================================================
+       TOKENISE
+    ========================================================= */
+
+    function getTokens(text) {
+        return normalizeText(text)
+            .split(/\s+/)
+            .filter(Boolean);
+    }
+
+
+    /* =========================================================
+       SUBJECT DETECTION
+    ========================================================= */
+
+    function detectSubject(question) {
+        const text = normalizeText(question);
+        let scores = {};
+        Object.keys(subjectWords).forEach(k => { scores[k] = 0; });
+
+        Object.keys(subjectWords).forEach(subject => {
+            subjectWords[subject].forEach(keyword => {
+                const key = normalizeText(keyword);
+                if (!key) return;
+                if (text.includes(key)) {
+                    if (key.includes(" ")) { scores[subject] += 8; }
+                    else { scores[subject] += 4; }
+                }
+            });
+        });
+
+        const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+        if (sorted[0][1] === 0) return null;
+        if (sorted[1] && sorted[0][1] === sorted[1][1]) return null;
+        return sorted[0][0];
+    }
+
+
+    /* =========================================================
+       TOPIC SCORING
+    ========================================================= */
+
+    function scoreKnowledgeItem(question, item) {
+        const text = normalizeText(question);
+        const tokens = new Set(getTokens(question));
+        let score = 0;
+
+        const topic = normalizeText(item.topic);
+        if (text.includes(topic)) score += 60;
+
+        item.keywords.forEach(keyword => {
+            const key = normalizeText(keyword);
+            if (!key) return;
+            if (text.includes(key)) {
+                score += key.includes(" ") ? 35 : 25;
+            }
+        });
+
+        item.keywords.forEach(keyword => {
+            const keyTokens = getTokens(keyword);
+            let matches = 0;
+            keyTokens.forEach(token => { if (tokens.has(token)) matches++; });
+            if (matches > 0) score += matches * 7;
+        });
+
+        (item.relatedKeywords || []).forEach(keyword => {
+            const key = normalizeText(keyword);
+            if (key && text.includes(key)) score += 10;
+        });
+
+        const formulaWords = ["formula", "calculate", "calculation", "equation", "how much", "work out", "find", "compute"];
+        formulaWords.forEach(word => {
+            if (text.includes(word) && item.formulas.length > 0) score += 10;
+        });
+
+        const definitionWords = ["what is", "define", "definition", "explain", "meaning", "what does"];
+        definitionWords.forEach(word => { if (text.includes(word)) score += 3; });
+
+        return score;
+    }
+
+
+    /* =========================================================
+       SEARCH KNOWLEDGE
+    ========================================================= */
+
+    function searchKnowledge(question, subject) {
+        let knowledge = [];
+        if (subject === "Accounting") knowledge = accountingKnowledge;
+        if (subject === "Economics") knowledge = economicsKnowledge;
+        if (subject === "Mathematics") knowledge = mathematicsKnowledge;
+        if (subject === "Business Studies") knowledge = businessStudiesKnowledge;
+        if (subject === "Financial Management") knowledge = financialManagementKnowledge;
+        if (!knowledge.length) return [];
+
+        const scored = knowledge.map(item => ({ item, score: scoreKnowledgeItem(question, item) }));
+        scored.sort((a, b) => b.score - a.score);
+        return scored.filter(result => result.score >= 18).slice(0, 3);
+    }
+
+
+    /* =========================================================
+       TOPIC LIST REQUEST
+    ========================================================= */
+
+    function isTopicListRequest(question) {
+        const text = normalizeText(question);
+        const phrases = ["list topics", "show topics", "topics", "what topics", "available topics", "what can you teach", "what do you know"];
+        return phrases.some(phrase => text === phrase || text.includes(phrase));
+    }
+
+
+    /* =========================================================
+       ALL INFORMATION REQUEST
+    ========================================================= */
+
+    function isAllInformationRequest(question) {
+        const text = normalizeText(question);
+        const phrases = ["all information", "everything about", "tell me everything", "complete information", "full information", "full explanation", "in detail", "detailed explanation"];
+        return phrases.some(phrase => text.includes(phrase));
+    }
+
+
+    /* =========================================================
+       EXAMPLE REQUEST DETECTION
+    ========================================================= */
+
+    function isExampleRequest(question) {
+        const text = normalizeText(question);
+        const phrases = ["example", "examples", "give me an example", "give me examples", "show me examples", "show me an example", "worked example"];
+        return phrases.some(phrase => text.includes(phrase));
+    }
+
+
+    /* =========================================================
+       FORMAT: EXAMPLES ONLY (minimum 5 where stored)
+    ========================================================= */
+
+    function formatExamplesOnly(item) {
+        const examples = item.examples || [];
+        let html = `<h2>${escapeHtml(item.topic)} - Examples</h2>`;
+
+        if (!examples.length) {
+            html += `
+                <p>
+                    I don't have worked examples stored for
+                    <strong>${escapeHtml(item.topic)}</strong> yet.
+                    Try asking for the general explanation instead,
+                    or ask me to add examples for this topic.
+                </p>
+            `;
+            return html;
+        }
+
+        html += `<ol>`;
+        examples.forEach(example => {
+            html += `<li style="margin-bottom:8px;">${escapeHtml(example)}</li>`;
+        });
+        html += `</ol>`;
+
+        if (examples.length < 5) {
+            html += `
+                <p>
+                    <em>
+                        Only ${examples.length} example${examples.length === 1 ? "" : "s"}
+                        currently stored for this topic - ask me
+                        and I can expand this list to at least five.
+                    </em>
+                </p>
+            `;
+        }
+
+        return html;
+    }
+
+
+    /* =========================================================
+       ESSAY REQUEST DETECTION (Economics essays)
+    ========================================================= */
+
+    function isEssayRequest(question) {
+        const text = normalizeText(question);
+        return text.includes("essay");
+    }
+
+
+    function scoreEssay(question, essay) {
+        const text = normalizeText(question);
+        let score = 0;
+
+        essay.keywords.forEach(keyword => {
+            const key = normalizeText(keyword);
+            if (!key) return;
+            if (text.includes(key)) score += key.includes(" ") ? 12 : 6;
+        });
+
+        const titleTokens = getTokens(essay.title);
+        const questionTokens = new Set(getTokens(question));
+        titleTokens.forEach(token => {
+            if (token.length > 3 && questionTokens.has(token)) score += 3;
+        });
+
+        return score;
+    }
+
+
+    function listEssayTopics() {
+        let html = `
+            <h2>Available Economics Essays</h2>
+            <p>Just ask, for example: "give me an essay on circular flow" or "essay on market failure".</p>
+            <ul>
+        `;
+        economicsEssays.forEach(essay => { html += `<li>${escapeHtml(essay.title)}</li>`; });
+        html += `</ul>`;
+        return html;
+    }
+
+
+    function renderEssay(essay) {
+        let html = `<h2>Essay: ${escapeHtml(essay.title)}</h2>`;
+        essay.sections.forEach(section => {
+            html += `<h3>${escapeHtml(section.heading)}</h3><ul>`;
+            section.points.forEach(point => { html += `<li>${escapeHtml(point)}</li>`; });
+            html += `</ul>`;
+        });
+        return html;
+    }
+
+
+    function generateEssayAnswer(question) {
+        const text = normalizeText(question);
+        const listPhrases = ["list essay", "essay topics", "what essays", "which essays", "available essays"];
+        if (listPhrases.some(phrase => text.includes(phrase))) return listEssayTopics();
+
+        const scored = economicsEssays.map(essay => ({ essay, score: scoreEssay(question, essay) }));
+        scored.sort((a, b) => b.score - a.score);
+
+        if (!scored.length || scored[0].score < 6) return listEssayTopics();
+        return renderEssay(scored[0].essay);
+    }
+
+
+    /* =========================================================
+       FINANCIAL STATEMENT REQUEST DETECTION
+    ========================================================= */
+
+    function isFinancialStatementRequest(question) {
+        const text = normalizeText(question);
+        const phrases = [
+            "statement of profit or loss", "statement of comprehensive income", "income statement",
+            "statement of financial position", "balance sheet", "cash flow statement", "statement of cash flows",
+            "prepare a financial statement", "prepare financial statements", "prepare me a financial statement",
+            "example financial statement", "financial statements example"
+        ];
+        return phrases.some(phrase => text.includes(phrase));
+    }
+
+
+    function generateFinancialStatement(question) {
+        const text = normalizeText(question);
+
+        if (text.includes("cash flow statement") || text.includes("statement of cash flows") || (text.includes("cash flow") && text.includes("statement"))) {
+            return financialStatementTemplates.cashflow;
+        }
+        if (text.includes("financial position") || text.includes("balance sheet")) {
+            return financialStatementTemplates.sofp;
+        }
+        if (text.includes("profit or loss") || text.includes("income statement") || text.includes("comprehensive income")) {
+            return financialStatementTemplates.pnl;
+        }
+
+        return `
+            <h2>Which financial statement?</h2>
+            <p>I can prepare a full worked example of:</p>
+            <ul>
+                <li>Statement of Profit or Loss (Income Statement)</li>
+                <li>Statement of Financial Position (Balance Sheet)</li>
+                <li>Statement of Cash Flows</li>
+            </ul>
+            <p>Just ask, for example: "prepare a statement of profit or loss".</p>
+        `;
+    }
+
+
+    /* =========================================================
+       JOKE / FUN FACT REQUEST DETECTION
+    ========================================================= */
+
+    function isJokeRequest(question) {
+        const text = normalizeText(question);
+        const phrases = ["joke", "make me laugh", "tell me something funny", "say something funny"];
+        return phrases.some(phrase => text.includes(phrase));
+    }
+
+
+    function isFunFactRequest(question) {
+        const text = normalizeText(question);
+        const phrases = ["fun fact", "funfact", "interesting fact", "did you know", "random fact"];
+        return phrases.some(phrase => text.includes(phrase));
+    }
+
+
+    function isMotivationRequest(question) {
+        const text = normalizeText(question);
+        const phrases = [
+            "motivate me", "motivation", "encourage me", "i am stressed", "i'm stressed",
+            "im stressed", "i am tired of studying", "i give up", "this is too hard"
+        ];
+        return phrases.some(phrase => text.includes(phrase));
+    }
+
+
+    /* =========================================================
+       TOPIC TITLE
+    ========================================================= */
+
+    function makeTopicTitle(item) {
+        return item.topic;
+    }
+
+
+    /* =========================================================
+       FORMAT KNOWLEDGE
+    ========================================================= */
+
+    function formatKnowledge(item, detailed = false) {
+        let html = "";
+        html += `<h2>${escapeHtml(item.topic)}</h2>`;
+        html += `<p>${escapeHtml(item.information)}</p>`;
+
+        if (item.formulas && item.formulas.length) {
+            html += `<h3>Formula${item.formulas.length > 1 ? "s" : ""}</h3>`;
+            item.formulas.forEach(formula => {
+                html += `<div class="formula">${escapeHtml(formula)}</div>`;
+            });
+        }
+
+        if (item.rules && item.rules.length) {
+            html += `<h3>Key points</h3><ul>`;
+            item.rules.forEach(rule => { html += `<li>${escapeHtml(rule)}</li>`; });
+            html += `</ul>`;
+        }
+
+        if (detailed && item.examples && item.examples.length) {
+            html += `<h3>Example${item.examples.length > 1 ? "s" : ""}</h3>`;
+            item.examples.forEach(example => {
+                html += `<div class="example-box">${escapeHtml(example)}</div>`;
+            });
+        }
+
+        return html;
+    }
+
+
+    /* =========================================================
+       TOPIC LIST
+    ========================================================= */
+
+    function getTopicList(subject) {
+        let knowledge = [];
+        if (subject === "Accounting") knowledge = accountingKnowledge;
+        if (subject === "Economics") knowledge = economicsKnowledge;
+        if (subject === "Mathematics") knowledge = mathematicsKnowledge;
+        if (subject === "Business Studies") knowledge = businessStudiesKnowledge;
+        if (subject === "Financial Management") knowledge = financialManagementKnowledge;
+        if (!knowledge.length) return "I do not have a topic list available yet.";
+
+        let html = `<h2>${escapeHtml(subject)} topics</h2><ul>`;
+        knowledge.forEach(item => { html += `<li>${escapeHtml(item.topic)}</li>`; });
+        html += `</ul>`;
+        html += `<p><em>Tip: you can also just ask me for a "joke" or a "fun fact" whenever you need a study break.</em></p>`;
+        return html;
+    }
+
+
+    /* =========================================================
+       SAFE HTML ESCAPE
+    ========================================================= */
+
+    function escapeHtml(value) {
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    /* =========================================================
+       CALCULATOR (chat expression calculator)
+    ========================================================= */
+
+    function simpleCalculator(question) {
+        const text = normalizeText(question);
+        const calculationWords = ["calculate", "what is", "solve", "work out", "compute", "equals"];
+        const hasCalculationWord = calculationWords.some(word => text.includes(word));
+        if (!hasCalculationWord) return null;
+
+        let expression = text;
+        expression = expression
+            .replace(/calculate/g, "")
+            .replace(/what is/g, "")
+            .replace(/solve/g, "")
+            .replace(/work out/g, "")
+            .replace(/compute/g, "")
+            .replace(/equals/g, "")
+            .replace(/=/g, "")
+            .trim();
+
+        if (!/^[0-9+\-*/().%\s^]+$/.test(expression)) return null;
+        if (!expression) return null;
+
+        try {
+            let safeExpression = expression
+                .replace(/\^/g, "**")
+                .replace(/(\d+(?:\.\d+)?)%/g, "($1/100)");
+
+            if (safeExpression.includes("**")) {
+                const pieces = safeExpression.split("**");
+                if (pieces.length > 2 || pieces.some(piece => piece.trim() === "")) return null;
+            }
+
+            const result = Function(`"use strict"; return (${safeExpression})`)();
+            if (typeof result !== "number" || !Number.isFinite(result)) return null;
+
+            const funLine = Math.random() < 0.3
+                ? `<p><em>${escapeHtml(pickRandom(encouragements))}</em></p>`
+                : "";
+
+            return `
+                <h2>Calculation</h2>
+                <div class="formula">${escapeHtml(expression)}</div>
+                <p><strong>Answer:</strong> ${escapeHtml(Number(result.toFixed(10)).toString())}</p>
+                ${funLine}
+            `;
+        } catch (error) {
+            return null;
+        }
+    }
+
+
+    /* =========================================================
+       JOKE / FUN FACT / MOTIVATION ANSWERS
+    ========================================================= */
+
+    function tellJoke() {
+        const joke = pickRandom(jokesKnowledge);
+        return `
+            <h2>Here's one for you</h2>
+            <p>${escapeHtml(joke.setup)}</p>
+            <p><strong>${escapeHtml(joke.punchline)}</strong></p>
+            <p><em>Okay, back to studying. Ask me another topic whenever you're ready.</em></p>
+        `;
+    }
+
+
+    function tellFunFact() {
+        const fact = pickRandom(funFactsKnowledge);
+        return `<h2>Fun fact</h2><p>${escapeHtml(fact)}</p>`;
+    }
+
+
+    function tellMotivation() {
+        const line = pickRandom(motivationalLines);
+        return `
+            <h2>You've got this</h2>
+            <p>${escapeHtml(line)}</p>
+            <p>If you want, tell me the exact topic you're stuck on and I'll break it down step by step.</p>
+        `;
+    }
+
+
+    /* =========================================================
+       GENERAL ANSWER
+    ========================================================= */
+
+    function generalAnswer(question) {
+        const text = normalizeText(question);
+
+        if (text === "hi" || text === "hello" || text === "hey" || text === "good morning" || text === "good afternoon" || text === "good evening") {
+            return `
+                <p>${escapeHtml(pickRandom(funGreetings))}</p>
+                <p>${escapeHtml(pickRandom(greetingFollowUps))}</p>
+            `;
+        }
+
+        if (text.includes("thank you") || text.includes("thanks") || text === "ty") {
+            return `<p>You're very welcome! Go forth and ace that test.</p>`;
+        }
+
+        /* ---- Identity: "who are you", "who made you", or both ---- */
+        const asksWho = text.includes("who are you") || text.includes("what are you") || text.includes("your name");
+        const asksMaker = text.includes("who made you") || text.includes("who created you") ||
+            text.includes("who built you") || text.includes("who developed you") || text.includes("developer");
+
+        if (asksWho && asksMaker) {
+            return `
+                <h2>Mastercommerce</h2>
+                <p>I am an educational learning system that helps learners study Accounting, Economics and Mathematics.</p>
+                <h3>Who made me</h3>
+                <p>${escapeHtml(developerInformation.developer)}, founded by ${escapeHtml(developerInformation.founder)} (${escapeHtml(developerInformation.location)}).</p>
+                <p>Version: ${escapeHtml(developerInformation.version)}</p>
+            `;
+        }
+
+        if (asksWho) {
+            return `
+                <h2>Mastercommerce</h2>
+                <p>I am an educational learning system created to help learners study Accounting, Economics and Mathematics - with the occasional terrible joke thrown in.</p>
+            `;
+        }
+
+        if (asksMaker) {
+            return `
+                <h2>Developer</h2>
+                <p>${escapeHtml(developerInformation.developer)}</p>
+                <p>Founder: ${escapeHtml(developerInformation.founder)}</p>
+                <p>Product: ${escapeHtml(developerInformation.product)} (${escapeHtml(developerInformation.version)})</p>
+            `;
+        }
+
+        return `
+            <p>I could not find enough specific information for that question in my current knowledge.</p>
+            <p>Try mentioning the exact topic. For example:</p>
+            <ul>
+                <li>What is IAS 16?</li>
+                <li>Explain gross profit.</li>
+                <li>What is price elasticity?</li>
+                <li>Explain the quadratic formula.</li>
+                <li>Give me an essay on market failure.</li>
+                <li>Prepare a statement of profit or loss.</li>
+                <li>Tell me a joke.</li>
+            </ul>
+        `;
+    }
+
+
+    /* =========================================================
+       CORE ANSWER (original engine, used by generateAnswer)
+    ========================================================= */
+
+    function coreAnswer(question) {
+        if (isJokeRequest(question)) return tellJoke();
+        if (isFunFactRequest(question)) return tellFunFact();
+        if (isMotivationRequest(question)) return tellMotivation();
+        if (isFinancialStatementRequest(question)) return generateFinancialStatement(question);
+        if (isEssayRequest(question)) return generateEssayAnswer(question);
+
+        const calculatorResult = simpleCalculator(question);
+        if (calculatorResult) return calculatorResult;
+
+        const subject = detectSubject(question);
+
+        if (isTopicListRequest(question)) {
+            if (subject) return getTopicList(subject);
+            return `
+                <h2>Mastercommerce topics</h2>
+                <p>I currently cover:</p>
+                <ul>
+                    <li>Accounting</li>
+                    <li>Economics</li>
+                    <li>Mathematics</li>
+                    <li>Business Studies</li>
+                    <li>Financial Management</li>
+                </ul>
+                <p>Ask something like "list Business Studies topics" - or "tell me a joke" if you need a break.</p>
+            `;
+        }
+
+        if (!subject) return generalAnswer(question);
+
+        const wantsExamples = isExampleRequest(question);
+        const results = searchKnowledge(question, subject);
+
+        if (!results.length) {
+            return `
+                <p>I understand that your question appears to be about <strong>${escapeHtml(subject)}</strong>, but I could not find a specific topic that matches it.</p>
+                <p>Try using the exact topic name, for example:</p>
+                <ul>
+                    <li>IAS 16</li>
+                    <li>IFRS 15</li>
+                    <li>Gross profit</li>
+                    <li>Inflation</li>
+                    <li>Price elasticity</li>
+                    <li>Quadratic equations</li>
+                </ul>
+            `;
+        }
+
+        const best = results[0].item;
+        lastConversationState.subject = subject;
+        lastConversationState.topic = best.topic;
+        lastConversationState.exampleIndex = 0;
+
+        if (wantsExamples) return formatExamplesOnly(best);
+
+        const detailed = isAllInformationRequest(question);
+        let answerHtml = formatKnowledge(best, detailed);
+
+        if (Math.random() < 0.2) {
+            answerHtml += `<p><em>${escapeHtml(pickRandom(encouragements))}</em></p>`;
+        }
+
+        return answerHtml;
+    }
+
+
+    /* =========================================================
+       SMART LAYER: typo correction, cross-subject search,
+       follow-ups, small talk and suggestions
+    ========================================================= */
+
+    /* ---------- Typo correction ---------- */
+
+    let vocabCache = null;
+
+    function getVocabulary() {
+        if (vocabCache) return vocabCache;
+        const set = new Set();
+        [accountingKnowledge, economicsKnowledge, mathematicsKnowledge, businessStudiesKnowledge, financialManagementKnowledge].forEach(list =>
+            list.forEach(item =>
+                [item.topic, ...item.keywords, ...(item.relatedKeywords || [])]
+                    .forEach(p => getTokens(p).forEach(t => { if (t.length >= 4) set.add(t); }))
+            )
+        );
+        vocabCache = Array.from(set);
+        return vocabCache;
+    }
+
+    function editDistance(a, b) {
+        const dp = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+        for (let j = 1; j <= b.length; j++) dp[0][j] = j;
+        for (let i = 1; i <= a.length; i++) {
+            for (let j = 1; j <= b.length; j++) {
+                dp[i][j] = Math.min(
+                    dp[i - 1][j] + 1,
+                    dp[i][j - 1] + 1,
+                    dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+                );
+            }
+        }
+        return dp[a.length][b.length];
+    }
+
+    function autoCorrect(question) {
+        const vocab = getVocabulary();
+        const known = new Set(vocab);
+
+        return getTokens(question).map(tok => {
+            if (tok.length < 4 || known.has(tok) || /\d/.test(tok)) return tok;
+
+            const max = tok.length <= 6 ? 1 : 2;
+            let best = tok;
+            let bestD = max + 1;
+
+            vocab.forEach(word => {
+                if (Math.abs(word.length - tok.length) > max) return;
+                const d = editDistance(tok, word);
+                if (d < bestD) { bestD = d; best = word; }
+            });
+
+            return best;
+        }).join(" ");
+    }
+
+
+    /* ---------- Search all subjects ---------- */
+
+    function searchAllSubjects(question, minScore) {
+        const all = [];
+        [accountingKnowledge, economicsKnowledge, mathematicsKnowledge, businessStudiesKnowledge, financialManagementKnowledge].forEach((list, i) => {
+            const subject = ["Accounting", "Economics", "Mathematics", "Business Studies", "Financial Management"][i];
+            list.forEach(item => all.push({ item, subject, score: scoreKnowledgeItem(question, item) }));
+        });
+        all.sort((a, b) => b.score - a.score);
+        return all.filter(r => r.score >= minScore).slice(0, 3);
+    }
+
+    function findTopicByName(name) {
+        for (const list of [accountingKnowledge, economicsKnowledge, mathematicsKnowledge, businessStudiesKnowledge, financialManagementKnowledge]) {
+            const found = list.find(i => i.topic === name);
+            if (found) return found;
+        }
+        return null;
+    }
+
+
+    /* ---------- Follow-ups ("another example", "explain more") ---------- */
+
+    function handleFollowUp(question) {
+        const text = normalizeText(question);
+
+        if (!lastConversationState.topic) return null;
+        if (detectSubject(question)) return null;
+        if (getTokens(question).length > 8) return null;
+
+        const item = findTopicByName(lastConversationState.topic);
+        if (!item) return null;
+
+        if (/(another|more|next|one more|different) examples?|give me an example|show me an example|example please/.test(text)) {
+            const examples = item.examples || [];
+            if (!examples.length) return formatExamplesOnly(item);
+
+            const idx = (lastConversationState.exampleIndex || 0) % examples.length;
+            lastConversationState.exampleIndex = idx + 1;
+
+            return `
+                <h2>${escapeHtml(item.topic)} - Example ${idx + 1} of ${examples.length}</h2>
+                <div class="example-box">${escapeHtml(examples[idx])}</div>
+                <p><em>Say "another example" for the next one.</em></p>
+            `;
+        }
+
+        if (/(explain|tell me) (more|again|further)|more detail|go deeper|i dont understand|simpler/.test(text)) {
+            return formatKnowledge(item, true);
+        }
+
+        return null;
+    }
+
+
+    /* ---------- Small talk and quick facts ---------- */
+
+    function smallTalk(question) {
+        const text = normalizeText(question);
+
+        if (/how are you|how r u|hows it going|whats up/.test(text)) {
+            return `<p>I'm doing great, thanks for asking. Ready to help with Accounting, Economics or Maths. What are we tackling?</p>`;
+        }
+
+        if (/what can you do|how can you help|^help$/.test(text)) {
+            return `
+                <h2>What I can do</h2>
+                <ul>
+                    <li>Explain Accounting, Economics and Maths topics</li>
+                    <li>Give worked examples (ask for "examples", then "another example")</li>
+                    <li>Write economics essays and prepare financial statements</li>
+                    <li>Calculate, and tell jokes or fun facts when you need a break</li>
+                </ul>
+            `;
+        }
+
+        if (/what (is )?(the )?(date|day) (is it )?today|todays date/.test(text)) {
+            return `<p>Today is ${escapeHtml(new Date().toLocaleDateString("en-ZA", { weekday: "long", year: "numeric", month: "long", day: "numeric" }))}.</p>`;
+        }
+
+        if (/what (is )?(the )?time|time is it/.test(text)) {
+            return `<p>It is ${escapeHtml(new Date().toLocaleTimeString("en-ZA", { hour: "2-digit", minute: "2-digit" }))}.</p>`;
+        }
+
+        if (/^(bye|goodbye|see you|cya|good night)/.test(text)) {
+            return `<p>Bye! Good luck with your studies. Come back anytime.</p>`;
+        }
+
+        if (/^(ok|okay|cool|nice|great|alright|got it)$/.test(text)) {
+            return `<p>Great! Ask me anything else whenever you're ready.</p>`;
+        }
+
+        return null;
+    }
+
+
+    /* ---------- Fallback detection ---------- */
+
+    function isFallbackAnswer(html) {
+        return html.includes("could not find");
+    }
+
+
+    /* ---------- "Did you mean" suggestions ---------- */
+
+    function suggestClosest(question) {
+        const near = searchAllSubjects(question, 8);
+
+        if (!near.length) {
+            return `
+                <p>I don't have that one in my study notes yet. I'm strongest on Accounting, Economics and Mathematics.</p>
+                <p>Try rephrasing with the topic name, or ask me for "list topics".</p>
+            `;
+        }
+
+        let html = `<p>I'm not 100% sure what you meant. Did you mean one of these?</p><ul>`;
+        near.forEach(r => { html += `<li>${escapeHtml(r.item.topic)} (${escapeHtml(r.subject)})</li>`; });
+        return html + `</ul>`;
+    }
+
+
+    /* =========================================================
+       GENERATE ANSWER (main entry)
+    ========================================================= */
+
+    function generateAnswer(question) {
+
+        const followUp = handleFollowUp(question);
+        if (followUp) return followUp;
+
+        const talk = smallTalk(question);
+        if (talk) return talk;
+
+        const answer = coreAnswer(question);
+        if (!isFallbackAnswer(answer)) return answer;
+
+        /* 1) retry after fixing typos */
+        const fixed = autoCorrect(question);
+        if (fixed && fixed !== normalizeText(question)) {
+            const retry = coreAnswer(fixed);
+            if (!isFallbackAnswer(retry)) return retry;
+        }
+
+        /* 2) search every subject, ignoring subject detection */
+        const wantsExamples = isExampleRequest(question);
+        const best = searchAllSubjects(fixed || question, 25)[0];
+
+        if (best) {
+            lastConversationState.subject = best.subject;
+            lastConversationState.topic = best.item.topic;
+            lastConversationState.exampleIndex = 0;
+
+            return wantsExamples
+                ? formatExamplesOnly(best.item)
+                : formatKnowledge(best.item, isAllInformationRequest(question));
+        }
+
+        /* 3) suggestions */
+        return suggestClosest(question);
+    }
+
+
+    /* =========================================================
+       MESSAGE CREATION
+    ========================================================= */
+
+    function addMessage(content, type) {
+        if (welcomeScreen) welcomeScreen.style.display = "none";
+
+        const row = document.createElement("div");
+        row.className = `message-row ${type}`;
+
+        const message = document.createElement("div");
+        message.className = `message ${type === "user" ? "user-message" : "assistant-message"}`;
+        message.innerHTML = content;
+
+        row.appendChild(message);
+        chatArea.appendChild(row);
+
+        requestAnimationFrame(() => {
+            chatArea.scrollTop = chatArea.scrollHeight;
+        });
+
+        return row;
+    }
+
+
+    /* =========================================================
+       THINKING MESSAGE
+    ========================================================= */
+
+    function addThinkingMessage() {
+        const row = document.createElement("div");
+        row.className = "message-row assistant";
+
+        const message = document.createElement("div");
+        message.className = "message assistant-message";
+
+        message.innerHTML = `
+            <div class="thinking">
+                <span>${escapeHtml(pickRandom(thinkingPhrases))}</span>
+                <span class="thinking-dot"></span>
+                <span class="thinking-dot"></span>
+                <span class="thinking-dot"></span>
+            </div>
+        `;
+
+        row.appendChild(message);
+        chatArea.appendChild(row);
+        chatArea.scrollTop = chatArea.scrollHeight;
+
+        return row;
+    }
+
+
+    /* =========================================================
+       SEND QUESTION
+    ========================================================= */
+
+    function sendQuestion() {
+        const question = questionInput.value.trim();
+        if (!question) return;
+
+        addMessage(escapeHtml(question), "user");
+
+        questionInput.value = "";
+        autoResizeInput();
+
+        const thinking = addThinkingMessage();
+
+        setTimeout(() => {
+            const answer = generateAnswer(question);
+            thinking.remove();
+            addMessage(answer, "assistant");
+        }, 350);
+    }
+
+
+    /* =========================================================
+       INPUT HEIGHT
+    ========================================================= */
+
+    function autoResizeInput() {
+        questionInput.style.height = "auto";
+        const height = Math.min(questionInput.scrollHeight, 180);
+        questionInput.style.height = `${height}px`;
+        questionInput.style.fontSize = "16px";
+    }
+
+    questionInput.addEventListener("input", autoResizeInput);
+
+
+    /* =========================================================
+       ENTER TO SEND
+    ========================================================= */
+
+    questionInput.addEventListener("keydown", event => {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            sendQuestion();
+        }
+    });
+
+    sendButton.addEventListener("click", sendQuestion);
+
+
+    /* =========================================================
+       SIDEBAR
+    ========================================================= */
+
+    function openSidebar() {
+        sidebar.classList.add("open");
+        sidebarOverlay.classList.add("show");
+    }
+
+    function closeSidebarMenu() {
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("show");
+    }
+
+    menuButton.addEventListener("click", openSidebar);
+    closeSidebar.addEventListener("click", closeSidebarMenu);
+    sidebarOverlay.addEventListener("click", closeSidebarMenu);
+
+
+    /* =========================================================
+       HOME
+    ========================================================= */
+
+    homeButton.addEventListener("click", () => {
+        closeSidebarMenu();
+
+        aboutModal.classList.remove("show");
+        settingsModal.classList.remove("show");
+        if (calculatorModal) calculatorModal.classList.remove("show");
+
+        chatArea.innerHTML = "";
+        chatArea.appendChild(createWelcomeScreen());
+
+        lastConversationState = { subject: null, topic: null, exampleIndex: 0 };
+    });
+
+
+    /* =========================================================
+       CREATE WELCOME SCREEN
+    ========================================================= */
+
+    function createWelcomeScreen() {
+        const wrapper = document.createElement("div");
+        wrapper.id = "welcomeScreen";
+        wrapper.className = "welcome-screen";
+
+        wrapper.innerHTML = `
+            <div class="welcome-content">
+                <div class="welcome-logo">M</div>
+                <h1>What would you like to learn?</h1>
+                <p>Ask a question about Accounting, Economics or Mathematics - or just say "tell me a joke" to break the ice.</p>
+                <div class="subject-cards">
+                    <div class="subject-card">
+                        <div class="subject-letter">A</div>
+                        <div>
+                            <h3>Accounting</h3>
+                            <p>Financial accounting, management accounting, tax, auditing, IFRS and calculations.</p>
+                        </div>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-letter">E</div>
+                        <div>
+                            <h3>Economics</h3>
+                            <p>Microeconomics, macroeconomics, policies, markets, essays and calculations.</p>
+                        </div>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-letter">M</div>
+                        <div>
+                            <h3>Mathematics</h3>
+                            <p>Algebra, functions, statistics, probability, calculus and problem solving.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        return wrapper;
+    }
+
+
+    /* =========================================================
+       NEW CHAT
+    ========================================================= */
+
+    newChatButton.addEventListener("click", () => {
+        closeSidebarMenu();
+
+        chatArea.innerHTML = "";
+        chatArea.appendChild(createWelcomeScreen());
+
+        lastConversationState = { subject: null, topic: null, exampleIndex: 0 };
+
+        questionInput.value = "";
+        autoResizeInput();
+        questionInput.focus();
+    });
+
+
+    /* =========================================================
+       CLEAR CHAT
+    ========================================================= */
+
+    clearChatButton.addEventListener("click", () => {
+        chatArea.innerHTML = "";
+        chatArea.appendChild(createWelcomeScreen());
+
+        lastConversationState = { subject: null, topic: null, exampleIndex: 0 };
+
+        closeSidebarMenu();
+    });
+
+
+    /* =========================================================
+       PLUS MENU
+    ========================================================= */
+
+    function togglePlusMenu() {
+        const showing = plusMenu.classList.toggle("show");
+        plusMenu.setAttribute("aria-hidden", String(!showing));
+        plusButton.setAttribute("aria-expanded", String(showing));
+    }
+
+    plusButton.addEventListener("click", event => {
+        event.stopPropagation();
+        togglePlusMenu();
+    });
+
+    document.querySelectorAll(".plus-option").forEach(option => {
+        option.addEventListener("click", () => {
+            plusMenu.classList.remove("show");
+            plusButton.setAttribute("aria-expanded", "false");
+
+            featureToast.classList.add("show");
+
+            setTimeout(() => {
+                featureToast.classList.remove("show");
+            }, 2200);
+        });
+    });
+
+    document.addEventListener("click", event => {
+        if (!plusMenu.contains(event.target) && !plusButton.contains(event.target)) {
+            plusMenu.classList.remove("show");
+            plusButton.setAttribute("aria-expanded", "false");
+        }
+    });
+
+
+    /* =========================================================
+       ABOUT MODAL
+    ========================================================= */
+
+    aboutButton.addEventListener("click", () => {
+        closeSidebarMenu();
+        aboutModal.classList.add("show");
+    });
+
+
+    /* =========================================================
+       SETTINGS MODAL
+    ========================================================= */
+
+    settingsButton.addEventListener("click", () => {
+        closeSidebarMenu();
+        settingsModal.classList.add("show");
+    });
+
+
+    /* =========================================================
+       CALCULATOR MODAL
+    ========================================================= */
+
+    const calculatorButton = document.getElementById("calculatorButton");
+    const calculatorModal = document.getElementById("calculatorModal");
+
+    if (calculatorButton && calculatorModal) {
+        calculatorButton.addEventListener("click", () => {
+            closeSidebarMenu();
+            calculatorModal.classList.add("show");
+        });
+    }
+
+
+    /* =========================================================
+       MODAL CLOSE BUTTONS
+    ========================================================= */
+
+    document.querySelectorAll("[data-close]").forEach(button => {
+        button.addEventListener("click", () => {
+            const id = button.dataset.close;
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.remove("show");
+        });
+    });
+
+
+    /* =========================================================
+       CLOSE MODAL WHEN CLICKING BACKGROUND
+    ========================================================= */
+
+    [aboutModal, settingsModal, calculatorModal].forEach(modal => {
+        if (!modal) return;
+        modal.addEventListener("click", event => {
+            if (event.target === modal) modal.classList.remove("show");
+        });
+    });
+
+
+    /* =========================================================
+       ESCAPE KEY
+    ========================================================= */
+
+    document.addEventListener("keydown", event => {
+        if (event.key !== "Escape") return;
+
+        closeSidebarMenu();
+
+        aboutModal.classList.remove("show");
+        settingsModal.classList.remove("show");
+        if (calculatorModal) calculatorModal.classList.remove("show");
+
+        plusMenu.classList.remove("show");
+    });
+
+
+    /* =========================================================
+       SETTINGS
+    ========================================================= */
+
+    function saveSettings() {
+        const settings = {
+            theme: document.body.classList.contains("dark") ? "dark" : "light",
+            background: ["white", "gray", "warm", "blue", "green", "lavender"].find(name =>
+                document.body.classList.contains(`background-${name}`)
+            ) || "white",
+            font: ["small", "medium", "large"].find(name =>
+                document.body.classList.contains(`font-${name}`)
+            ) || "medium",
+            reducedMotion: document.body.classList.contains("reduced-motion")
+        };
+
+        localStorage.setItem("mastercommerceSettings", JSON.stringify(settings));
+    }
+
+    function loadSettings() {
+        const saved = localStorage.getItem("mastercommerceSettings");
+
+        if (!saved) {
+            applyTheme("light");
+            applyBackground("white");
+            applyFont("medium");
+            return;
+        }
+
+        try {
+            const settings = JSON.parse(saved);
+            applyTheme(settings.theme || "light");
+            applyBackground(settings.background || "white");
+            applyFont(settings.font || "medium");
+
+            if (settings.reducedMotion) {
+                document.body.classList.add("reduced-motion");
+            }
+        } catch (error) {
+            applyTheme("light");
+            applyBackground("white");
+            applyFont("medium");
+        }
+    }
+
+    function applyTheme(theme) {
+        document.body.classList.toggle("dark", theme === "dark");
+    }
+
+    function applyBackground(background) {
+        ["white", "gray", "warm", "blue", "green", "lavender"].forEach(name => {
+            document.body.classList.remove(`background-${name}`);
+        });
+        document.body.classList.add(`background-${background}`);
+    }
+
+    function applyFont(font) {
+        ["small", "medium", "large"].forEach(name => {
+            document.body.classList.remove(`font-${name}`);
+        });
+        document.body.classList.add(`font-${font}`);
+    }
+
+    document.querySelectorAll("[data-theme]").forEach(button => {
+        button.addEventListener("click", () => {
+            applyTheme(button.dataset.theme);
+            saveSettings();
+        });
+    });
+
+    document.querySelectorAll("[data-background]").forEach(button => {
+        button.addEventListener("click", () => {
+            applyBackground(button.dataset.background);
+            saveSettings();
+        });
+    });
+
+    document.querySelectorAll("[data-font]").forEach(button => {
+        button.addEventListener("click", () => {
+            applyFont(button.dataset.font);
+            saveSettings();
+        });
+    });
+
+    motionButton.addEventListener("click", () => {
+        document.body.classList.toggle("reduced-motion");
+        saveSettings();
+    });
+
+    resetSettingsButton.addEventListener("click", () => {
+        document.body.classList.remove(
+            "dark",
+            "background-white", "background-gray", "background-warm",
+            "background-blue", "background-green", "background-lavender",
+            "font-small", "font-medium", "font-large",
+            "reduced-motion"
+        );
+
+        applyTheme("light");
+        applyBackground("white");
+        applyFont("medium");
+
+        document.body.classList.remove("reduced-motion");
+
+        saveSettings();
+    });
+
+
+    /* =========================================================
+       MOBILE ZOOM PROTECTION
+    ========================================================= */
+
+    questionInput.style.fontSize = "16px";
+
+    let lastTouchEnd = 0;
+
+    document.addEventListener("touchend", event => {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) event.preventDefault();
+        lastTouchEnd = now;
+    }, { passive: false });
+
+    document.addEventListener("gesturestart", event => { event.preventDefault(); }, { passive: false });
+    document.addEventListener("gesturechange", event => { event.preventDefault(); }, { passive: false });
+    document.addEventListener("gestureend", event => { event.preventDefault(); }, { passive: false });
+
+
+    /* =========================================================
+       ============================================================
+       ADVANCED CALCULATOR (Scientific + Financial)
+       ============================================================
+    ========================================================= */
+
+    /* ---- Tab switching: Scientific vs Financial ---- */
+
+    const calcTabButtons = document.querySelectorAll("[data-calctab]");
+    const calcPanels = {
+        scientific: document.getElementById("calcSciPanel"),
+        financial: document.getElementById("calcFinPanel")
+    };
+
+    calcTabButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            calcTabButtons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            Object.keys(calcPanels).forEach(key => {
+                if (!calcPanels[key]) return;
+                calcPanels[key].classList.toggle("active", key === btn.dataset.calctab);
+            });
+        });
+    });
+
+    /* ---- Financial sub-tab switching ---- */
+
+    const calcFinTabButtons = document.querySelectorAll("[data-fintab]");
+    const calcFinPanels = {
+        tvm: document.getElementById("calcTVM"),
+        loan: document.getElementById("calcLoan"),
+        compound: document.getElementById("calcCompound")
+    };
+
+    calcFinTabButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            calcFinTabButtons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            Object.keys(calcFinPanels).forEach(key => {
+                if (!calcFinPanels[key]) return;
+                calcFinPanels[key].classList.toggle("active", key === btn.dataset.fintab);
+            });
+        });
+    });
+
+
+    /* =========================================================
+       SCIENTIFIC CALCULATOR
+    ========================================================= */
+
+    const calcSciDisplay = document.getElementById("calcSciInput");
+    const calcSciHistoryEl = document.getElementById("calcSciHistory");
+    const calcDegRadBtn = document.getElementById("calcDegRad");
+    const calcSciGrid = document.getElementById("calcSciGrid");
+
+    let sciExpression = "";
+    let sciAngleMode = "DEG";
+    let sciMemory = 0;
+    let sciHistory = [];
+
+    function sciAngleToRad(x) {
+        return sciAngleMode === "DEG" ? (x * Math.PI / 180) : x;
+    }
+
+    function sciRadToAngle(x) {
+        return sciAngleMode === "DEG" ? (x * 180 / Math.PI) : x;
+    }
+
+    function sciSin(x) { return Math.sin(sciAngleToRad(x)); }
+    function sciCos(x) { return Math.cos(sciAngleToRad(x)); }
+    function sciTan(x) { return Math.tan(sciAngleToRad(x)); }
+    function sciAsin(x) { return sciRadToAngle(Math.asin(x)); }
+    function sciAcos(x) { return sciRadToAngle(Math.acos(x)); }
+    function sciAtan(x) { return sciRadToAngle(Math.atan(x)); }
+    function sciLog(x) { return Math.log(x) / Math.LN10; }
+    function sciLn(x) { return Math.log(x); }
+    function sciSqrt(x) { return Math.sqrt(x); }
+    function sciFact(n) {
+        n = Math.round(n);
+        if (n < 0 || !Number.isFinite(n)) return NaN;
+        let result = 1;
+        for (let i = 2; i <= n; i++) result *= i;
+        return result;
+    }
+
+    function updateSciDisplay() {
+        calcSciDisplay.textContent = sciExpression === "" ? "0" : sciExpression;
+
+        calcSciHistoryEl.innerHTML = "";
+        sciHistory.slice(-3).forEach(entry => {
+            const row = document.createElement("div");
+            row.className = "calc-history-row";
+            row.textContent = `${entry.expr} = ${entry.result}`;
+            row.addEventListener("click", () => {
+                sciExpression = String(entry.result);
+                updateSciDisplay();
+            });
+            calcSciHistoryEl.appendChild(row);
+        });
+    }
+
+    function sciAutoBalance(expr) {
+        let open = 0;
+        for (const ch of expr) {
+            if (ch === "(") open++;
+            if (ch === ")") open--;
+        }
+        if (open > 0) expr += ")".repeat(open);
+        return expr;
+    }
+
+    function evaluateSciExpression(expr) {
+        if (!expr || !expr.trim()) return null;
+
+        let jsExpr = sciAutoBalance(expr);
+
+        jsExpr = jsExpr
+            .replace(/×/g, "*")
+            .replace(/÷/g, "/")
+            .replace(/\^/g, "**")
+            .replace(/π/g, "(Math.PI)")
+            .replace(/\be\b/g, "(Math.E)");
+
+        try {
+            const fn = new Function(
+                "sin", "cos", "tan", "asin", "acos", "atan", "log", "ln", "sqrt", "fact",
+                `"use strict"; return (${jsExpr});`
+            );
+
+            const result = fn(sciSin, sciCos, sciTan, sciAsin, sciAcos, sciAtan, sciLog, sciLn, sciSqrt, sciFact);
+
+            if (typeof result !== "number" || !Number.isFinite(result)) return null;
+
+            return Number(result.toFixed(10));
+        } catch (error) {
+            return null;
+        }
+    }
+
+    function wrapSciExpression(prefix, suffix) {
+        if (!sciExpression) {
+            sciExpression = prefix + suffix;
+        } else {
+            sciExpression = prefix + sciExpression + suffix;
+        }
+    }
+
+    function handleSciKey(key) {
+
+        if (/^[0-9.]$/.test(key)) {
+            sciExpression += key;
+            updateSciDisplay();
+            return;
+        }
+
+        switch (key) {
+
+            case "(":
+            case ")":
+                sciExpression += key;
+                break;
+
+            case "+":
+            case "-":
+            case "×":
+            case "÷":
+            case "^":
+                sciExpression += key;
+                break;
+
+            case "AC":
+                sciExpression = "";
+                break;
+
+            case "back":
+                sciExpression = sciExpression.slice(0, -1);
+                break;
+
+            case "%":
+                if (sciExpression) sciExpression = "((" + sciExpression + ")/100)";
+                break;
+
+            case "sin": wrapSciExpression("sin(", ")"); break;
+            case "cos": wrapSciExpression("cos(", ")"); break;
+            case "tan": wrapSciExpression("tan(", ")"); break;
+            case "asin": wrapSciExpression("asin(", ")"); break;
+            case "acos": wrapSciExpression("acos(", ")"); break;
+            case "atan": wrapSciExpression("atan(", ")"); break;
+            case "log": wrapSciExpression("log(", ")"); break;
+            case "ln": wrapSciExpression("ln(", ")"); break;
+            case "sqrt": wrapSciExpression("sqrt(", ")"); break;
+            case "x2": wrapSciExpression("((", ")^2)"); break;
+            case "1/x": wrapSciExpression("(1/(", "))"); break;
+            case "fact": wrapSciExpression("fact(", ")"); break;
+
+            case "pi":
+                sciExpression += "π";
+                break;
+
+            case "euler":
+                sciExpression += "e";
+                break;
+
+            case "pm":
+                if (sciExpression) sciExpression = "(-(" + sciExpression + "))";
+                else sciExpression = "-";
+                break;
+
+            case "MC":
+                sciMemory = 0;
+                break;
+
+            case "MR":
+                sciExpression += String(sciMemory);
+                break;
+
+            case "M+": {
+                const val = evaluateSciExpression(sciExpression);
+                if (val !== null) sciMemory += val;
+                break;
+            }
+
+            case "M-": {
+                const val = evaluateSciExpression(sciExpression);
+                if (val !== null) sciMemory -= val;
+                break;
+            }
+
+            case "DEG":
+                sciAngleMode = sciAngleMode === "DEG" ? "RAD" : "DEG";
+                if (calcDegRadBtn) calcDegRadBtn.textContent = sciAngleMode;
+                break;
+
+            case "equals": {
+                const result = evaluateSciExpression(sciExpression);
+                if (result === null) {
+                    calcSciDisplay.textContent = "Error";
+                    setTimeout(updateSciDisplay, 900);
+                    return;
+                }
+                sciHistory.push({ expr: sciExpression, result: result });
+                sciExpression = String(result);
+                break;
+            }
+
+            default:
+                break;
+        }
+
+        updateSciDisplay();
+    }
+
+    if (calcSciGrid) {
+        calcSciGrid.addEventListener("click", event => {
+            const btn = event.target.closest("[data-calc-key]");
+            if (!btn) return;
+            handleSciKey(btn.dataset.calcKey);
+        });
+    }
+
+
+    /* =========================================================
+       FINANCIAL CALCULATOR - HELPERS
+    ========================================================= */
+
+    function formatCurrency(value) {
+        if (typeof value !== "number" || !Number.isFinite(value)) return "-";
+        const sign = value < 0 ? "-" : "";
+        const abs = Math.abs(value);
+        const parts = abs.toFixed(2).split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        return `${sign}R ${parts[0]}.${parts[1]}`;
+    }
+
+    function formatNumber(value, decimals) {
+        if (typeof value !== "number" || !Number.isFinite(value)) return "-";
+        return value.toFixed(decimals === undefined ? 4 : decimals);
+    }
+
+
+    /* =========================================================
+       TVM SOLVER
+    ========================================================= */
+
+    function tvmRateFunction(i, n, pv, pmt, fv, type) {
+        if (Math.abs(i) < 1e-12) return pv + pmt * n + fv;
+        return pv * Math.pow(1 + i, n) + pmt * (1 + type * i) * ((Math.pow(1 + i, n) - 1) / i) + fv;
+    }
+
+    function tvmSolveRate(n, pv, pmt, fv, type) {
+        let lo = -0.999999, hi = 10;
+        const steps = 3000;
+        let prev = tvmRateFunction(lo, n, pv, pmt, fv, type);
+        let prevI = lo;
+        let bracketLo = null, bracketHi = null;
+
+        for (let k = 1; k <= steps; k++) {
+            const i = lo + (hi - lo) * k / steps;
+            const val = tvmRateFunction(i, n, pv, pmt, fv, type);
+
+            if (prev === 0) { bracketLo = prevI; bracketHi = prevI; break; }
+            if ((prev < 0 && val > 0) || (prev > 0 && val < 0)) {
+                bracketLo = prevI;
+                bracketHi = i;
+                break;
+            }
+            prev = val;
+            prevI = i;
+        }
+
+        if (bracketLo === null) return null;
+
+        let a = bracketLo, b = bracketHi;
+        for (let iter = 0; iter < 200; iter++) {
+            const m = (a + b) / 2;
+            const fm = tvmRateFunction(m, n, pv, pmt, fv, type);
+            if (Math.abs(fm) < 1e-9) return m;
+            const fa = tvmRateFunction(a, n, pv, pmt, fv, type);
+            if ((fa < 0 && fm > 0) || (fa > 0 && fm < 0)) b = m; else a = m;
+        }
+
+        return (a + b) / 2;
+    }
+
+    function tvmSolve(target, inputs) {
+        const { n, iY, pv, pmt, fv, py, timing } = inputs;
+        const i = (iY / 100) / py;
+        const type = timing === "begin" ? 1 : 0;
+
+        switch (target) {
+
+            case "FV": {
+                let result;
+                if (Math.abs(i) < 1e-12) result = -(pv + pmt * n);
+                else result = -(pv * Math.pow(1 + i, n) + pmt * (1 + type * i) * ((Math.pow(1 + i, n) - 1) / i));
+                return result;
+            }
+
+            case "PV": {
+                let result;
+                if (Math.abs(i) < 1e-12) result = -(fv + pmt * n);
+                else result = -(fv + pmt * (1 + type * i) * ((Math.pow(1 + i, n) - 1) / i)) / Math.pow(1 + i, n);
+                return result;
+            }
+
+            case "PMT": {
+                let result;
+                if (Math.abs(i) < 1e-12) {
+                    if (n === 0) return null;
+                    result = -(fv + pv) / n;
+                } else {
+                    const annuityFactor = (1 + type * i) * ((Math.pow(1 + i, n) - 1) / i);
+                    if (annuityFactor === 0) return null;
+                    result = -(fv + pv * Math.pow(1 + i, n)) / annuityFactor;
+                }
+                return result;
+            }
+
+            case "N": {
+                if (!pmt) return null;
+                if (Math.abs(i) < 1e-12) {
+                    return -(fv + pv) / pmt;
+                }
+                const numerator = pmt * (1 + type * i) - fv * i;
+                const denominator = pmt * (1 + type * i) + pv * i;
+                if (denominator === 0 || numerator / denominator <= 0) return null;
+                return Math.log(numerator / denominator) / Math.log(1 + i);
+            }
+
+            case "IY": {
+                const iSolved = tvmSolveRate(n, pv, pmt, fv, type);
+                if (iSolved === null) return null;
+                return iSolved * py * 100;
+            }
+
+            default:
+                return null;
+        }
+    }
+
+
+    /* =========================================================
+       LOAN / AMORTISATION
+    ========================================================= */
+
+    function calcLoanResult(principal, annualRatePct, years, py) {
+        const n = Math.round(years * py);
+        const i = (annualRatePct / 100) / py;
+
+        let payment;
+        if (i === 0) {
+            payment = principal / n;
+        } else {
+            payment = (principal * i) / (1 - Math.pow(1 + i, -n));
+        }
+
+        const totalPaid = payment * n;
+        const totalInterest = totalPaid - principal;
+
+        return { payment, totalPaid, totalInterest, n, i, principal };
+    }
+
+    function generateAmortizationRows(loanResult) {
+        let balance = loanResult.principal;
+        const rows = [];
+
+        for (let p = 1; p <= loanResult.n; p++) {
+            const interest = balance * loanResult.i;
+            let principalPaid = loanResult.payment - interest;
+
+            if (p === loanResult.n) principalPaid = balance;
+
+            balance = balance - principalPaid;
+            if (balance < 0.005) balance = 0;
+
+            rows.push({
+                period: p,
+                payment: p === loanResult.n ? (principalPaid + interest) : loanResult.payment,
+                interest,
+                principal: principalPaid,
+                balance
+            });
+        }
+
+        return rows;
+    }
+
+
+    /* =========================================================
+       COMPOUND INTEREST
+    ========================================================= */
+
+    function calcCompoundResult(principal, annualRatePct, years, compoundsPerYear, contribution) {
+        const r = annualRatePct / 100;
+        const periods = compoundsPerYear * years;
+        const ratePerPeriod = r / compoundsPerYear;
+
+        const growthOfPrincipal = principal * Math.pow(1 + ratePerPeriod, periods);
+
+        let growthOfContributions;
+        if (ratePerPeriod === 0) {
+            growthOfContributions = contribution * periods;
+        } else {
+            growthOfContributions = contribution * ((Math.pow(1 + ratePerPeriod, periods) - 1) / ratePerPeriod);
+        }
+
+        const futureValue = growthOfPrincipal + growthOfContributions;
+        const totalContributions = principal + contribution * periods;
+        const totalInterest = futureValue - totalContributions;
+
+        return { futureValue, totalContributions, totalInterest, periods };
+    }
+
+
+    /* =========================================================
+       FINANCIAL CALCULATOR - UI WIRING
+    ========================================================= */
+
+    /* ---- TVM ---- */
+
+    const tvmSolveBtn = document.getElementById("tvmSolveBtn");
+    const tvmResultEl = document.getElementById("tvmResult");
+    const tvmTargetSelect = document.getElementById("tvmTarget");
+
+    if (tvmSolveBtn) {
+        tvmSolveBtn.addEventListener("click", () => {
+            const target = tvmTargetSelect.value;
+
+            const inputs = {
+                n: parseFloat(document.getElementById("tvmN").value) || 0,
+                iY: parseFloat(document.getElementById("tvmIY").value) || 0,
+                pv: parseFloat(document.getElementById("tvmPV").value) || 0,
+                pmt: parseFloat(document.getElementById("tvmPMT").value) || 0,
+                fv: parseFloat(document.getElementById("tvmFV").value) || 0,
+                py: parseFloat(document.getElementById("tvmPY").value) || 12,
+                timing: document.getElementById("tvmTiming").value
+            };
+
+            const result = tvmSolve(target, inputs);
+
+            if (result === null || !Number.isFinite(result)) {
+                tvmResultEl.innerHTML = `<p class="calc-error">Could not solve for ${target} with those values. Check your inputs (a solution may not exist for this combination).</p>`;
+                return;
+            }
+
+            let label = target;
+            let displayValue = target === "IY" ? `${formatNumber(result, 4)} %` :
+                                target === "N" ? formatNumber(result, 4) + " periods" :
+                                formatCurrency(result);
+
+            tvmResultEl.innerHTML = `
+                <p><strong>${label} = ${displayValue}</strong></p>
+                <p class="calc-note">Sign convention: cash outflows are negative, cash inflows are positive (standard TVM convention).</p>
+            `;
+
+            if (target === "N") document.getElementById("tvmN").value = result.toFixed(4);
+            if (target === "IY") document.getElementById("tvmIY").value = result.toFixed(4);
+            if (target === "PV") document.getElementById("tvmPV").value = result.toFixed(2);
+            if (target === "PMT") document.getElementById("tvmPMT").value = result.toFixed(2);
+            if (target === "FV") document.getElementById("tvmFV").value = result.toFixed(2);
+        });
+    }
+
+    /* ---- Loan / Amortisation ---- */
+
+    const loanCalcBtn = document.getElementById("loanCalcBtn");
+    const loanResultEl = document.getElementById("loanResult");
+    const loanAmortBtn = document.getElementById("loanAmortBtn");
+    const loanAmortTableWrap = document.getElementById("loanAmortTableWrap");
+
+    let lastLoanResult = null;
+
+    if (loanCalcBtn) {
+        loanCalcBtn.addEventListener("click", () => {
+            const principal = parseFloat(document.getElementById("loanPrincipal").value) || 0;
+            const rate = parseFloat(document.getElementById("loanRate").value) || 0;
+            const years = parseFloat(document.getElementById("loanYears").value) || 0;
+            const py = parseFloat(document.getElementById("loanPY").value) || 12;
+
+            if (principal <= 0 || years <= 0) {
+                loanResultEl.innerHTML = `<p class="calc-error">Enter a loan amount and term greater than zero.</p>`;
+                return;
+            }
+
+            lastLoanResult = calcLoanResult(principal, rate, years, py);
+
+            loanResultEl.innerHTML = `
+                <p><strong>Payment per period:</strong> ${formatCurrency(lastLoanResult.payment)}</p>
+                <p><strong>Total paid:</strong> ${formatCurrency(lastLoanResult.totalPaid)}</p>
+                <p><strong>Total interest:</strong> ${formatCurrency(lastLoanResult.totalInterest)}</p>
+                <p><strong>Number of payments:</strong> ${lastLoanResult.n}</p>
+            `;
+
+            loanAmortTableWrap.innerHTML = "";
+            loanAmortTableWrap.style.display = "none";
+        });
+    }
+
+    if (loanAmortBtn) {
+        loanAmortBtn.addEventListener("click", () => {
+            if (!lastLoanResult) {
+                loanResultEl.innerHTML = `<p class="calc-error">Calculate a loan first.</p>`;
+                return;
+            }
+
+            const rows = generateAmortizationRows(lastLoanResult);
+
+            let html = `
+                <table class="calc-amort-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Payment</th>
+                            <th>Interest</th>
+                            <th>Principal</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            rows.forEach(row => {
+                html += `
+                    <tr>
+                        <td>${row.period}</td>
+                        <td>${formatCurrency(row.payment)}</td>
+                        <td>${formatCurrency(row.interest)}</td>
+                        <td>${formatCurrency(row.principal)}</td>
+                        <td>${formatCurrency(row.balance)}</td>
+                    </tr>
+                `;
+            });
+
+            html += `</tbody></table>`;
+
+            loanAmortTableWrap.innerHTML = html;
+            loanAmortTableWrap.style.display = "block";
+        });
+    }
+
+    /* ---- Compound Interest ---- */
+
+    const compoundCalcBtn = document.getElementById("compoundCalcBtn");
+    const compoundResultEl = document.getElementById("compoundResult");
+
+    if (compoundCalcBtn) {
+        compoundCalcBtn.addEventListener("click", () => {
+            const principal = parseFloat(document.getElementById("compoundPrincipal").value) || 0;
+            const rate = parseFloat(document.getElementById("compoundRate").value) || 0;
+            const years = parseFloat(document.getElementById("compoundYears").value) || 0;
+            const n = parseFloat(document.getElementById("compoundN").value) || 1;
+            const contribution = parseFloat(document.getElementById("compoundContribution").value) || 0;
+
+            if (principal < 0 || years <= 0) {
+                compoundResultEl.innerHTML = `<p class="calc-error">Enter a principal and term greater than zero.</p>`;
+                return;
+            }
+
+            const result = calcCompoundResult(principal, rate, years, n, contribution);
+
+            compoundResultEl.innerHTML = `
+                <p><strong>Future value:</strong> ${formatCurrency(result.futureValue)}</p>
+                <p><strong>Total contributions (incl. principal):</strong> ${formatCurrency(result.totalContributions)}</p>
+                <p><strong>Total interest earned:</strong> ${formatCurrency(result.totalInterest)}</p>
+            `;
+        });
+    }
+
+
+    /* =========================================================
+       SMART BACKUP SOURCES (ADD-ON)
+       Sits directly ABOVE the "LOAD SETTINGS" section.
+       Nothing existing is changed.
+
+       How it works:
+       1. Mastercommerce searches its own notes first (as before).
+       2. It then checks whether the answer it found REALLY fits
+          the question (not just one lucky keyword).
+       3. If the notes have no answer, or only a weak/unrelated
+          one, it quietly asks Wikipedia instead.
+       4. If Wikipedia has nothing either, the original answer
+          is shown. The user never has to type "Wikipedia".
+    ========================================================= */
+
+    const wikiConfig = {
+        lang: "en",
+        timeoutMs: 8000,
+        minCoverage: 0.6          /* how much of the question the notes must cover */
+    };
+
+    let wikiSlotCounter = 0;
+
+    /* Words that carry no subject meaning */
+    const wikiStopWords = new Set((
+        "a an the of in on at to for from by with without about as is are was were be been being am " +
+        "do does did done can could would should will shall may might must " +
+        "what whats who whom whose which when where why how whether " +
+        "i me my mine we us our you your he she it its they them their this that these those there here " +
+        "and or but if then so than also too very just only into over under between " +
+        "tell give show explain explanation describe define definition meaning mean means " +
+        "please kindly need want know learn understand help " +
+        "example examples another more some any all everything information info detail details detailed full brief short simple " +
+        "essay summary notes note question answer topic topics " +
+        "calculate calculation formula formulas work out find compute"
+    ).split(/\s+/));
+
+    /* ---------- Explicit request words (optional for the user) ---------- */
+
+    function wikiWantsLookup(question) {
+        return /\b(wikipedia|wiki|look ?up|search for|search the web|google)\b/i.test(question);
+    }
+
+    /* ---------- Turn a question into a clean search phrase ---------- */
+
+    function wikiCleanQuery(question) {
+        return String(question || "")
+            .replace(/\b(please|kindly|wikipedia|wiki|look ?up|search for|search the web|search|google|on the internet|online)\b/gi, " ")
+            .replace(/^\s*(can|could|would) you\s+/i, "")
+            .replace(/^\s*(tell me|give me|show me)\s+(about|information (on|about)|info (on|about)|more about)\s+/i, "")
+            .replace(/^\s*(what do you know about|do you know about|do you know|tell me|explain|describe|define|meaning of|definition of)\s+/i, "")
+            .replace(/^\s*(what|who|where|when|why|how)\s+(is|are|was|were|does|do|did)?\s*(the|a|an)?\s*/i, "")
+            .replace(/\b(mean|means)\s*$/i, "")
+            .replace(/[?!.,]+$/g, "")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+    /* ---------- Content words of a question ---------- */
+
+    function wikiContentTerms(question) {
+        return getTokens(question).filter(t =>
+            !wikiStopWords.has(t) && (t.length >= 3 || /\d/.test(t))
+        );
+    }
+
+    /* ---------- Does a word exist in a vocabulary (typo tolerant)? ---------- */
+
+    function wikiTermKnown(term, vocabSet, vocabList) {
+        if (vocabSet.has(term)) return true;
+
+        const singular = term.replace(/(es|s)$/, "");
+        if (singular.length >= 3 && vocabSet.has(singular)) return true;
+        if (vocabSet.has(term + "s") || vocabSet.has(term + "es")) return true;
+
+        if (term.length < 5 || /\d/.test(term)) return false;
+
+        const max = term.length <= 7 ? 1 : 2;
+        return vocabList.some(word =>
+            Math.abs(word.length - term.length) <= max &&
+            word.length >= 4 &&
+            editDistance(term, word) <= max
+        );
+    }
+
+    /* ---------- Words that belong to one stored topic ---------- */
+
+    function wikiItemVocabulary(item) {
+        const set = new Set();
+        [item.topic, ...(item.keywords || []), ...(item.relatedKeywords || [])]
+            .forEach(phrase => getTokens(phrase).forEach(t => set.add(t)));
+        return set;
+    }
+
+    /* ---------- Did the notes REALLY answer this question? ---------- */
+
+    function wikiNotesAnsweredWell(question, localAnswer) {
+
+        /* Things the app handles itself: always keep the original reply */
+        const ownJobs = [
+            isJokeRequest, isFunFactRequest, isMotivationRequest,
+            isFinancialStatementRequest, isEssayRequest,
+            isTopicListRequest, isExampleRequest
+        ];
+        for (const check of ownJobs) {
+            try {
+                if (check(question)) return true;
+            } catch (e) { /* ignore */ }
+        }
+
+        /* Only judge answers that came from a stored topic */
+        const topicName = lastConversationState && lastConversationState.topic;
+        const item = topicName ? findTopicByName(topicName) : null;
+        if (!item || !localAnswer.includes(escapeHtml(item.topic))) return true;
+
+        const terms = wikiContentTerms(question);
+        if (!terms.length) return true;
+
+        const vocabSet = wikiItemVocabulary(item);
+        const vocabList = Array.from(vocabSet);
+        const known = terms.filter(t => wikiTermKnown(t, vocabSet, vocabList)).length;
+
+        return (known / terms.length) >= wikiConfig.minCoverage;
+    }
+
+    /* ---------- Network helper ---------- */
+
+    async function wikiFetchJson(url) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), wikiConfig.timeoutMs);
+        try {
+            const response = await fetch(url, { signal: controller.signal });
+            if (!response.ok) throw new Error("HTTP " + response.status);
+            return await response.json();
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
+    /* ---------- Find the best Wikipedia page ---------- */
+
+    async function wikiLookup(question) {
+        const query = wikiCleanQuery(question);
+        if (!query) return null;
+
+        const queryTerms = wikiContentTerms(query);
+        if (!queryTerms.length) return null;
+
+        const base = `https://${wikiConfig.lang}.wikipedia.org`;
+
+        const searchUrl =
+            `${base}/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}` +
+            `&srlimit=3&format=json&origin=*`;
+        const searchData = await wikiFetchJson(searchUrl);
+        const hits = (searchData && searchData.query && searchData.query.search) || [];
+
+        for (const hit of hits) {
+            const summaryUrl = `${base}/api/rest_v1/page/summary/${encodeURIComponent(hit.title.replace(/ /g, "_"))}`;
+
+            let summary;
+            try {
+                summary = await wikiFetchJson(summaryUrl);
+            } catch (e) {
+                continue;
+            }
+
+            if (!summary || !summary.extract || summary.type === "disambiguation") continue;
+
+            /* The page must actually be about what was asked */
+            const haystack = (summary.title + " " + summary.extract).toLowerCase();
+            const related = queryTerms.some(t => haystack.includes(t.replace(/(es|s)$/, "")));
+            if (!related) continue;
+
+            return {
+                title: summary.title || hit.title,
+                extract: summary.extract,
+                description: summary.description || "",
+                thumbnail: summary.thumbnail && summary.thumbnail.source ? summary.thumbnail.source : ""
+            };
+        }
+
+        return null;
+    }
+
+    /* ---------- Show the Wikipedia answer ---------- */
+
+    function wikiFormat(result) {
+        let html = `<h2>${escapeHtml(result.title)}</h2>`;
+        if (result.description) {
+            html += `<p><em>${escapeHtml(result.description)}</em></p>`;
+        }
+        if (result.thumbnail) {
+            html += `<p><img src="${escapeHtml(result.thumbnail)}" alt="${escapeHtml(result.title)}" style="max-width:180px; border-radius:8px;"></p>`;
+        }
+        html += `<p>${escapeHtml(result.extract)}</p>`;
+        return html;
+    }
+
+    function wikiFillSlot(slotId, html, tries) {
+        const slot = document.getElementById(slotId);
+        if (slot) {
+            slot.innerHTML = html;
+            requestAnimationFrame(() => { chatArea.scrollTop = chatArea.scrollHeight; });
+            return;
+        }
+        /* the message may not be on screen yet, so wait briefly */
+        if ((tries || 0) < 40) {
+            setTimeout(() => wikiFillSlot(slotId, html, (tries || 0) + 1), 100);
+        }
+    }
+
+    /* =========================================================
+       EXTRA FREE SOURCES (all work without an account or key)
+       - math.js ........ calculations the notes cannot do
+       - Frankfurter .... currency conversion
+       - World Bank ..... GDP, inflation, unemployment by country
+       - REST Countries . capital, population, currency, languages
+       - Dictionary ..... word meanings (dictionaryapi.dev, then Wiktionary)
+       - Simple English Wikipedia, Wikibooks, Wikiversity, Wikidata
+         (tried when normal Wikipedia finds nothing)
+    ========================================================= */
+
+    async function wikiFetchText(url) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), wikiConfig.timeoutMs);
+        try {
+            const response = await fetch(url, { signal: controller.signal });
+            if (!response.ok) throw new Error("HTTP " + response.status);
+            return await response.text();
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
+    function wikiSimplify(text) {
+        return String(text || "").toLowerCase().replace(/[’']/g, "").replace(/[?!.]+$/g, "").replace(/\s+/g, " ").trim();
+    }
+
+    function wikiNumber(value, decimals) {
+        return Number(value).toLocaleString("en-GB", {
+            minimumFractionDigits: decimals || 0,
+            maximumFractionDigits: decimals || 0
+        });
+    }
+
+    /* ---------- 1) Maths (math.js) ---------- */
+
+    function wikiMathExpression(question) {
+        let t = String(question || "").toLowerCase()
+            .replace(/\b(what is|whats|calculate|solve|work out|compute|equals|how much is)\b/g, " ")
+            .replace(/[?=]/g, " ")
+            .trim();
+
+        t = t.replace(/(\d)\s*[x×]\s*(?=\d)/g, "$1*").replace(/÷/g, "/");
+        t = t.replace(/(\d+(?:\.\d+)?)\s*%\s*of\s*(\d+(?:\.\d+)?)/g, "($1/100)*$2");
+
+        if (!/^[\d\s+\-*/().%^]+$/.test(t)) return null;
+        if (!/\d/.test(t) || !/[+\-*/^%]/.test(t)) return null;
+        return t.trim();
+    }
+
+    async function wikiMath(expression) {
+        const text = (await wikiFetchText("https://api.mathjs.org/v4/?expr=" + encodeURIComponent(expression))).trim();
+        const number = Number(text);
+        if (!text || (isNaN(number) && !/^[\d\s.,e+\-]+$/i.test(text))) return null;
+
+        const shown = isFinite(number) ? String(parseFloat(number.toPrecision(12))) : text;
+        return `<p><strong>${escapeHtml(expression)} = ${escapeHtml(shown)}</strong></p>`;
+    }
+
+    /* ---------- 2) Currency (Frankfurter) ---------- */
+
+    const wikiCurrencyNames = {
+        rand: "ZAR", rands: "ZAR", zar: "ZAR",
+        dollar: "USD", dollars: "USD", usd: "USD", "us dollar": "USD", "us dollars": "USD",
+        euro: "EUR", euros: "EUR", eur: "EUR",
+        pound: "GBP", pounds: "GBP", gbp: "GBP",
+        yen: "JPY", jpy: "JPY",
+        yuan: "CNY", rmb: "CNY", cny: "CNY",
+        rupee: "INR", rupees: "INR", inr: "INR",
+        aud: "AUD", cad: "CAD", chf: "CHF", nzd: "NZD", brl: "BRL", mxn: "MXN",
+        sgd: "SGD", sek: "SEK", nok: "NOK", dkk: "DKK", pln: "PLN", try: "TRY",
+        krw: "KRW", thb: "THB", hkd: "HKD", idr: "IDR", myr: "MYR", php: "PHP"
+    };
+
+    function wikiCurrencyCode(word) {
+        return wikiCurrencyNames[String(word || "").toLowerCase()] || null;
+    }
+
+    async function wikiTryCurrency(question) {
+        const text = wikiSimplify(question);
+        const names = Object.keys(wikiCurrencyNames).sort((a, b) => b.length - a.length).join("|");
+        const pattern = new RegExp(
+            "(?:(\\d[\\d\\s,]*(?:\\.\\d+)?)\\s*)?\\b(" + names + ")\\b\\s*(?:to|in|into|=|vs)\\s*\\b(" + names + ")\\b"
+        );
+        const m = text.match(pattern);
+        if (!m) return null;
+
+        const from = wikiCurrencyCode(m[2]);
+        const to = wikiCurrencyCode(m[3]);
+        const amount = m[1] ? parseFloat(m[1].replace(/[\s,]/g, "")) : 1;
+        if (!from || !to || from === to || !isFinite(amount)) return null;
+
+        let data = null;
+        const urls = [
+            `https://api.frankfurter.dev/v1/latest?base=${from}&symbols=${to}`,
+            `https://api.frankfurter.app/latest?from=${from}&to=${to}`
+        ];
+        for (const url of urls) {
+            try { data = await wikiFetchJson(url); if (data && data.rates && data.rates[to]) break; } catch (e) { data = null; }
+        }
+        if (!data || !data.rates || !data.rates[to]) return null;
+
+        const rate = data.rates[to];
+        return `
+            <h2>Currency conversion</h2>
+            <p><strong>${wikiNumber(amount, 2)} ${from} = ${wikiNumber(amount * rate, 2)} ${to}</strong></p>
+            <p>Rate: 1 ${from} = ${wikiNumber(rate, 4)} ${to}${data.date ? " (" + escapeHtml(data.date) + ")" : ""}</p>
+        `;
+    }
+
+    /* ---------- Country helpers (REST Countries) ---------- */
+
+    const wikiCountryAliases = {
+        "usa": "United States", "america": "United States", "united states of america": "United States",
+        "uk": "United Kingdom", "britain": "United Kingdom", "great britain": "United Kingdom",
+        "drc": "DR Congo", "ivory coast": "Ivory Coast", "swaziland": "Eswatini"
+    };
+
+    const wikiCountryNames = [
+        "south africa", "nigeria", "kenya", "zimbabwe", "botswana", "namibia", "mozambique", "zambia",
+        "angola", "eswatini", "lesotho", "malawi", "tanzania", "uganda", "ethiopia", "ghana", "egypt",
+        "morocco", "algeria", "senegal", "rwanda", "china", "india", "japan", "germany", "france",
+        "italy", "spain", "brazil", "argentina", "canada", "australia", "russia", "mexico",
+        "united states", "united kingdom", "usa", "uk", "america", "britain", "turkey", "saudi arabia",
+        "nigeria", "indonesia", "pakistan", "bangladesh", "netherlands", "sweden", "norway", "switzerland"
+    ];
+
+    async function wikiRestCountry(name) {
+        const clean = wikiSimplify(name).replace(/^the\s+/, "");
+        if (!clean || clean.length < 3) return null;
+        const searchName = wikiCountryAliases[clean] || clean;
+
+        const url = `https://restcountries.com/v3.1/name/${encodeURIComponent(searchName)}` +
+            `?fields=name,cca2,capital,population,currencies,languages,region`;
+        const list = await wikiFetchJson(url);
+        if (!Array.isArray(list) || !list.length) return null;
+
+        const lower = searchName.toLowerCase();
+        const exact = list.find(c =>
+            (c.name && c.name.common && c.name.common.toLowerCase() === lower) ||
+            (c.name && c.name.official && c.name.official.toLowerCase() === lower)
+        );
+        return exact || (list.length === 1 ? list[0] : null);
+    }
+
+    /* Find a country name inside a question */
+    function wikiFindCountryName(text) {
+        const known = wikiCountryNames.slice().sort((a, b) => b.length - a.length)
+            .find(n => new RegExp("\\b" + n + "\\b").test(text));
+        if (known) return known;
+
+        const m = text.match(
+            /\b(?:in|of|for)\s+(?:the\s+)?([a-z][a-z .'-]*?)(?=\s+(?:in|for|during)\s+(?:19|20)\d{2}|\s+(?:19|20)\d{2}|\s*$)/
+        );
+        return m ? m[1].trim() : null;
+    }
+
+    /* ---------- 3) Country facts ---------- */
+
+    async function wikiTryCountryFact(question) {
+        const text = wikiSimplify(question);
+        const m = text.match(/\b(capital|population|currency|currencies|official languages?|languages?|continent)\b.*?\b(?:of|in)\s+(?:the\s+)?([a-z][a-z .'-]*)$/);
+        if (!m) return null;
+
+        const country = await wikiRestCountry(m[2]);
+        if (!country) return null;
+
+        const currencies = country.currencies
+            ? Object.values(country.currencies).map(c => c.name + (c.symbol ? " (" + c.symbol + ")" : "")).join(", ")
+            : "";
+        const languages = country.languages ? Object.values(country.languages).join(", ") : "";
+
+        let html = `<h2>${escapeHtml(country.name.common)}</h2><ul>`;
+        if (country.capital && country.capital.length) html += `<li><strong>Capital:</strong> ${escapeHtml(country.capital.join(", "))}</li>`;
+        if (country.population) html += `<li><strong>Population:</strong> ${wikiNumber(country.population)}</li>`;
+        if (currencies) html += `<li><strong>Currency:</strong> ${escapeHtml(currencies)}</li>`;
+        if (languages) html += `<li><strong>Languages:</strong> ${escapeHtml(languages)}</li>`;
+        if (country.region) html += `<li><strong>Region:</strong> ${escapeHtml(country.region)}</li>`;
+        return html + `</ul>`;
+    }
+
+    /* ---------- 4) Economic figures (World Bank) ---------- */
+
+    const wikiIndicators = [
+        { re: /population growth/, code: "SP.POP.GROW", label: "Population growth", type: "pct" },
+        { re: /life expectancy/, code: "SP.DYN.LE00.IN", label: "Life expectancy at birth", type: "years" },
+        { re: /literacy/, code: "SE.ADT.LITR.ZS", label: "Adult literacy rate", type: "pct" },
+        { re: /\bgini\b/, code: "SI.POV.GINI", label: "Gini index (0 = equality, 100 = inequality)", type: "num1" },
+        { re: /poverty/, code: "SI.POV.DDAY", label: "Poverty headcount ratio (international poverty line)", type: "pct" },
+        { re: /government debt|public debt|debt to gdp|national debt/, code: "GC.DOD.TOTL.GD.ZS", label: "Central government debt (% of GDP)", type: "pct" },
+        { re: /lending (interest )?rate|interest rate/, code: "FR.INR.LEND", label: "Lending interest rate", type: "pct" },
+        { re: /tax revenue/, code: "GC.TAX.TOTL.GD.ZS", label: "Tax revenue (% of GDP)", type: "pct" },
+        { re: /foreign direct investment|\bfdi\b/, code: "BX.KLT.DINV.WD.GD.ZS", label: "Foreign direct investment, net inflows (% of GDP)", type: "pct" },
+        { re: /current account/, code: "BN.CAB.XOKA.GD.ZS", label: "Current account balance (% of GDP)", type: "pct" },
+        { re: /labour force participation|labor force participation/, code: "SL.TLF.CACT.ZS", label: "Labour force participation rate", type: "pct" },
+        { re: /education (spending|expenditure)/, code: "SE.XPD.TOTL.GD.ZS", label: "Government education spending (% of GDP)", type: "pct" },
+        { re: /health (spending|expenditure)/, code: "SH.XPD.CHEX.GD.ZS", label: "Health spending (% of GDP)", type: "pct" },
+        { re: /trade (openness|to gdp)|trade as a percentage/, code: "NE.TRD.GNFS.ZS", label: "Trade (% of GDP)", type: "pct" },
+        { re: /\bexports\b/, code: "NE.EXP.GNFS.ZS", label: "Exports of goods and services (% of GDP)", type: "pct" },
+        { re: /\bimports\b/, code: "NE.IMP.GNFS.ZS", label: "Imports of goods and services (% of GDP)", type: "pct" },
+        { re: /official exchange rate|exchange rate/, code: "PA.NUS.FCRF", label: "Official exchange rate (local currency per US$)", type: "num2" },
+        { re: /gdp growth|economic growth( rate)?|growth rate/, code: "NY.GDP.MKTP.KD.ZG", label: "GDP growth", type: "pct" },
+        { re: /gdp per capita/, code: "NY.GDP.PCAP.CD", label: "GDP per capita", type: "usd" },
+        { re: /\bgdp\b|gross domestic product/, code: "NY.GDP.MKTP.CD", label: "GDP", type: "usdBig" },
+        { re: /\binflation\b|\bcpi\b/, code: "FP.CPI.TOTL.ZG", label: "Inflation (consumer prices, annual)", type: "pct" },
+        { re: /unemployment/, code: "SL.UEM.TOTL.ZS", label: "Unemployment rate", type: "pct" },
+        { re: /\bpopulation\b/, code: "SP.POP.TOTL", label: "Population", type: "pop" }
+    ];
+
+    function wikiFormatIndicator(type, value) {
+        if (type === "pct") return wikiNumber(value, 1) + "%";
+        if (type === "years") return wikiNumber(value, 1) + " years";
+        if (type === "num1") return wikiNumber(value, 1);
+        if (type === "num2") return wikiNumber(value, 2);
+        if (type === "pop") return wikiNumber(value, 0);
+        if (type === "usd") return "US$ " + wikiNumber(value, 0);
+        if (value >= 1e12) return "US$ " + wikiNumber(value / 1e12, 2) + " trillion";
+        if (value >= 1e9) return "US$ " + wikiNumber(value / 1e9, 2) + " billion";
+        return "US$ " + wikiNumber(value, 0);
+    }
+
+    /* every country named in the question (up to 3), so "compare" questions work */
+    function wikiFindCountries(text) {
+        const found = [];
+        wikiCountryNames.slice().sort((a, b) => b.length - a.length).forEach(n => {
+            if (new RegExp("\\b" + n + "\\b").test(text) && !found.some(f => f.includes(n) || n.includes(f))) found.push(n);
+        });
+        if (!found.length) {
+            const one = wikiFindCountryName(text);
+            if (one) found.push(one);
+        }
+        return found.slice(0, 3);
+    }
+
+    async function wikiTryWorldBank(question) {
+        const text = wikiSimplify(question);
+
+        /* "why / causes / essay" questions are for the notes, not for statistics */
+        if (/\b(cause|causes|effect|effects|impact|essay|why|advantages|disadvantages|types|solutions|reasons|formula|define|definition|explain)\b/.test(text)) return null;
+
+        const indicator = wikiIndicators.find(i => i.re.test(text));
+        if (!indicator) return null;
+
+        const names = wikiFindCountries(text);
+        if (!names.length) return null;
+
+        const yearMatch = text.match(/\b((?:19|20)\d{2})\b/);
+        const lines = [];
+
+        for (const name of names) {
+            try {
+                const country = await wikiRestCountry(name);
+                if (!country || !country.cca2) continue;
+
+                const url = `https://api.worldbank.org/v2/country/${country.cca2}/indicator/${indicator.code}?format=json` +
+                    (yearMatch ? `&date=${yearMatch[1]}` : `&mrnev=1`);
+                const data = await wikiFetchJson(url);
+                const row = data && data[1] && data[1][0];
+                if (!row || row.value === null || row.value === undefined) continue;
+
+                lines.push({ country: country.name.common, value: wikiFormatIndicator(indicator.type, row.value), year: row.date });
+            } catch (e) { /* skip this country */ }
+        }
+        if (!lines.length) return null;
+
+        let html = `<h2>${escapeHtml(indicator.label)}</h2>`;
+        if (lines.length === 1) {
+            html = `<h2>${escapeHtml(lines[0].country)}: ${escapeHtml(indicator.label)}</h2>` +
+                   `<p><strong>${escapeHtml(lines[0].value)}</strong> (${escapeHtml(lines[0].year)})</p>`;
+        } else {
+            html += `<ul>` + lines.map(l => `<li><strong>${escapeHtml(l.country)}:</strong> ${escapeHtml(l.value)} (${escapeHtml(l.year)})</li>`).join("") + `</ul>`;
+        }
+        return html + `<p><em>World Bank data</em></p>`;
+    }
+
+    /* ---------- 5) Word meanings (dictionary, then Wiktionary) ---------- */
+
+    async function wikiTryDictionary(question) {
+        const text = wikiSimplify(question);
+        const m = text.match(
+            /^(?:what does|what do|what is the meaning of|what is the definition of|definition of|meaning of|define)\s+(?:the word\s+)?"?([a-z]{3,})"?(?:\s+mean)?$/
+        );
+        if (!m) return null;
+        const word = m[1];
+
+        /* dictionaryapi.dev */
+        try {
+            const data = await wikiFetchJson("https://api.dictionaryapi.dev/api/v2/entries/en/" + encodeURIComponent(word));
+            if (Array.isArray(data) && data[0] && data[0].meanings && data[0].meanings.length) {
+                let html = `<h2>${escapeHtml(data[0].word || word)}</h2>`;
+                data[0].meanings.slice(0, 3).forEach(meaning => {
+                    const def = meaning.definitions && meaning.definitions[0];
+                    if (!def) return;
+                    html += `<p><em>${escapeHtml(meaning.partOfSpeech || "")}</em>: ${escapeHtml(def.definition)}</p>`;
+                    if (def.example) html += `<p>Example: ${escapeHtml(def.example)}</p>`;
+                });
+                return html;
+            }
+        } catch (e) { /* try Wiktionary next */ }
+
+        /* Wiktionary */
+        try {
+            const data = await wikiFetchJson("https://en.wiktionary.org/api/rest_v1/page/definition/" + encodeURIComponent(word));
+            const entries = data && data.en;
+            if (entries && entries.length) {
+                let html = `<h2>${escapeHtml(word)}</h2>`;
+                entries.slice(0, 3).forEach(entry => {
+                    const def = entry.definitions && entry.definitions[0];
+                    if (!def) return;
+                    const plain = String(def.definition || "").replace(/<[^>]+>/g, "").trim();
+                    if (plain) html += `<p><em>${escapeHtml(entry.partOfSpeech || "")}</em>: ${escapeHtml(plain)}</p>`;
+                });
+                if (html.includes("<p>")) return html;
+            }
+        } catch (e) { /* nothing */ }
+
+        return null;
+    }
+
+    /* ---------- 6) Other Wikimedia sources + Wikidata ---------- */
+
+    async function wikiMediaSearch(host, query, queryTerms) {
+        const url =
+            `https://${host}/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}` +
+            `&gsrlimit=3&prop=extracts&exintro=1&explaintext=1&exlimit=max&exchars=700&format=json&origin=*`;
+        const data = await wikiFetchJson(url);
+        const pages = data && data.query && data.query.pages ? Object.values(data.query.pages) : [];
+        pages.sort((a, b) => (a.index || 0) - (b.index || 0));
+
+        for (const page of pages) {
+            const extract = String(page.extract || "").trim();
+            if (extract.length < 80) continue;
+
+            const haystack = (page.title + " " + extract).toLowerCase();
+            if (!queryTerms.some(t => haystack.includes(t.replace(/(es|s)$/, "")))) continue;
+
+            return { title: page.title, extract: extract, description: "", thumbnail: "" };
+        }
+        return null;
+    }
+
+    async function wikiWikidata(query, queryTerms) {
+        const url =
+            `https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(query)}` +
+            `&language=en&format=json&origin=*&limit=3`;
+        const data = await wikiFetchJson(url);
+        const hits = (data && data.search) || [];
+
+        for (const hit of hits) {
+            if (!hit.label || !hit.description) continue;
+            const label = hit.label.toLowerCase();
+            if (!queryTerms.some(t => label.includes(t.replace(/(es|s)$/, "")))) continue;
+
+            const description = hit.description.charAt(0).toUpperCase() + hit.description.slice(1);
+            return { title: hit.label, extract: description + ".", description: "", thumbnail: "" };
+        }
+        return null;
+    }
+
+    /* ---------- 7) Current office holders (Wikidata: president, prime minister, king...) ---------- */
+
+    function wikiCurrentHolderIds(claims) {
+        return (claims || [])
+            .filter(c => c.rank !== "deprecated" &&
+                !(c.qualifiers && c.qualifiers.P582) &&                    /* P582 = end time: skip former holders */
+                c.mainsnak && c.mainsnak.datavalue && c.mainsnak.datavalue.value && c.mainsnak.datavalue.value.id)
+            .sort((a, b) => (b.rank === "preferred") - (a.rank === "preferred"))
+            .map(c => c.mainsnak.datavalue.value.id);
+    }
+
+    async function wikiTryOfficeHolder(question) {
+        const text = wikiSimplify(question);
+        const role = text.match(/\b(president|prime minister|head of state|head of government|king|queen|monarch|chancellor|leader|ruler)\b/);
+        if (!role || !/\b(who|current|currently|now|today|name)\b/.test(text)) return null;
+
+        const countryName = wikiFindCountryName(text);
+        if (!countryName) return null;
+        const search = wikiCountryAliases[countryName.replace(/^the\s+/, "")] || countryName.replace(/^the\s+/, "");
+
+        const found = await wikiFetchJson(
+            `https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(search)}` +
+            `&language=en&format=json&origin=*&limit=5`);
+        const country = ((found && found.search) || []).find(h =>
+            /country|sovereign state|republic|kingdom|nation|monarchy|state in/i.test(h.description || ""));
+        if (!country) return null;
+
+        const ent = await wikiFetchJson(
+            `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${country.id}&props=claims&format=json&origin=*`);
+        const claims = ent && ent.entities && ent.entities[country.id] && ent.entities[country.id].claims;
+        if (!claims) return null;
+
+        const stateIds = wikiCurrentHolderIds(claims.P35);      /* head of state */
+        const govIds = wikiCurrentHolderIds(claims.P6);         /* head of government */
+
+        const wantState = /president|king|queen|monarch|head of state|leader|ruler/.test(role[1]);
+        const wantGov = /prime minister|chancellor|head of government|leader/.test(role[1]);
+        const sameHolder = !!stateIds[0] && stateIds[0] === govIds[0];      /* e.g. South Africa: one person is both */
+        const showGov = wantGov || (wantState && sameHolder);
+        const ids = [...new Set([].concat(wantState ? stateIds.slice(0, 1) : [], showGov ? govIds.slice(0, 1) : []))];
+        if (!ids.length) return null;
+
+        const lab = await wikiFetchJson(
+            `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${ids.join("|")}&props=labels&languages=en&format=json&origin=*`);
+        const nameOf = id => lab && lab.entities && lab.entities[id] && lab.entities[id].labels && lab.entities[id].labels.en
+            ? lab.entities[id].labels.en.value : null;
+
+        let html = `<h2>${escapeHtml(country.label)}</h2>`;
+        const state = wantState && stateIds[0] ? nameOf(stateIds[0]) : null;
+        const gov = showGov && govIds[0] ? nameOf(govIds[0]) : null;
+
+        if (state && gov && stateIds[0] === govIds[0]) {
+            html += `<p><strong>Head of state and head of government:</strong> ${escapeHtml(state)}</p>`;
+        } else {
+            if (state) html += `<p><strong>Head of state:</strong> ${escapeHtml(state)}</p>`;
+            if (gov) html += `<p><strong>Head of government:</strong> ${escapeHtml(gov)}</p>`;
+        }
+        if (!state && !gov) return null;
+
+        return html;
+    }
+
+    /* ---------- 8) Live weather and local time (Open-Meteo, no key needed) ---------- */
+
+    const wikiWeatherCodes = {
+        0: "Clear sky", 1: "Mainly clear", 2: "Partly cloudy", 3: "Overcast", 45: "Fog", 48: "Freezing fog",
+        51: "Light drizzle", 53: "Drizzle", 55: "Heavy drizzle", 61: "Light rain", 63: "Rain", 65: "Heavy rain",
+        71: "Light snow", 73: "Snow", 75: "Heavy snow", 80: "Rain showers", 81: "Rain showers", 82: "Violent rain showers",
+        95: "Thunderstorm", 96: "Thunderstorm with hail", 99: "Thunderstorm with heavy hail"
+    };
+
+    async function wikiGeocode(place) {
+        const name = String(place || "").trim();
+        if (name.length < 2) return null;
+        const data = await wikiFetchJson(
+            `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(name)}&count=1&language=en&format=json`);
+        return data && data.results && data.results[0] ? data.results[0] : null;
+    }
+
+    async function wikiTryWeather(question) {
+        const text = wikiSimplify(question);
+        if (!/\b(weather|temperature|forecast|raining)\b/.test(text)) return null;
+
+        const m = text.match(/\b(?:in|at|for|of)\s+([a-z][a-z .'-]*?)(?:\s+(?:today|now|right now|tomorrow|currently))?$/);
+        if (!m) return null;
+
+        const geo = await wikiGeocode(m[1]);
+        if (!geo) return null;
+
+        const data = await wikiFetchJson(
+            `https://api.open-meteo.com/v1/forecast?latitude=${geo.latitude}&longitude=${geo.longitude}` +
+            `&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code` +
+            `&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=2`);
+        const c = data && data.current;
+        if (!c) return null;
+
+        const d = data.daily || {};
+        let html = `<h2>Weather in ${escapeHtml(geo.name)}${geo.country ? ", " + escapeHtml(geo.country) : ""}</h2>`;
+        html += `<p><strong>${wikiNumber(c.temperature_2m, 1)}°C</strong> - ${escapeHtml(wikiWeatherCodes[c.weather_code] || "Current conditions")}</p>`;
+        html += `<p>Feels like ${wikiNumber(c.apparent_temperature, 1)}°C | Humidity ${wikiNumber(c.relative_humidity_2m)}% | Wind ${wikiNumber(c.wind_speed_10m, 1)} km/h</p>`;
+        if (d.temperature_2m_max && d.temperature_2m_min) {
+            html += `<p>Today: ${wikiNumber(d.temperature_2m_min[0], 0)}°C to ${wikiNumber(d.temperature_2m_max[0], 0)}°C`;
+            if (d.precipitation_probability_max) html += `, rain chance ${wikiNumber(d.precipitation_probability_max[0])}%`;
+            html += `</p>`;
+            if (d.temperature_2m_max.length > 1) {
+                html += `<p>Tomorrow: ${wikiNumber(d.temperature_2m_min[1], 0)}°C to ${wikiNumber(d.temperature_2m_max[1], 0)}°C</p>`;
+            }
+        }
+        return html + `<p><em>Live data from Open-Meteo.</em></p>`;
+    }
+
+    async function wikiTryTime(question) {
+        const text = wikiSimplify(question);
+        const m = text.match(/\btime\b.*?\b(?:in|at)\s+([a-z][a-z .'-]*)$/);
+        if (!m) return null;
+
+        const geo = await wikiGeocode(m[1]);
+        if (!geo || !geo.timezone) return null;
+
+        const shown = new Intl.DateTimeFormat("en-ZA", {
+            timeZone: geo.timezone, weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", hour12: false
+        }).format(new Date());
+
+        return `<h2>Time in ${escapeHtml(geo.name)}${geo.country ? ", " + escapeHtml(geo.country) : ""}</h2>` +
+               `<p><strong>${escapeHtml(shown)}</strong></p><p><em>Time zone: ${escapeHtml(geo.timezone)}</em></p>`;
+    }
+
+    /* ---------- 9) Web search (Google Programmable Search) and live news (GDELT) ----------
+       Web search needs your own free Google key (see mcSearch below). Without it, this
+       source is skipped. The AI proxy (mcAI.endpoint) does its own, better web search. */
+
+    const mcSearch = {
+        google: {
+            key: "",     /* API key from Google Cloud - restrict it to your website address (HTTP referrers) */
+            cx: ""       /* Search engine ID from programmablesearchengine.google.com ("search the entire web") */
+        },
+        news: true       /* free news search through GDELT (no key); turn off with false */
+    };
+
+    function wikiLinkList(items) {
+        let html = "<ul>";
+        items.forEach(it => {
+            if (!it.link || !/^https?:\/\//i.test(it.link)) return;
+            html += `<li style="margin-bottom:8px;"><strong>${escapeHtml(it.title)}</strong>` +
+                    (it.snippet ? `<br>${escapeHtml(it.snippet)}` : "") +
+                    `<br><a href="${escapeHtml(it.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(it.source || it.link)}</a></li>`;
+        });
+        return html + "</ul>";
+    }
+
+    async function wikiTryWebSearch(question) {
+        if (!mcSearch.google.key || !mcSearch.google.cx) return null;
+
+        const q = wikiCleanQuery(question) || question;
+        const data = await wikiFetchJson(
+            `https://www.googleapis.com/customsearch/v1?key=${encodeURIComponent(mcSearch.google.key)}` +
+            `&cx=${encodeURIComponent(mcSearch.google.cx)}&q=${encodeURIComponent(q)}&num=5`);
+
+        const items = ((data && data.items) || []).map(i => ({
+            title: i.title, snippet: String(i.snippet || "").replace(/\s+/g, " ").trim(), link: i.link, source: i.displayLink
+        }));
+        if (!items.length) return null;
+
+        return `<h2>Web results</h2>${wikiLinkList(items)}<p><em>Search results - check the sources before relying on them.</em></p>`;
+    }
+
+    async function wikiTryNews(question) {
+        if (!mcSearch.news) return null;
+        const text = wikiSimplify(question);
+        if (!/\b(news|headlines?|latest|breaking|happened|this week)\b/.test(text)) return null;
+
+        const q = wikiCleanQuery(question)
+            .replace(/\b(latest|news|headlines?|breaking|about|on|today|this week|what happened|what is|whats|the|in)\b/gi, " ")
+            .replace(/\s+/g, " ").trim();
+        if (q.length < 3) return null;
+
+        const data = await wikiFetchJson(
+            `https://api.gdeltproject.org/api/v2/doc/doc?query=${encodeURIComponent(q)}&mode=artlist&maxrecords=5&format=json&sort=datedesc`);
+
+        const articles = (data && data.articles) || [];
+        const items = articles.map(a => ({
+            title: a.title, link: a.url, source: (a.domain || "") + (a.seendate ? " - " + a.seendate.slice(0, 4) + "-" + a.seendate.slice(4, 6) + "-" + a.seendate.slice(6, 8) : "")
+        }));
+        if (!items.length) return null;
+
+        return `<h2>Latest news: ${escapeHtml(q)}</h2>${wikiLinkList(items)}<p><em>Headlines from GDELT.</em></p>`;
+    }
+
+    /* ---------- The full lookup order ---------- */
+
+    async function wikiResolve(question, mathExpression) {
+
+        /* Pure calculations: only math.js, never Wikipedia */
+        if (mathExpression) {
+            try { return await wikiMath(mathExpression); } catch (e) { return null; }
+        }
+
+        /* Special-purpose sources (each returns null if the question is not theirs) */
+        const specials = [wikiTryOfficeHolder, wikiTryWeather, wikiTryTime, wikiTryCurrency, wikiTryWorldBank, wikiTryCountryFact, wikiTryDictionary];
+        for (const source of specials) {
+            try {
+                const html = await source(question);
+                if (html) return html;
+            } catch (e) { /* source down: move on */ }
+        }
+
+        /* Questions about "now" or records: news and web search come BEFORE Wikipedia */
+        const askedAboutNow = /\b(latest|current|currently|today|right now|news|headlines?|this week|this year|recent|recently|who won|record|fastest|slowest|tallest|richest|largest|biggest|smallest|most expensive|cheapest|price of|how much does)\b/.test(wikiSimplify(question));
+        if (askedAboutNow) {
+            for (const source of [wikiTryNews, wikiTryWebSearch]) {
+                try {
+                    const html = await source(question);
+                    if (html) return html;
+                } catch (e) { /* move on */ }
+            }
+        }
+
+        /* Wikipedia */
+        try {
+            const result = await wikiLookup(question);
+            if (result) return wikiFormat(result);
+        } catch (e) { /* move on */ }
+
+        /* Simple English, Wikibooks, Wikiversity and Wikidata (in parallel) */
+        const query = wikiCleanQuery(question);
+        const queryTerms = wikiContentTerms(query);
+        if (!query || !queryTerms.length) {
+            try { return await wikiTryWebSearch(question); } catch (e) { return null; }
+        }
+
+        const attempts = await Promise.all([
+            wikiMediaSearch("simple.wikipedia.org", query, queryTerms).catch(() => null),
+            wikiMediaSearch("en.wikibooks.org", query, queryTerms).catch(() => null),
+            wikiMediaSearch("en.wikiversity.org", query, queryTerms).catch(() => null),
+            wikiWikidata(query, queryTerms).catch(() => null)
+        ]);
+
+        const found = attempts.find(Boolean);
+        if (found) return wikiFormat(found);
+
+        /* nothing in the encyclopaedias: last resort is a real web search (if a key is set) */
+        try { return await wikiTryWebSearch(question); } catch (e) { return null; }
+    }
+
+    /* ---------- Wrap the existing generateAnswer (original kept intact) ---------- */
+
+    const originalGenerateAnswer = generateAnswer;
+
+    generateAnswer = function (question) {
+
+        const forced = wikiWantsLookup(question);
+        const localAnswer = originalGenerateAnswer(question);
+
+        const localFailed =
+            isFallbackAnswer(localAnswer) ||
+            localAnswer.includes("I don't have that one in my study notes") ||
+            localAnswer.includes("I'm not 100% sure what you meant");
+
+        const mathExpression = wikiMathExpression(question);
+
+        /* The notes already answered it properly: nothing more to do */
+        if (!forced) {
+            if (mathExpression) {
+                /* keep the app's own calculator result if it produced one */
+                let ownCalc = null;
+                try { ownCalc = simpleCalculator(question); } catch (e) { ownCalc = null; }
+                if (ownCalc) return localAnswer;
+            }
+            if (!mathExpression && !localFailed && wikiNotesAnsweredWell(question, localAnswer)) return localAnswer;
+        }
+
+        /* Offline: keep the original answer */
+        if (typeof navigator !== "undefined" && navigator.onLine === false) {
+            return localAnswer;
+        }
+
+        const slotId = "wikiSlot" + (++wikiSlotCounter);
+
+        wikiResolve(question, mathExpression)
+            .then(html => {
+                /* Nothing found anywhere: quietly keep the original answer */
+                wikiFillSlot(slotId, html || localAnswer);
+            })
+            .catch(() => {
+                wikiFillSlot(slotId, localAnswer);
+            });
+
+        /* Looks exactly like the normal "Thinking" indicator */
+        return `<div id="${slotId}"><div class="thinking"><span>Thinking</span><span class="thinking-dot"></span><span class="thinking-dot"></span><span class="thinking-dot"></span></div></div>`;
+    };
+
+    /* =========================================================
+       END OF SMART BACKUP SOURCES
+    ========================================================= */
+
+
+    /* =========================================================
+       DOCUMENT + WORD-PROBLEM UPGRADE (ADD-ON)
+       Paste this block directly ABOVE the "LOAD SETTINGS"
+       section (below "END OF SMART BACKUP SOURCES").
+       Nothing existing is changed; it wraps generateAnswer.
+
+       WHAT THIS DOES (locally, no AI needed):
+       - Splits pasted documents into numbered questions/sub-questions
+       - Reads marks, keeps order and numbering
+       - Solves: linear/quadratic equations, WACC, VAT, gross profit
+       - Answers "explain question 2", "answers only", "exam format",
+         "continue"
+       - Flags missing information instead of inventing it
+
+       WHAT IT CANNOT DO WITHOUT AN AI MODEL:
+       General subject understanding (science, English, history,
+       essays, case studies). For that, set mcAI.endpoint to YOUR
+       OWN backend proxy (the proxy holds the secret API key).
+       API keys must never be placed in this file.
+    ========================================================= */
+
+    const mcAI = {
+        endpoint: "",            /* your proxy URL, e.g. "https://mastercommerce-ai.yourname.workers.dev" (leave "" to stay free/offline-style) */
+        timeoutMs: 60000
+    };
+
+    const mcBatchSize = 12;
+    let mcDoc = { items: [], next: 0, raw: "" };
+
+    /* ---------- number helpers ---------- */
+
+    function mcNum(str) {
+        const m = String(str).toLowerCase().replace(/r\s*(?=\d)/g, "").match(/(-?\d[\d\s,]*(?:\.\d+)?)\s*(billion|bn|million|m|thousand|k)?\b/);
+        if (!m) return null;
+        let v = parseFloat(m[1].replace(/[\s,]/g, ""));
+        if (!isFinite(v)) return null;
+        const u = m[2];
+        if (u === "billion" || u === "bn") v *= 1e9;
+        else if (u === "million" || u === "m") v *= 1e6;
+        else if (u === "thousand" || u === "k") v *= 1e3;
+        return v;
+    }
+
+    function mcPercents(clause) {
+        const out = [];
+        const re = /(\d+(?:\.\d+)?)\s*%/g;
+        let m;
+        while ((m = re.exec(clause))) out.push(parseFloat(m[1]));
+        return out;
+    }
+
+    function mcMoney(clause) {
+        const c = clause.replace(/\d+(?:\.\d+)?\s*%/g, " ");
+        const re = /r?\s*\d[\d\s,]*(?:\.\d+)?\s*(?:billion|bn|million|m|thousand|k)?\b/gi;
+        const found = [];
+        let m;
+        while ((m = re.exec(c))) {
+            const v = mcNum(m[0]);
+            if (v !== null) found.push(v);
+        }
+        return found;
+    }
+
+    const mcR = v => {
+        const r = Math.round(v * 100) / 100, d = Number.isInteger(r) ? 0 : 2;
+        return "R " + r.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d }).replace(/,/g, " ");
+    };
+    const mcP = v => Number(v.toFixed(2)) + "%";
+    
+    /* =========================================================
+       EXTRA STUDY NOTES: Business Studies, Financial Management,
+       more Accounting and more Economics topics.
+       They join the same search engine as your existing notes.
+    ========================================================= */
+
+    const businessStudiesKnowledge = [
+        { topic: "Business Environments", keywords: ["business environment", "micro environment", "market environment", "macro environment", "internal environment", "external environment"], relatedKeywords: ["pestle", "stakeholders", "competitors", "suppliers", "customers"],
+          information: "A business operates in three environments: the micro (internal) environment, the market environment and the macro environment.",
+          formulas: [],
+          rules: ["Micro (internal): vision, mission, objectives, culture, resources and management - the business controls these.",
+                  "Market: customers, competitors, suppliers, intermediaries and labour - the business can influence but not control them.",
+                  "Macro (external): political, economic, social, technological, legal and environmental factors - the business cannot control them."],
+          examples: ["A rise in the repo rate is a macro-economic factor; a new competitor opening nearby is a market factor."] },
+
+        { topic: "PESTLE Analysis", keywords: ["pestle", "pest analysis", "pestel", "macro environment factors"], relatedKeywords: ["political", "economic", "social", "technological", "legal", "environmental"],
+          information: "PESTLE analysis examines the macro-environment under six headings: Political, Economic, Social, Technological, Legal and Environmental.",
+          formulas: [],
+          rules: ["Political: government stability and policy, e.g. elections, regulation.", "Economic: interest rates, inflation, exchange rates, economic growth.", "Social: demographics, culture, lifestyle and attitudes.", "Technological: automation, internet, new production methods.", "Legal: legislation such as the Consumer Protection Act and labour laws.", "Environmental: climate change, pollution, sustainability requirements."],
+          examples: ["Load shedding is often classed as a technological/economic factor affecting production."] },
+
+        { topic: "SWOT Analysis", keywords: ["swot", "swot analysis", "strengths weaknesses opportunities threats"], relatedKeywords: ["strategy", "internal", "external"],
+          information: "SWOT analysis evaluates a business's internal Strengths and Weaknesses and its external Opportunities and Threats.",
+          formulas: [],
+          rules: ["Strengths and weaknesses are internal factors the business can control.", "Opportunities and threats are external factors from the market and macro environments.", "Results are used to develop strategies that build on strengths and reduce threats."],
+          examples: ["Strength: skilled workforce. Weakness: outdated machinery. Opportunity: new export market. Threat: new competitor."] },
+
+        { topic: "Porter's Five Forces", keywords: ["porter", "porters five forces", "five forces", "competitive forces"], relatedKeywords: ["competition", "industry", "substitutes", "new entrants"],
+          information: "Porter's Five Forces is a framework for analysing the competitiveness of an industry.",
+          formulas: [],
+          rules: ["Threat of new entrants.", "Bargaining power of suppliers.", "Bargaining power of buyers (customers).", "Threat of substitute products or services.", "Rivalry among existing competitors."],
+          examples: [] },
+
+        { topic: "Management Functions", keywords: ["management functions", "functions of management", "planning organising leading controlling", "polc", "fayol", "management"], relatedKeywords: ["manager", "planning", "organising", "leading", "controlling", "top management", "middle management", "supervisors"],
+          information: "Management is the process of using resources effectively to achieve business objectives. The classic functions are planning, organising, leading (directing) and controlling.",
+          formulas: [],
+          rules: ["Planning: setting objectives and deciding how to achieve them.", "Organising: arranging resources, tasks and authority.", "Leading: motivating and guiding people towards objectives.", "Controlling: comparing actual results with plans and taking corrective action.", "Levels: top management (strategic), middle management (tactical), lower management/supervisors (operational)."],
+          examples: [] },
+
+        { topic: "Leadership Styles", keywords: ["leadership styles", "autocratic", "democratic", "laissez faire", "transformational", "transactional", "leadership"], relatedKeywords: ["leader", "decision making", "employees", "participation"],
+          information: "A leadership style is the way a leader makes decisions and interacts with employees.",
+          formulas: [],
+          rules: ["Autocratic: the leader decides alone; fast but can demotivate staff.", "Democratic: employees participate in decisions; better motivation but slower.", "Laissez-faire: the leader gives staff freedom; works with skilled, self-motivated employees.", "Transformational: inspires change and a shared vision.", "Transactional: uses rewards and penalties to achieve set goals."],
+          examples: ["In an emergency, an autocratic style is often most suitable because quick decisions are needed."] },
+
+        { topic: "Motivation Theories", keywords: ["motivation", "maslow", "hierarchy of needs", "herzberg", "two factor theory", "theory x", "theory y", "mcgregor"], relatedKeywords: ["needs", "hygiene factors", "motivators", "employees", "job satisfaction"],
+          information: "Motivation theories explain what drives employees to perform.",
+          formulas: [],
+          rules: ["Maslow's hierarchy: physiological, safety, social (belonging), esteem and self-actualisation needs; lower needs must be met before higher ones.", "Herzberg: hygiene factors (salary, conditions, job security) prevent dissatisfaction; motivators (recognition, achievement, responsibility) create satisfaction.", "McGregor Theory X: employees dislike work and need control. Theory Y: employees are self-motivated and seek responsibility."],
+          examples: ["Offering promotion and recognition appeals to esteem needs in Maslow's hierarchy."] },
+
+        { topic: "Forms of Ownership", keywords: ["forms of ownership", "sole proprietor", "sole proprietorship", "partnership business", "private company", "public company", "close corporation", "personal liability company", "non profit company", "state owned company", "cooperative", "co operative", "franchise"], relatedKeywords: ["liability", "continuity", "taxation", "capital", "companies act"],
+          information: "Forms of ownership describe the legal structure of a business. Each differs in liability, continuity, capital, tax and control.",
+          formulas: [],
+          rules: ["Sole proprietor: one owner, unlimited personal liability, easy to start, limited capital.", "Partnership: 2 or more partners sharing profits and unlimited liability; ends if a partner leaves unless agreed otherwise.", "Private company ((Pty) Ltd): separate legal entity, limited liability, shares not offered to the public.", "Public company (Ltd): shares can be offered to the public and listed on a stock exchange.", "Personal liability company (Inc.): directors are jointly liable with the company for its debts.", "Non-profit company (NPC): formed for public benefit; profits are not distributed to members.", "State-owned company (SOC Ltd): owned by the government.", "Close corporations: no new ones can be registered since the Companies Act 71 of 2008 took effect; existing ones may continue.", "Co-operative: owned by members who share benefits (Co-operatives Act 14 of 2005).", "Franchise: a franchisee pays fees/royalties to use the franchisor's brand and system."],
+          examples: [] },
+
+        { topic: "Entrepreneurship and Business Plans", keywords: ["entrepreneur", "entrepreneurship", "business plan", "start a business", "business idea", "characteristics of an entrepreneur"], relatedKeywords: ["risk", "innovation", "funding", "seda", "smme"],
+          information: "An entrepreneur identifies an opportunity, organises resources and takes the risk of starting a business. A business plan sets out how the venture will operate and succeed.",
+          formulas: [],
+          rules: ["Typical entrepreneur characteristics: risk-taking, innovation, determination, creativity, leadership and self-confidence.", "A business plan usually includes an executive summary, business description, market analysis, marketing plan, operations plan, management and financial plan.", "Sources of funding: own capital, bank loans, venture capital, crowdfunding, grants and support bodies such as SEDA, IDC and NEF.", "SMMEs (small, medium and micro enterprises) are important for job creation and economic growth."],
+          examples: [] },
+
+        { topic: "Marketing Mix", keywords: ["marketing mix", "4ps", "7ps", "product price place promotion", "marketing", "promotion mix"], relatedKeywords: ["people", "process", "physical evidence", "advertising", "pricing", "distribution"],
+          information: "The marketing mix is the set of tools a business uses to satisfy customers: the 4 Ps (product, price, place, promotion), extended to 7 Ps for services (people, process, physical evidence).",
+          formulas: [],
+          rules: ["Product: what is sold, including quality, brand and packaging.", "Price: what the customer pays, including discounts and credit terms.", "Place: how and where the product is distributed.", "Promotion: advertising, sales promotion, publicity, personal selling.", "People, process and physical evidence apply mainly to services."],
+          examples: [] },
+
+        { topic: "Market Segmentation and Research", keywords: ["market segmentation", "market research", "target market", "segmentation", "market share", "swot of market"], relatedKeywords: ["demographic", "geographic", "psychographic", "behavioural", "survey"],
+          information: "Segmentation divides a market into groups of customers with similar needs. Market research gathers information about customers, competitors and trends.",
+          formulas: ["Market share % = Business sales / Total market sales × 100"],
+          rules: ["Common segmentation bases: geographic, demographic, psychographic (lifestyle) and behavioural.", "Primary research collects new data (surveys, interviews); secondary research uses existing data (reports, statistics)."],
+          examples: ["Sales R2 million in a market worth R10 million gives a 20% market share."] },
+
+        { topic: "Product Life Cycle", keywords: ["product life cycle", "plc", "introduction growth maturity decline"], relatedKeywords: ["sales", "profit", "marketing", "stage"],
+          information: "The product life cycle describes the stages a product goes through: introduction, growth, maturity and decline.",
+          formulas: [],
+          rules: ["Introduction: low sales, high costs, heavy promotion.", "Growth: sales and profit rise quickly, competitors enter.", "Maturity: sales peak and stabilise, competition is strong.", "Decline: sales and profit fall; the business may withdraw or relaunch the product."],
+          examples: [] },
+
+        { topic: "Human Resource Management", keywords: ["human resource", "human resources", "hr management", "recruitment", "selection", "induction", "training and development", "performance appraisal", "staff turnover"], relatedKeywords: ["employees", "interview", "job description", "job specification", "orientation"],
+          information: "Human resource management deals with the people in a business: planning, recruiting, selecting, training, appraising and rewarding employees.",
+          formulas: ["Staff turnover % = Employees who left / Average number of employees × 100"],
+          rules: ["Job analysis produces a job description (duties) and a job specification (qualifications and skills needed).", "Recruitment attracts applicants; selection chooses the best (CV screening, interviews, tests, reference checks).", "Induction introduces new employees to the business; training develops skills.", "Performance appraisal evaluates how well employees do their jobs."],
+          examples: ["10 employees left from an average staff of 100: staff turnover = 10%."] },
+
+        { topic: "Labour Legislation in South Africa", keywords: ["labour legislation", "labour relations act", "lra", "basic conditions of employment", "bcea", "employment equity", "skills development act", "uif", "unemployment insurance", "coida", "ohsa", "occupational health and safety", "ccma", "labour law"], relatedKeywords: ["dismissal", "strike", "overtime", "leave", "discrimination", "employer", "employee"],
+          information: "South African labour laws protect employees and regulate the employment relationship.",
+          formulas: [],
+          rules: ["Labour Relations Act 66 of 1995 (LRA): collective bargaining, unfair dismissal, strikes and lock-outs; disputes go to the CCMA.", "Basic Conditions of Employment Act 75 of 1997 (BCEA): minimum conditions such as working hours, overtime, leave and notice periods.", "Employment Equity Act 55 of 1998 (EEA): prohibits unfair discrimination and promotes affirmative action for designated groups.", "Skills Development Act 97 of 1998 and Skills Development Levies Act 9 of 1999: promote training; employers pay a skills development levy (1% of payroll).", "Unemployment Insurance Act 63 of 2001 (UIA): provides short-term relief for workers who lose income; employer and employee each contribute 1%.", "Compensation for Occupational Injuries and Diseases Act 130 of 1993 (COIDA): compensation for work-related injuries or illness.", "Occupational Health and Safety Act 85 of 1993 (OHSA): safe working conditions."],
+          examples: [] },
+
+        { topic: "Business Legislation in South Africa", keywords: ["consumer protection act", "cpa", "national credit act", "nca", "companies act", "competition act", "popia", "protection of personal information", "bbbee", "bee", "broad based black economic empowerment", "business legislation", "nema"], relatedKeywords: ["consumer", "credit", "company", "competition", "privacy", "environment"],
+          information: "Several Acts regulate how businesses operate in South Africa.",
+          formulas: [],
+          rules: ["Consumer Protection Act 68 of 2008: protects consumers from unfair practices and gives rights such as quality goods and fair marketing.", "National Credit Act 34 of 2005: regulates credit granting and protects borrowers from reckless lending.", "Companies Act 71 of 2008: governs the formation and management of companies.", "Competition Act 89 of 1998: promotes fair competition and prohibits cartels and abuse of dominance.", "Protection of Personal Information Act 4 of 2013 (POPIA): regulates how personal information is collected and used.", "Broad-Based Black Economic Empowerment Act 53 of 2003: promotes economic transformation (ownership, management control, skills development, enterprise and supplier development, socio-economic development).", "National Environmental Management Act 107 of 1998 (NEMA): protects the environment and promotes sustainable development."],
+          examples: [] },
+
+        { topic: "Quality Management", keywords: ["quality management", "total quality management", "tqm", "quality control", "quality assurance", "quality circles", "quality"], relatedKeywords: ["production", "customer", "defects", "continuous improvement"],
+          information: "Quality management aims to ensure products and services consistently meet customer requirements.",
+          formulas: [],
+          rules: ["Quality control: inspecting products to find defects.", "Quality assurance: preventing defects by building quality into every stage of the process.", "Total Quality Management (TQM): every employee is responsible for quality, with continuous improvement.", "Quality circles: small groups of employees who meet to solve quality problems."],
+          examples: [] },
+
+        { topic: "Production and Operations", keywords: ["production management", "operations management", "just in time", "jit", "lean production", "kaizen", "production process", "inventory control"], relatedKeywords: ["efficiency", "waste", "stock", "production function"],
+          information: "Production (operations) management converts inputs into outputs efficiently while controlling cost, quality and delivery.",
+          formulas: [],
+          rules: ["Just-in-time (JIT): materials arrive exactly when needed, reducing storage costs.", "Lean production: removes waste while keeping quality.", "Kaizen: continuous small improvements by everyone.", "Production methods include job, batch and flow (mass) production."],
+          examples: [] },
+
+        { topic: "Corporate Social Responsibility and Ethics", keywords: ["corporate social responsibility", "csr", "business ethics", "triple bottom line", "king code", "corporate governance", "social investment", "sustainability"], relatedKeywords: ["stakeholders", "environment", "community", "people planet profit"],
+          information: "CSR means a business takes responsibility for its impact on society and the environment. Ethics are the moral standards guiding behaviour.",
+          formulas: [],
+          rules: ["Triple bottom line: people (social), planet (environmental) and profit (economic).", "Corporate governance is the system by which companies are directed and controlled; South Africa follows the King Code.", "Corporate social investment includes donations, bursaries, community projects and environmental programmes.", "Stakeholders include owners, employees, customers, suppliers, government and the community."],
+          examples: [] },
+
+        { topic: "Business Sectors", keywords: ["business sectors", "primary sector", "secondary sector", "tertiary sector", "quaternary sector", "economic sectors"], relatedKeywords: ["agriculture", "mining", "manufacturing", "services"],
+          information: "Businesses operate in economic sectors depending on what they produce.",
+          formulas: [],
+          rules: ["Primary sector: extracts natural resources (farming, mining, fishing).", "Secondary sector: manufactures and processes goods (factories, construction).", "Tertiary sector: provides services (retail, banking, tourism, transport).", "Quaternary sector: knowledge-based services such as research and information technology."],
+          examples: [] },
+
+        { topic: "Insurance", keywords: ["insurance", "insurance principles", "utmost good faith", "insurable interest", "indemnity", "subrogation", "contribution", "proximate cause", "underinsurance"], relatedKeywords: ["premium", "claim", "policy", "risk", "short term insurance", "long term insurance"],
+          information: "Insurance transfers risk from the insured to the insurer in exchange for a premium.",
+          formulas: [],
+          rules: ["Utmost good faith: both parties must disclose all relevant facts.", "Insurable interest: the insured must stand to suffer a financial loss.", "Indemnity: the insured is restored to the same financial position, not better.", "Subrogation: after paying a claim, the insurer takes over the insured's rights against a third party.", "Contribution: if insured with several insurers, each pays a share of the loss.", "Proximate cause: the main cause of the loss must be an insured risk."],
+          examples: [] },
+
+        { topic: "Investments", keywords: ["investment", "investments", "shares", "bonds", "unit trusts", "fixed deposit", "property investment", "retirement annuity", "jse"], relatedKeywords: ["risk", "return", "dividend", "interest", "liquidity"],
+          information: "Investments are assets bought to earn income or growth. Choices balance risk, return and liquidity.",
+          formulas: ["Return on investment (ROI) % = (Gain from investment - Cost of investment) / Cost of investment × 100"],
+          rules: ["Shares: part ownership; return from dividends and capital growth; higher risk.", "Bonds: loans to governments or companies paying interest; lower risk than shares.", "Unit trusts: pooled funds managed by professionals.", "Fixed deposits: low-risk, fixed interest for a set period.", "Higher expected return generally means higher risk."],
+          examples: ["Investment cost R20 000 grows to R23 000: ROI = 3 000 / 20 000 × 100 = 15%."] },
+
+        { topic: "Business Operations: Professionalism and Communication", keywords: ["professionalism", "business communication", "meetings", "agenda", "minutes of a meeting", "report writing", "presentation skills", "negotiation", "conflict management"], relatedKeywords: ["teamwork", "ethics", "stakeholders"],
+          information: "Professional behaviour and clear communication are essential for business success.",
+          formulas: [],
+          rules: ["Features of professionalism: punctuality, honesty, accountability, respect and competence.", "A meeting uses an agenda (list of topics) and minutes (record of what was decided).", "Conflict can be handled by negotiation, mediation or arbitration.", "Good business communication is clear, accurate, courteous and appropriate for the audience."],
+          examples: [] },
+
+        { topic: "Strategic Management", keywords: ["strategic management", "strategy", "vision and mission", "mission statement", "vision statement", "objectives", "smart goals", "strategic planning"], relatedKeywords: ["goals", "competitive advantage", "swot", "implementation"],
+          information: "Strategic management sets the long-term direction of a business and decides how resources will be used to achieve it.",
+          formulas: [],
+          rules: ["Vision: where the business wants to be in future.", "Mission: why the business exists and what it does.", "SMART objectives are Specific, Measurable, Achievable, Realistic and Time-bound.", "Strategy steps: analyse the environment, set objectives, formulate, implement and evaluate the strategy."],
+          examples: [] }
+    ];
+
+    const financialManagementKnowledge = [
+        { topic: "Time Value of Money", keywords: ["time value of money", "tvm", "present value", "future value", "annuity", "perpetuity", "discounting", "compounding"], relatedKeywords: ["interest rate", "periods", "cash flow", "discount rate"],
+          information: "A rand today is worth more than a rand in future because it can earn interest. Time value of money converts cash flows between different points in time.",
+          formulas: ["Future value: FV = PV × (1 + r)^n", "Present value: PV = FV ÷ (1 + r)^n", "PV of an ordinary annuity = PMT × [1 - (1 + r)^-n] ÷ r", "FV of an ordinary annuity = PMT × [(1 + r)^n - 1] ÷ r", "PV of a perpetuity = PMT ÷ r"],
+          rules: ["Use the same period for r and n (monthly rate with number of months).", "Annuity due payments occur at the start of each period."],
+          examples: ["R10 000 invested at 8% for 3 years: FV = 10 000 × 1.08³ = R12 597.12.", "R5 000 received in 2 years at 10%: PV = 5 000 ÷ 1.10² = R4 132.23."] },
+
+        { topic: "Net Present Value (NPV)", keywords: ["npv", "net present value", "investment appraisal", "capital budgeting", "capital investment decision"], relatedKeywords: ["cash flows", "discount rate", "initial investment", "accept", "reject"],
+          information: "NPV is the present value of a project's future cash flows less its initial investment. It shows how much value the project adds.",
+          formulas: ["NPV = -Initial investment + Σ [Cash flow(t) ÷ (1 + r)^t]"],
+          rules: ["NPV > 0: accept the project (it earns more than the required return).", "NPV < 0: reject the project.", "NPV = 0: the project earns exactly the required return.", "When ranking projects, choose the highest NPV (if funds are not limited)."],
+          examples: ["Invest R100 000; inflows R50 000 for 3 years at 10%: PV of inflows = R124 342.60, NPV = R24 342.60, so accept."] },
+
+        { topic: "Internal Rate of Return (IRR)", keywords: ["irr", "internal rate of return"], relatedKeywords: ["npv", "hurdle rate", "required return", "project"],
+          information: "IRR is the discount rate at which a project's NPV equals zero.",
+          formulas: ["IRR: the rate r where Σ [Cash flow(t) ÷ (1 + r)^t] - Initial investment = 0"],
+          rules: ["Accept if IRR is greater than the required rate of return (hurdle rate).", "IRR is found by trial and error, interpolation or a financial calculator.", "IRR can mislead when cash flows change sign more than once."],
+          examples: [] },
+
+        { topic: "Payback Period", keywords: ["payback", "payback period", "discounted payback"], relatedKeywords: ["cash flows", "investment", "recover"],
+          information: "The payback period is the time it takes for a project's cash inflows to recover the initial investment.",
+          formulas: ["Payback (even cash flows) = Initial investment ÷ Annual cash inflow", "Payback (uneven) = Full years + (Unrecovered amount ÷ Cash flow in the next year)"],
+          rules: ["Advantage: simple and shows liquidity and risk.", "Disadvantage: ignores the time value of money and cash flows after payback.", "Discounted payback uses discounted cash flows."],
+          examples: ["Investment R120 000 with R40 000 a year: payback = 3 years."] },
+
+        { topic: "Cost of Capital and CAPM", keywords: ["cost of capital", "capm", "capital asset pricing model", "cost of equity", "beta", "risk free rate", "market risk premium", "required return"], relatedKeywords: ["wacc", "equity", "debt", "risk"],
+          information: "The cost of capital is the return required by the providers of finance. CAPM estimates the cost of equity from market risk.",
+          formulas: ["CAPM: Ke = Rf + β × (Rm - Rf)", "After-tax cost of debt = Kd × (1 - tax rate)", "WACC = (E ÷ V × Ke) + (D ÷ V × Kd × (1 - t))"],
+          rules: ["Beta measures sensitivity to market movements: β > 1 is riskier than the market.", "(Rm - Rf) is the market risk premium."],
+          examples: ["Rf = 7%, β = 1.2, Rm = 14%: Ke = 7% + 1.2 × 7% = 15.4%."] },
+
+        { topic: "Share and Dividend Valuation", keywords: ["dividend growth model", "gordon growth model", "share valuation", "dividend discount model", "value of a share", "intrinsic value"], relatedKeywords: ["dividend", "growth rate", "required return", "share price"],
+          information: "A share's value can be estimated as the present value of its expected future dividends.",
+          formulas: ["Constant growth model: P0 = D1 ÷ (Ke - g)", "D1 = D0 × (1 + g)", "Dividend yield = D1 ÷ P0"],
+          rules: ["Ke must be greater than g for the model to work."],
+          examples: ["D0 = R2, g = 5%, Ke = 15%: D1 = R2.10 and P0 = 2.10 ÷ 0.10 = R21."] },
+
+        { topic: "Break-even Analysis", keywords: ["break even", "break even point", "break even analysis", "contribution margin", "cvp analysis", "cost volume profit", "margin of safety"], relatedKeywords: ["fixed costs", "variable costs", "selling price", "units"],
+          information: "The break-even point is the sales level where total revenue equals total cost, so profit is zero.",
+          formulas: ["Contribution per unit = Selling price - Variable cost per unit", "Break-even units = Fixed costs ÷ Contribution per unit", "Break-even revenue = Break-even units × Selling price", "Units for target profit = (Fixed costs + Target profit) ÷ Contribution per unit", "Margin of safety = Actual sales - Break-even sales"],
+          rules: ["Above break-even the business makes a profit; below it, a loss."],
+          examples: ["Fixed costs R60 000, price R50, variable cost R30: contribution R20, break-even = 3 000 units (R150 000)."] },
+
+        { topic: "Working Capital Management", keywords: ["working capital", "working capital management", "cash conversion cycle", "operating cycle", "net working capital", "economic order quantity", "eoq"], relatedKeywords: ["inventory", "receivables", "payables", "liquidity"],
+          information: "Working capital is the funding needed for day-to-day operations. Managing it balances liquidity and profitability.",
+          formulas: ["Net working capital = Current assets - Current liabilities", "Cash conversion cycle = Inventory days + Debtor days - Creditor days", "EOQ = √(2 × D × S ÷ H)"],
+          rules: ["D = annual demand, S = ordering cost per order, H = holding cost per unit per year.", "Too little working capital risks illiquidity; too much ties up money that could earn a return."],
+          examples: ["D = 10 000 units, S = R50, H = R2: EOQ = √(2 × 10 000 × 50 ÷ 2) = 707 units (about)."] },
+
+        { topic: "Financial and Operating Leverage", keywords: ["leverage", "financial leverage", "operating leverage", "gearing", "capital structure", "debt equity ratio", "degree of operating leverage"], relatedKeywords: ["debt", "equity", "risk", "interest"],
+          information: "Leverage uses fixed costs or borrowed funds to magnify returns - and risk.",
+          formulas: ["Debt-equity ratio = Total debt ÷ Total equity", "Gearing = Debt ÷ (Debt + Equity)", "Degree of operating leverage = % change in operating profit ÷ % change in sales"],
+          rules: ["Higher gearing increases financial risk because interest must be paid.", "Interest on debt is tax deductible, which lowers the after-tax cost of debt."],
+          examples: [] },
+
+        { topic: "DuPont Analysis and Return Measures", keywords: ["dupont", "return on equity", "return on assets", "return on investment", "roi", "roce", "return on capital employed", "eva"], relatedKeywords: ["profit margin", "asset turnover", "equity multiplier"],
+          information: "DuPont analysis breaks return on equity into profitability, efficiency and leverage.",
+          formulas: ["ROE = Net profit margin × Asset turnover × Equity multiplier", "Net profit margin = Net profit ÷ Sales", "Asset turnover = Sales ÷ Total assets", "Equity multiplier = Total assets ÷ Equity", "ROCE = Operating profit ÷ Capital employed × 100"],
+          rules: ["A rise in ROE can come from higher margins, better asset use or more borrowing."],
+          examples: ["Margin 10%, asset turnover 2, equity multiplier 1.5: ROE = 0.10 × 2 × 1.5 = 30%."] },
+
+        { topic: "Risk and Return", keywords: ["risk and return", "standard deviation", "expected return", "diversification", "systematic risk", "unsystematic risk", "portfolio"], relatedKeywords: ["investment", "beta", "variance"],
+          information: "Investors expect higher returns for taking higher risk. Diversification reduces risk that is specific to one asset.",
+          formulas: ["Expected return = Σ (Probability × Return)", "Portfolio return = Σ (Weight × Return of each asset)"],
+          rules: ["Systematic (market) risk affects all assets and cannot be diversified away.", "Unsystematic (specific) risk can be reduced by diversification."],
+          examples: ["Returns 20% (prob. 0.5) and 4% (prob. 0.5): expected return = 12%."] },
+
+        { topic: "Sources of Finance", keywords: ["sources of finance", "long term finance", "short term finance", "debentures", "bank overdraft", "trade credit", "retained earnings", "leasing", "factoring", "venture capital"], relatedKeywords: ["loan", "equity", "debt", "capital"],
+          information: "Businesses raise funds from owners (equity) or lenders (debt), over short or long periods.",
+          formulas: [],
+          rules: ["Short-term: bank overdraft, trade credit, factoring.", "Medium-term: instalment sale, leasing, term loans.", "Long-term: ordinary and preference shares, debentures, mortgage bonds, retained earnings.", "Match the term of finance to the term of the asset being financed."],
+          examples: [] }
+    ];
+
+    const extraAccountingKnowledge = [
+        { topic: "Management Accounting: Costing and Variances", keywords: ["management accounting", "absorption costing", "marginal costing", "variable costing", "standard costing", "variance analysis", "material variance", "labour variance", "overhead absorption", "cost classification", "relevant costing", "make or buy"], relatedKeywords: ["standard cost", "actual cost", "favourable", "adverse", "fixed cost", "variable cost"],
+          information: "Management accounting provides cost and planning information for internal decisions.",
+          formulas: ["Material price variance = (Actual price - Standard price) × Actual quantity", "Material usage variance = (Actual quantity - Standard quantity) × Standard price", "Labour rate variance = (Actual rate - Standard rate) × Actual hours", "Labour efficiency variance = (Actual hours - Standard hours) × Standard rate", "Overhead absorption rate = Budgeted overheads ÷ Budgeted activity level"],
+          rules: ["Absorption costing includes fixed production overheads in product cost; marginal costing treats them as period costs.", "A variance is favourable when it increases profit and adverse when it reduces profit.", "Relevant costs are future cash flows that differ between alternatives; sunk costs are ignored."],
+          examples: ["Standard price R10, actual price R11, actual quantity 500 kg: price variance = R500 adverse."] },
+
+        { topic: "Statement of Changes in Equity", keywords: ["statement of changes in equity", "changes in equity", "reserves", "share premium", "retained income"], relatedKeywords: ["dividends", "profit", "share capital", "other comprehensive income"],
+          information: "The statement of changes in equity reconciles the opening and closing balance of each component of equity.",
+          formulas: ["Closing retained earnings = Opening + Profit for the year - Dividends declared"],
+          rules: ["Share issues increase share capital; dividends reduce retained earnings.", "Other comprehensive income (e.g. revaluation surplus) is shown within reserves."],
+          examples: [] },
+
+        { topic: "Share Issues", keywords: ["share issue", "issue of shares", "rights issue", "bonus issue", "capitalisation issue", "share buyback", "repurchase of shares"], relatedKeywords: ["share capital", "issue price", "shareholders"],
+          information: "A company can raise capital by issuing shares to the public, existing shareholders or specific investors.",
+          formulas: ["Proceeds = Number of shares issued × Issue price"],
+          rules: ["Rights issue: new shares offered to existing shareholders in proportion to their holdings.", "Bonus (capitalisation) issue: free shares from reserves; total equity does not change.", "A share buyback reduces share capital and cash."],
+          examples: ["500 000 shares issued at R4 each raises R2 000 000."] },
+
+        { topic: "Partnership Changes", keywords: ["admission of a partner", "retirement of a partner", "dissolution of a partnership", "goodwill partnership", "change in profit sharing ratio", "revaluation of assets partnership"], relatedKeywords: ["partners", "capital accounts", "goodwill"],
+          information: "When partners join, leave or change profit-sharing ratios, assets are revalued, goodwill is dealt with and capital accounts are adjusted.",
+          formulas: ["Goodwill = Value of the business - Net identifiable assets"],
+          rules: ["Goodwill is usually raised in the old ratio and written off in the new ratio.", "On dissolution, assets are realised, liabilities paid and the balance is shared in the capital account balances."],
+          examples: [] },
+
+        { topic: "IAS 1 - Presentation of Financial Statements", keywords: ["ias 1", "presentation of financial statements", "going concern", "accrual basis", "materiality", "ifrs 18"], relatedKeywords: ["statement of financial position", "profit or loss", "notes"],
+          information: "IAS 1 sets out the overall requirements for presenting general purpose financial statements. IFRS 18 will replace it for periods starting on or after 1 January 2027.",
+          formulas: [],
+          rules: ["A complete set includes the statement of financial position, profit or loss and other comprehensive income, changes in equity, cash flows and notes.", "Financial statements are prepared on the going concern and accrual bases unless stated otherwise.", "Material items are presented separately; current and non-current items are normally distinguished."],
+          examples: [] },
+
+        { topic: "IAS 38 - Intangible Assets", keywords: ["ias 38", "intangible assets", "development costs", "research costs", "patents", "trademarks", "internally generated goodwill"], relatedKeywords: ["amortisation", "recognition", "useful life"],
+          information: "IAS 38 deals with identifiable non-monetary assets without physical substance.",
+          formulas: [],
+          rules: ["Research costs are expensed.", "Development costs are capitalised only if criteria such as technical feasibility and intention to complete are met.", "Internally generated goodwill is not recognised.", "Intangibles with finite lives are amortised; those with indefinite lives are tested for impairment annually."],
+          examples: [] },
+
+        { topic: "IAS 40 - Investment Property and IFRS 5", keywords: ["ias 40", "investment property", "ifrs 5", "held for sale", "non current assets held for sale", "discontinued operations"], relatedKeywords: ["fair value model", "cost model", "disposal group"],
+          information: "IAS 40 covers property held to earn rentals or capital appreciation. IFRS 5 covers assets whose carrying amount will be recovered mainly through sale.",
+          formulas: [],
+          rules: ["Investment property may use the cost model or the fair value model (changes in fair value go to profit or loss).", "IFRS 5: assets held for sale are measured at the lower of carrying amount and fair value less costs to sell, and are not depreciated."],
+          examples: [] },
+
+        { topic: "IAS 19 - Employee Benefits", keywords: ["ias 19", "employee benefits", "defined benefit", "defined contribution", "post employment benefits", "leave pay", "bonus provision"], relatedKeywords: ["pension", "short term benefits"],
+          information: "IAS 19 governs short-term benefits, post-employment benefits and other long-term benefits.",
+          formulas: [],
+          rules: ["Short-term benefits (salaries, leave, bonuses) are recognised as an expense when employees render service.", "Defined contribution plan: the employer's cost is the contribution paid.", "Defined benefit plan: the employer carries actuarial and investment risk and recognises a net liability or asset."],
+          examples: [] },
+
+        { topic: "IAS 20, IAS 41, IFRS 13 and IFRS 2", keywords: ["ias 20", "government grants", "ias 41", "biological assets", "agriculture accounting", "ifrs 13", "fair value measurement", "ifrs 2", "share based payment"], relatedKeywords: ["fair value", "grant", "vesting"],
+          information: "These standards deal with grants, agriculture, fair value and share-based payments.",
+          formulas: [],
+          rules: ["IAS 20: government grants are recognised in profit or loss over the periods the related costs are expensed.", "IAS 41: biological assets are measured at fair value less costs to sell.", "IFRS 13: fair value is the exit price in an orderly transaction between market participants.", "IFRS 2: equity-settled share-based payments are measured at grant-date fair value and expensed over the vesting period."],
+          examples: [] },
+
+        { topic: "Ratio Analysis Interpretation", keywords: ["ratio interpretation", "interpret ratios", "liquidity ratios", "profitability ratios", "solvency ratios", "efficiency ratios", "return on equity", "earnings per share ratio", "price earnings ratio", "dividend yield"], relatedKeywords: ["current ratio", "debt ratio", "inventory turnover", "pe ratio"],
+          information: "Ratios are interpreted by comparing them with previous years, budgets, other businesses and industry norms.",
+          formulas: ["Price/earnings ratio = Market price per share ÷ Earnings per share", "Dividend yield % = Dividend per share ÷ Market price per share × 100", "Dividend payout ratio = Dividends ÷ Earnings", "Gross profit mark-up % = Gross profit ÷ Cost of sales × 100"],
+          rules: ["A current ratio of about 2:1 and acid-test of about 1:1 are traditional liquidity guides.", "Always state the ratio, explain what it shows, and comment on the trend and possible causes."],
+          examples: ["Market price R30 and EPS R3: P/E ratio = 10."] }
+    ];
+
+    const extraEconomicsKnowledge = [
+        { topic: "Production Possibility Curve", keywords: ["production possibility curve", "ppc", "production possibility frontier", "ppf", "opportunity cost curve"], relatedKeywords: ["scarcity", "efficiency", "growth", "trade off"],
+          information: "The PPC shows the maximum combinations of two goods an economy can produce with its resources and technology.",
+          formulas: ["Opportunity cost of good X = Quantity of Y given up ÷ Quantity of X gained"],
+          rules: ["Points on the curve are efficient; points inside indicate unemployed or underused resources; points outside are unattainable.", "The curve shifts outward with economic growth (more resources or better technology).", "The curve is bowed outward because of increasing opportunity cost."],
+          examples: [] },
+
+        { topic: "Costs of Production", keywords: ["costs of production", "total cost", "average cost", "marginal cost", "fixed cost", "variable cost", "short run costs", "law of diminishing returns", "economies of scale", "diseconomies of scale"], relatedKeywords: ["output", "firm", "production", "average variable cost"],
+          information: "Costs are classified as fixed or variable and are used to find profit-maximising output.",
+          formulas: ["TC = TFC + TVC", "AC = TC ÷ Q", "AVC = TVC ÷ Q", "AFC = TFC ÷ Q", "MC = Change in TC ÷ Change in Q"],
+          rules: ["Law of diminishing returns: adding more of a variable input to a fixed input eventually yields smaller increases in output.", "Economies of scale: average cost falls as output expands in the long run.", "Marginal cost cuts average cost at its lowest point."],
+          examples: ["Q = 10 and TC = R500: AC = R50."] },
+
+        { topic: "Taxation Types", keywords: ["taxation", "progressive tax", "proportional tax", "regressive tax", "direct tax", "indirect tax", "tax system", "personal income tax", "sars"], relatedKeywords: ["government revenue", "vat", "equity", "income distribution"],
+          information: "Taxes are compulsory payments to government used to fund public spending and redistribute income.",
+          formulas: ["Average tax rate = Tax paid ÷ Taxable income × 100"],
+          rules: ["Progressive: the tax rate rises as income rises (e.g. personal income tax).", "Proportional: the same rate at all income levels.", "Regressive: takes a larger share of low incomes.", "Direct taxes are paid on income or wealth; indirect taxes (VAT, fuel levy) are included in prices."],
+          examples: [] },
+
+        { topic: "Phillips Curve and Unemployment-Inflation Trade-off", keywords: ["phillips curve", "inflation unemployment trade off", "stagflation phillips"], relatedKeywords: ["inflation", "unemployment", "natural rate"],
+          information: "The short-run Phillips curve suggests an inverse relationship between inflation and unemployment.",
+          formulas: [],
+          rules: ["Lower unemployment is associated with higher inflation in the short run.", "In the long run the curve is vertical at the natural rate of unemployment.", "Stagflation (high inflation with high unemployment) challenged the simple trade-off."],
+          examples: [] },
+
+        { topic: "Economic Growth and Development Indicators", keywords: ["economic development", "human development index", "hdi", "development indicators", "sustainable development", "economic growth vs development"], relatedKeywords: ["life expectancy", "education", "income per capita", "poverty"],
+          information: "Economic growth is an increase in real output; economic development improves living standards and wellbeing more broadly.",
+          formulas: [],
+          rules: ["HDI combines life expectancy, education and income per capita.", "Sustainable development meets present needs without compromising the ability of future generations to meet theirs.", "Growth is necessary but not sufficient for development."],
+          examples: [] },
+
+        { topic: "Globalisation and Trade Blocs", keywords: ["globalisation", "globalization", "trade bloc", "free trade area", "customs union", "sadc", "brics", "afcfta", "wto", "regional integration"], relatedKeywords: ["trade", "tariffs", "integration", "multinational"],
+          information: "Globalisation is the growing integration of economies through trade, investment and technology.",
+          formulas: [],
+          rules: ["Free trade area: no tariffs between members, each sets its own external tariffs.", "Customs union: free trade inside plus a common external tariff.", "Common market adds free movement of labour and capital.", "SADC and the African Continental Free Trade Area (AfCFTA) are African examples.", "The WTO sets and enforces rules for international trade."],
+          examples: [] }
+    ];
+
+    /* join the new notes to the same search engine */
+    subjectWords["Business Studies"] = [
+        "business studies", "business", "entrepreneur", "swot", "pestle", "leadership", "management", "marketing",
+        "human resource", "labour relations", "labour law", "bcea", "consumer protection", "csr", "ethics",
+        "forms of ownership", "sole proprietor", "partnership", "franchise", "insurance", "investment", "quality",
+        "business plan", "motivation", "maslow", "herzberg", "stakeholder", "corporate governance", "market research"
+    ];
+    subjectWords["Financial Management"] = [
+        "financial management", "npv", "net present value", "irr", "internal rate of return", "payback", "capm", "beta",
+        "wacc", "cost of capital", "break even", "break-even", "contribution margin", "time value of money",
+        "present value", "future value", "annuity", "working capital", "eoq", "leverage", "gearing", "dupont",
+        "dividend growth", "cash conversion cycle", "capital budgeting"
+    ];
+    subjectWords.Accounting = subjectWords.Accounting.concat([
+        "management accounting", "variance", "absorption costing", "marginal costing", "standard costing",
+        "share issue", "statement of changes in equity", "ias 38", "ias 40", "ias 19", "ifrs 5", "ifrs 13", "ifrs 2", "ias 1"
+    ]);
+    subjectWords.Economics = subjectWords.Economics.concat([
+        "production possibility", "ppc", "costs of production", "economies of scale", "taxation", "progressive tax",
+        "phillips curve", "hdi", "development", "globalisation", "trade bloc"
+    ]);
+
+    extraAccountingKnowledge.forEach(item => accountingKnowledge.push(item));
+    extraEconomicsKnowledge.forEach(item => economicsKnowledge.push(item));
+
+    /* ---------- symbol helpers ---------- */
+
+    /* Clean ASCII maths into proper symbols for display */
+    function mcSym(s) {
+        return String(s)
+            .replace(/<=/g, "≤").replace(/>=/g, "≥").replace(/!=/g, "≠")
+            .replace(/\^2(?!\d)/g, "²").replace(/\^3(?!\d)/g, "³")
+            .replace(/sqrt\(/gi, "√(")
+            .replace(/(\S)\s*\*\s*(\S)/g, "$1 × $2")
+            .replace(/(\d|x|\))-(?=[\dx(])/g, "$1 − ")
+            .replace(/(\s)-(\s)/g, "$1−$2")
+            .replace(/(^|[(=+×÷−\s])-(?=[\dx(])/g, "$1−");
+    }
+
+    const mcMinus = n => (n < 0 ? "−" : "") + Math.abs(+Number(n).toFixed(6));
+    const mcPar = n => (n < 0 ? "(" + mcMinus(n) + ")" : mcMinus(n));
+
+    /* Render worked lines: steps as headings, workings in formula boxes, final answer highlighted */
+    function mcLines(arr) {
+        return arr.map(l => {
+            const t = mcSym(l);
+            if (/^∴/.test(t)) {
+                return `<p style="font-weight:700;margin:8px 0;padding:6px 10px;border-left:3px solid currentColor;">${escapeHtml(t)}</p>`;
+            }
+            if (/^Step \d+:/.test(t)) {
+                return `<p style="margin:10px 0 2px;"><strong>${escapeHtml(t)}</strong></p>`;
+            }
+            return `<div class="formula">${escapeHtml(t)}</div>`;
+        }).join("");
+    }
+
+    /* ---------- solver: arithmetic with symbols (√ π ² ³ × ÷ −) ---------- */
+
+    function mcSolveArithmetic(text) {
+        const raw = String(text).trim();
+        const stripped = raw.replace(/^(please\s+)?(calculate|what is|whats|work out|evaluate|simplify|compute|solve)\s*:?\s*/i, "").replace(/[?=\s]+$/g, "");
+        const hadWord = stripped !== raw.replace(/[?=\s]+$/g, "");
+        const hasSym = /[√π²³×÷−^]/.test(stripped);
+
+        if (!stripped || !/^[\d\s+\-−*×/÷().^√π²³]+$/.test(stripped)) return null;
+        if (!/\d/.test(stripped) || !/[+\-−*×/÷^√²³]/.test(stripped)) return null;
+        if (!hadWord && !hasSym) return null;
+
+        try {
+            let e = stripped
+                .replace(/[−–]/g, "-").replace(/×/g, "*").replace(/÷/g, "/")
+                .replace(/(\d|\)|π|²|³)(?=\s*[(π√])/g, "$1*")
+                .replace(/²/g, "**2").replace(/³/g, "**3").replace(/\^/g, "**")
+                .replace(/√\s*(\d+(?:\.\d+)?|\([^()]*\))/g, "Math.sqrt($1)")
+                .replace(/π/g, "Math.PI");
+            const v = new Function(`"use strict"; return (${e});`)();
+            if (typeof v !== "number" || !Number.isFinite(v)) return null;
+
+            const exact = Math.abs(v - +v.toFixed(6)) < 1e-12;
+            const pretty = stripped.replace(/\s*[*×]\s*/g, " × ").replace(/\s*[/÷]\s*/g, " ÷ ").replace(/\s*-\s*/g, " − ").replace(/\s*\+\s*/g, " + ");
+            return {
+                text: [
+                    "Step 1: Write the expression",
+                    pretty,
+                    "Step 2: Evaluate in order (brackets, powers and roots, × and ÷, + and −)",
+                    `∴ ${pretty} ${exact ? "=" : "≈"} ${mcMinus(v)}`
+                ]
+            };
+        } catch (err) {
+            return null;
+        }
+    }
+
+    /* ---------- solver: equations in x ---------- */
+
+    function mcPrepExpr(s) {
+        return s.replace(/\s+/g, "")
+            .replace(/(\d|\)|π)(?=[x(π√])/g, "$1*")
+            .replace(/x(?=[\d(xπ√])/g, "x*")
+            .replace(/\)(?=\d)/g, ")*")
+            .replace(/π(?=\d)/g, "π*")
+            .replace(/√(\d+(?:\.\d+)?|\([^()]*\))/g, "Math.sqrt($1)")
+            .replace(/π/g, "Math.PI")
+            .replace(/\^/g, "**");
+    }
+
+    function mcSolveEquation(text) {
+        const t = String(text).replace(/[×]/g, "*").replace(/÷/g, "/").replace(/²/g, "^2").replace(/³/g, "^3").replace(/[−–]/g, "-");
+        const C = "0-9x+\\-*/().^√π\\s";
+        const re = new RegExp(`([${C}]*x[${C}]*=[${C}]+|[${C}]+=[${C}]*x[${C}]*)`, "i");
+        const m = t.match(re);
+        if (!m) return null;
+        const parts = m[1].toLowerCase().split("=");
+        if (parts.length !== 2 || !parts[0].trim() || !parts[1].trim()) return null;
+
+        try {
+            const l = mcPrepExpr(parts[0]), r = mcPrepExpr(parts[1]);
+            const f = new Function("x", `"use strict"; return (${l}) - (${r});`);
+            const f0 = f(0), f1 = f(1), fm = f(-1), f2 = f(2);
+            const a = (f1 + fm) / 2 - f0, b = (f1 - fm) / 2, c = f0;
+            if (![a, b, c].every(Number.isFinite)) return null;
+            if (Math.abs(a * 4 + b * 2 + c - f2) > 1e-6) return { unsupported: true };
+
+            const eq = `${parts[0].trim()} = ${parts[1].trim()}`;
+            const poly = [[a, "x²"], [b, "x"], [c, ""]].filter(p => Math.abs(p[0]) > 1e-12)
+                .map((p, i) => {
+                    const v = +p[0].toFixed(6);
+                    const sign = i === 0 ? (v < 0 ? "−" : "") : (v < 0 ? " − " : " + ");
+                    return sign + (Math.abs(v) === 1 && p[1] ? "" : Math.abs(v)) + p[1];
+                }).join("") || "0";
+
+            const L = ["Step 1: Write the equation", eq, "Step 2: Move everything to one side", `${poly} = 0`];
+
+            if (Math.abs(a) < 1e-12) {
+                if (Math.abs(b) < 1e-12) {
+                    L.push(Math.abs(c) < 1e-9 ? "∴ True for every x" : "∴ No solution");
+                    return { text: L };
+                }
+                L.push("Step 3: Isolate x", `x = ${mcMinus(-c)} ÷ ${mcPar(b)}`, `∴ x = ${mcMinus(-c / b)}`);
+                return { text: L };
+            }
+
+            const d = b * b - 4 * a * c;
+            L.push(
+                "Step 3: Identify the coefficients", `a = ${mcMinus(a)},  b = ${mcMinus(b)},  c = ${mcMinus(c)}`,
+                "Step 4: Calculate the discriminant", "Δ = b² − 4ac",
+                `Δ = ${mcPar(b)}² − 4(${mcMinus(a)})(${mcMinus(c)}) = ${mcMinus(d)}`
+            );
+            if (d < -1e-12) {
+                L.push("∴ Δ < 0, so there are no real solutions");
+            } else if (Math.abs(d) <= 1e-12) {
+                L.push("Step 5: Solve", "x = −b ÷ 2a", `∴ x = ${mcMinus(-b / (2 * a))} (repeated root)`);
+            } else {
+                const s = Math.sqrt(d);
+                L.push(
+                    "Step 5: Apply the quadratic formula", "x = [−b ± √Δ] ÷ 2a",
+                    `x = [${mcMinus(-b)} ± √${mcMinus(d)}] ÷ ${mcMinus(2 * a)}`,
+                    `∴ x = ${mcMinus((-b + s) / (2 * a))}  or  x = ${mcMinus((-b - s) / (2 * a))}`
+                );
+            }
+            return { text: L };
+        } catch (e) {
+            return null;
+        }
+    }
+
+    /* ---------- solver: WACC ---------- */
+
+    function mcSolveWACC(text) {
+        if (!/\bwacc\b|weighted average cost of capital/i.test(text)) return null;
+
+        const clauses = text.split(/[.;\n]|\band\b|,\s+/i).map(s => s.trim()).filter(Boolean);
+        const v = {};
+
+        clauses.forEach(c => {
+            const lc = c.toLowerCase();
+            const pct = mcPercents(c);
+            const money = mcMoney(c).filter(n => n >= 100);
+
+            if (pct.length) {
+                if (/cost of debt|interest rate|borrowing|\bkd\b|debt.*(rate|cost)/.test(lc) && v.kd === undefined) v.kd = pct[0];
+                else if (/cost of equity|required return|\bke\b|equity.*(rate|cost|return)/.test(lc) && v.ke === undefined) v.ke = pct[0];
+                else if (/tax/.test(lc) && v.t === undefined) v.t = pct[0];
+            } else if (money.length) {
+                if (/equity|share|market capital/.test(lc) && v.E === undefined) v.E = money[0];
+                else if (/debt|loan|bond|borrow/.test(lc) && v.D === undefined) v.D = money[0];
+            }
+        });
+
+        const missing = [];
+        if (v.E === undefined) missing.push("market value of equity");
+        if (v.D === undefined) missing.push("market value of debt");
+        if (v.ke === undefined) missing.push("cost of equity");
+        if (v.kd === undefined) missing.push("cost of debt");
+        if (missing.length) return { missing };
+
+        const assumed = [];
+        if (v.t === undefined) { v.t = 0; assumed.push("No tax rate was given, so t = 0% was assumed."); }
+
+        const V = v.E + v.D, we = v.E / V, wd = v.D / V;
+        const kdAfter = v.kd * (1 - v.t / 100);
+        const w = we * v.ke + wd * kdAfter;
+
+        return {
+            assumed,
+            text: [
+                "Step 1: Write the formula",
+                "WACC = (E ÷ V × Ke) + (D ÷ V × Kd × (1 − t))",
+                "Step 2: List the given values",
+                `E = ${mcR(v.E)}`, `D = ${mcR(v.D)}`,
+                `Ke = ${mcP(v.ke)}`, `Kd = ${mcP(v.kd)}`, `t = ${mcP(v.t)}`,
+                "Step 3: Total capital",
+                `V = E + D = ${mcR(v.E)} + ${mcR(v.D)} = ${mcR(V)}`,
+                "Step 4: Weights",
+                `E ÷ V = ${mcR(v.E)} ÷ ${mcR(V)} = ${mcP(we * 100)}`,
+                `D ÷ V = ${mcR(v.D)} ÷ ${mcR(V)} = ${mcP(wd * 100)}`,
+                "Step 5: After-tax cost of debt",
+                `Kd × (1 − t) = ${mcP(v.kd)} × (1 − ${+(v.t / 100).toFixed(4)}) = ${mcP(kdAfter)}`,
+                "Step 6: Calculate WACC",
+                `WACC = (${mcP(we * 100)} × ${mcP(v.ke)}) + (${mcP(wd * 100)} × ${mcP(kdAfter)})`,
+                `WACC = ${mcP(we * v.ke)} + ${mcP(wd * kdAfter)}`,
+                `∴ WACC ≈ ${mcP(w)}`
+            ]
+        };
+    }
+
+    /* ---------- solver: VAT ---------- */
+
+    function mcSolveVAT(text) {
+        if (!/\bvat\b/i.test(text)) return null;
+        if (/input vat|output vat/i.test(text) && mcMoney(text).length > 1) return null;
+
+        const money = mcMoney(text.replace(/\d+(?:\.\d+)?\s*%/g, " ")).filter(n => n >= 1);
+        if (money.length !== 1) return null;
+
+        const rateM = text.match(/(\d+(?:\.\d+)?)\s*%/);
+        const rate = rateM ? parseFloat(rateM[1]) : 15;
+        const assumed = rateM ? [] : ["No VAT rate was given, so South Africa's standard 15% was assumed."];
+        const amt = money[0];
+        const f = (1 + rate / 100).toFixed(2);
+
+        if (/(incl|inclusive)/i.test(text)) {
+            const excl = amt / (1 + rate / 100);
+            return { assumed, text: [
+                "Step 1: VAT-inclusive amount", `${mcR(amt)}`,
+                "Step 2: Find the VAT-exclusive amount", `${mcR(amt)} ÷ ${f} = ${mcR(excl)}`,
+                "Step 3: Find the VAT", `${mcR(amt)} − ${mcR(excl)} = ${mcR(amt - excl)}`,
+                `∴ VAT = ${mcR(amt - excl)}`
+            ] };
+        }
+        if (/(excl|exclusive|add vat|before vat)/i.test(text)) {
+            return { assumed, text: [
+                "Step 1: VAT-exclusive amount", `${mcR(amt)}`,
+                "Step 2: Calculate the VAT", `${mcR(amt)} × ${rate}% = ${mcR(amt * rate / 100)}`,
+                "Step 3: VAT-inclusive amount", `${mcR(amt)} × ${f} = ${mcR(amt * (1 + rate / 100))}`,
+                `∴ VAT = ${mcR(amt * rate / 100)}  |  Inclusive = ${mcR(amt * (1 + rate / 100))}`
+            ] };
+        }
+        return { missing: ["whether the amount includes or excludes VAT"] };
+    }
+
+    /* ---------- solver: gross profit ---------- */
+
+    function mcSolveGrossProfit(text) {
+        if (!/gross profit/i.test(text)) return null;
+        const s = text.match(/sales[^\d]{0,25}(r?\s*\d[\d\s,]*(?:\.\d+)?)/i);
+        const c = text.match(/cost of (?:sales|goods sold)[^\d]{0,25}(r?\s*\d[\d\s,]*(?:\.\d+)?)/i);
+        if (!s || !c) return null;
+        const sales = mcNum(s[1]), cos = mcNum(c[1]);
+        if (sales === null || cos === null) return null;
+        const gp = sales - cos;
+        return { text: [
+            "Step 1: Formula", "Gross profit = Sales − Cost of sales",
+            "Step 2: Substitute", `Gross profit = ${mcR(sales)} − ${mcR(cos)} = ${mcR(gp)}`,
+            "Step 3: Gross profit percentage", `Gross profit % = ${mcR(gp)} ÷ ${mcR(sales)} × 100 = ${mcP((gp / sales) * 100)}`,
+            `∴ Gross profit = ${mcR(gp)} (${mcP((gp / sales) * 100)})`
+        ] };
+    }
+
+    /* ---------- Financial Management solvers: NPV, IRR, payback, break-even, CAPM, EOQ ---------- */
+
+    const mcRs = v => (v < 0 ? "−" : "") + mcR(Math.abs(v));
+    const mcN = v => String(+Number(v).toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    const mcSup = n => String(n).split("").map(d => "⁰¹²³⁴⁵⁶⁷⁸⁹"[+d]).join("");
+
+    /* amounts in order of appearance; ignores years, periods, percentages and dates */
+    function mcMoneyTokens(text) {
+        const blank = m => " ".repeat(m.length);
+        const cleaned = String(text)
+            .replace(/\d+(?:\.\d+)?\s*%/g, blank)
+            .replace(/\b(?:years?|periods?|yrs?|months?)\s*\d+(?:\s*(?:to|-|and)\s*\d+)?/gi, blank)
+            .replace(/\b\d+(?:\.\d+)?\s*(?:years?|yrs?|months?|units?|times)\b/gi, blank)
+            .replace(/\b(?:19|20)\d{2}\b/g, blank);
+        const re = /r?\s*(\d{1,3}(?:[ ,]\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\s*(billion|bn|million|m|thousand|k)?\b/gi;
+        const out = [];
+        let m;
+        while ((m = re.exec(cleaned))) {
+            let v = parseFloat(m[1].replace(/[ ,]/g, ""));
+            const u = (m[2] || "").toLowerCase();
+            if (u === "billion" || u === "bn") v *= 1e9;
+            else if (u === "million" || u === "m") v *= 1e6;
+            else if (u === "thousand" || u === "k") v *= 1e3;
+            if (isFinite(v)) out.push({ value: v, index: m.index });
+        }
+        return out;
+    }
+
+    function mcPickRate(text) {
+        const re = /(\d+(?:\.\d+)?)\s*%/g;
+        let m, first = null;
+        while ((m = re.exec(text))) {
+            if (first === null) first = parseFloat(m[1]);
+            const before = text.slice(Math.max(0, m.index - 60), m.index).toLowerCase();
+            if (/discount|required|cost of capital|rate of return|hurdle|interest|wacc|rate/.test(before)) return parseFloat(m[1]);
+        }
+        return first;
+    }
+
+    /* investment + list of cash flows */
+    function mcParseProject(text) {
+        const toks = mcMoneyTokens(text);
+        const kw = /(initial|invest(?:s|ed|ment)?|outlay|capital expenditure|purchas\w*|costs?\b|spends?|buys?|pays?)/i.exec(text);
+        if (!kw || !toks.length) return { missing: "initial investment" };
+
+        const invIdx = toks.findIndex(t => t.index >= kw.index);
+        if (invIdx < 0) return { missing: "initial investment" };
+
+        const investment = toks[invIdx].value;
+        let flows = toks.filter((t, i) => i !== invIdx).map(t => t.value);
+
+        const rep = text.match(/(\d+)\s*(?:years?|yrs?)/i);
+        if (flows.length === 1 && rep && /(each|every|per|annual|a year|yearly|for\s+\d+\s*(?:years?|yrs?))/i.test(text)) {
+            flows = Array(parseInt(rep[1], 10)).fill(flows[0]);
+        }
+        if (!flows.length) return { missing: "the yearly cash flows" };
+        return { investment, flows };
+    }
+
+    function mcNpvAt(rate, investment, flows) {
+        return flows.reduce((sum, cf, i) => sum + cf / Math.pow(1 + rate, i + 1), -investment);
+    }
+
+    function mcSolveNPV(text) {
+        if (!/\bnpv\b|net present value/i.test(text)) return null;
+        const p = mcParseProject(text);
+        if (p.missing) return { missing: [p.missing] };
+        const r = mcPickRate(text);
+        if (r === null) return { missing: ["the discount rate (required return)"] };
+
+        const i = r / 100;
+        const L = [
+            "Step 1: Write the formula", "NPV = −I₀ + Σ [CFₜ ÷ (1 + r)ᵗ]",
+            "Step 2: List the given values", `I₀ = ${mcR(p.investment)}`, `r = ${mcP(r)}`,
+            ...p.flows.map((cf, k) => `Year ${k + 1} cash flow = ${mcR(cf)}`),
+            "Step 3: Discount each cash flow"
+        ];
+        let total = 0;
+        p.flows.forEach((cf, k) => {
+            const pv = cf / Math.pow(1 + i, k + 1);
+            total += pv;
+            L.push(`Year ${k + 1}: ${mcR(cf)} ÷ (1 + ${+(i).toFixed(4)})${k + 1 <= 9 ? mcSup(k + 1) : "^" + (k + 1)} = ${mcR(pv)}`);
+        });
+        const npv = total - p.investment;
+        L.push("Step 4: Add the present values and subtract the investment",
+            `Total PV of inflows = ${mcR(total)}`,
+            `NPV = ${mcR(total)} − ${mcR(p.investment)} = ${mcRs(npv)}`,
+            `∴ NPV = ${mcRs(npv)} → ${npv > 0 ? "accept the project (NPV > 0)" : npv < 0 ? "reject the project (NPV < 0)" : "indifferent (NPV = 0)"}`);
+        return { assumed: ["Cash flows were taken in the order given, one at the end of each year."], text: L };
+    }
+
+    function mcSolveIRR(text) {
+        if (!/\birr\b|internal rate of return/i.test(text)) return null;
+        const p = mcParseProject(text);
+        if (p.missing) return { missing: [p.missing] };
+
+        let lo = null, hi = null, prev = mcNpvAt(-0.9, p.investment, p.flows);
+        for (let r = -0.89; r <= 5; r += 0.01) {
+            const v = mcNpvAt(r, p.investment, p.flows);
+            if ((prev < 0 && v > 0) || (prev > 0 && v < 0)) { lo = r - 0.01; hi = r; break; }
+            prev = v;
+        }
+        if (lo === null) return { missing: ["cash flows that produce a positive and a negative NPV (an IRR may not exist)"] };
+
+        for (let k = 0; k < 100; k++) {
+            const mid = (lo + hi) / 2;
+            const f = mcNpvAt(mid, p.investment, p.flows);
+            const flo = mcNpvAt(lo, p.investment, p.flows);
+            if ((flo < 0 && f > 0) || (flo > 0 && f < 0)) hi = mid; else lo = mid;
+        }
+        const irr = ((lo + hi) / 2) * 100;
+        const hurdle = mcPickRate(text);
+
+        const L = [
+            "Step 1: Definition", "IRR is the rate r where NPV = 0",
+            "Step 2: List the given values", `I₀ = ${mcR(p.investment)}`,
+            ...p.flows.map((cf, k) => `Year ${k + 1} cash flow = ${mcR(cf)}`),
+            "Step 3: Find r by trial and error (bisection)",
+            `NPV at ${mcP(irr)} ≈ ${mcRs((v => (Math.abs(v) < 0.5 ? 0 : v))(mcNpvAt(irr / 100, p.investment, p.flows)))}`,
+            `∴ IRR ≈ ${mcP(irr)}`
+        ];
+        if (hurdle !== null) L.push(`Compare: IRR ${irr > hurdle ? ">" : "<"} required return ${mcP(hurdle)} → ${irr > hurdle ? "accept" : "reject"} the project`);
+        return { text: L };
+    }
+
+    function mcSolvePayback(text) {
+        if (!/payback/i.test(text)) return null;
+        const p = mcParseProject(text);
+        if (p.missing) return { missing: [p.missing] };
+
+        const discount = /discounted/i.test(text);
+        const r = mcPickRate(text);
+        if (discount && r === null) return { missing: ["the discount rate (for discounted payback)"] };
+
+        const L = ["Step 1: Method", discount ? "Discounted payback: accumulate discounted cash flows until I₀ is recovered" : "Accumulate cash flows until I₀ is recovered", `I₀ = ${mcR(p.investment)}`, "Step 2: Cumulative cash flow"];
+        let cum = 0, result = null;
+        for (let k = 0; k < p.flows.length; k++) {
+            const cf = discount ? p.flows[k] / Math.pow(1 + r / 100, k + 1) : p.flows[k];
+            const before = cum;
+            cum += cf;
+            L.push(`Year ${k + 1}: ${mcR(cf)} → cumulative ${mcR(cum)}`);
+            if (result === null && cum >= p.investment) {
+                result = k + (p.investment - before) / cf;
+                L.push("Step 3: Fraction of the recovery year", `(${mcR(p.investment)} − ${mcR(before)}) ÷ ${mcR(cf)} = ${+((p.investment - before) / cf).toFixed(2)}`);
+                break;
+            }
+        }
+        if (result === null) { L.push(`∴ The investment is not recovered within ${p.flows.length} years`); return { text: L }; }
+        L.push(`∴ ${discount ? "Discounted payback" : "Payback"} ≈ ${+result.toFixed(2)} years`);
+        return { text: L };
+    }
+
+    function mcSolveBreakEven(text) {
+        if (!/break[- ]?even/i.test(text)) return null;
+        const val = re => { const m = text.match(re); return m ? mcNum(m[1]) : null; };
+        const num = "(r?\\s*\\d[\\d\\s,]*(?:\\.\\d+)?\\s*(?:million|m|thousand|k)?)";
+        const fc = val(new RegExp("fixed (?:costs?|expenses?|overheads?)[^\\d]{0,30}" + num, "i"));
+        const sp = val(new RegExp("(?:selling price|sales price|price per unit|sells? (?:each |it )?(?:at|for))[^\\d]{0,30}" + num, "i"));
+        const vc = val(new RegExp("variable (?:costs?|expenses?)(?: per unit)?[^\\d]{0,30}" + num, "i"));
+
+        const missing = [];
+        if (fc === null) missing.push("fixed costs");
+        if (sp === null) missing.push("selling price per unit");
+        if (vc === null) missing.push("variable cost per unit");
+        if (missing.length) return { missing };
+        if (sp <= vc) return { text: ["The selling price is not higher than the variable cost per unit, so the contribution is not positive.", "∴ There is no break-even point"] };
+
+        const cm = sp - vc, units = fc / cm;
+        const L = [
+            "Step 1: Formula", "Break-even units = Fixed costs ÷ (Selling price − Variable cost per unit)",
+            "Step 2: Contribution per unit", `${mcR(sp)} − ${mcR(vc)} = ${mcR(cm)}`,
+            "Step 3: Break-even units", `${mcR(fc)} ÷ ${mcR(cm)} = ${mcN(units)} units`,
+            "Step 4: Break-even revenue", `${mcN(units)} × ${mcR(sp)} = ${mcR(units * sp)}`
+        ];
+        const tp = text.match(/target profit[^\d]{0,20}(r?\s*\d[\d\s,]*(?:\.\d+)?)/i);
+        if (tp) {
+            const t = mcNum(tp[1]);
+            L.push("Step 5: Units for the target profit", `(${mcR(fc)} + ${mcR(t)}) ÷ ${mcR(cm)} = ${mcN((fc + t) / cm)} units`);
+        }
+        L.push(`∴ Break-even = ${Math.ceil(units - 1e-9).toLocaleString("en-US").replace(/,/g, " ")} units (${mcR(units * sp)})`);
+        return { text: L };
+    }
+
+    function mcSolveCAPM(text) {
+        if (!/capm|capital asset pricing/i.test(text)) return null;
+        const pct = re => { const m = text.match(re); return m ? parseFloat(m[1]) : null; };
+        const beta = pct(/beta[^\d-]{0,20}(-?\d+(?:\.\d+)?)/i);
+        const rf = pct(/risk[- ]free[^\d]{0,30}(\d+(?:\.\d+)?)\s*%/i);
+        let rm = pct(/market (?:return|rate of return)[^\d]{0,30}(\d+(?:\.\d+)?)\s*%/i);
+        const prem = pct(/market risk premium[^\d]{0,30}(\d+(?:\.\d+)?)\s*%/i);
+
+        const missing = [];
+        if (beta === null) missing.push("beta");
+        if (rf === null) missing.push("risk-free rate");
+        if (rm === null && prem === null) missing.push("market return (or market risk premium)");
+        if (missing.length) return { missing };
+
+        const premium = prem !== null ? prem : rm - rf;
+        const ke = rf + beta * premium;
+        return { text: [
+            "Step 1: Formula", "Ke = Rf + β × (Rm − Rf)",
+            "Step 2: Given values", `Rf = ${mcP(rf)}`, `β = ${beta}`, prem !== null ? `Market risk premium = ${mcP(prem)}` : `Rm = ${mcP(rm)}`,
+            "Step 3: Market risk premium", prem !== null ? `${mcP(prem)}` : `${mcP(rm)} − ${mcP(rf)} = ${mcP(premium)}`,
+            "Step 4: Substitute", `Ke = ${mcP(rf)} + ${beta} × ${mcP(premium)}`,
+            `∴ Ke = ${mcP(ke)}`
+        ] };
+    }
+
+    function mcSolveEOQ(text) {
+        if (!/\beoq\b|economic order quantity/i.test(text)) return null;
+        const num = "(r?\\s*\\d[\\d\\s,]*(?:\\.\\d+)?)";
+        const g = re => { const m = text.match(re); return m ? mcNum(m[1]) : null; };
+        const D = g(new RegExp("(?:annual |yearly )?demand[^\\d]{0,25}" + num, "i"));
+        const S = g(new RegExp("(?:ordering|order|setup) cost[^\\d]{0,25}" + num, "i"));
+        const H = g(new RegExp("(?:holding|carrying|storage) cost[^\\d]{0,25}" + num, "i"));
+        const missing = [];
+        if (D === null) missing.push("annual demand");
+        if (S === null) missing.push("ordering cost per order");
+        if (H === null) missing.push("holding cost per unit per year");
+        if (missing.length) return { missing };
+
+        const q = Math.sqrt((2 * D * S) / H);
+        return { text: [
+            "Step 1: Formula", "EOQ = √(2 × D × S ÷ H)",
+            "Step 2: Substitute", `EOQ = √(2 × ${mcN(D)} × ${mcN(S)} ÷ ${mcN(H)})`, `EOQ = √${mcN((2 * D * S) / H)}`,
+            `∴ EOQ ≈ ${+q.toFixed(2)} units per order`
+        ] };
+    }
+
+    /* ---------- math.js (loaded from unpkg) ----------
+       Used for what the built-in solvers cannot do: trig/log/factorial/statistics,
+       matrices, unit conversion, derivatives and simplification.
+       If it cannot load (offline), the app simply keeps using its own solvers. */
+
+    const MC_MATHJS_URL = "https://unpkg.com/mathjs@15.2.0/lib/browser/math.js";
+    let mcMath = null;
+    let mcMathLoading = false;
+
+    function mcAttachMath(lib) {
+        try {
+            const lb = lib && (lib.create ? lib : lib.default);
+            if (!lb || !lb.create) return;
+
+            const m = lb.create(lb.all);
+            const keep = { evaluate: m.evaluate, parse: m.parse, simplify: m.simplify, derivative: m.derivative };
+
+            /* students type the expressions, so switch off the risky functions */
+            const blocked = () => { throw new Error("This function is disabled"); };
+            m.import({ import: blocked, createUnit: blocked, reviver: blocked, evaluate: blocked, parse: blocked, simplify: blocked, derivative: blocked }, { override: true });
+
+            mcMath = { m, evaluate: keep.evaluate, parse: keep.parse, simplify: keep.simplify, derivative: keep.derivative };
+        } catch (e) {
+            mcMath = null;
+        }
+    }
+
+    function mcInitMath() {
+        if (mcMath || mcMathLoading) return;
+        if (typeof window !== "undefined" && window.math) { mcAttachMath(window.math); if (mcMath) return; }
+
+        mcMathLoading = true;
+        const s = document.createElement("script");
+        s.src = MC_MATHJS_URL;
+        s.async = true;
+        s.onload = () => { mcMathLoading = false; if (window.math) mcAttachMath(window.math); };
+        s.onerror = () => { mcMathLoading = false; };
+        document.head.appendChild(s);
+    }
+
+    function mcMathPrep(s) {
+        return String(s)
+            .replace(/[−–]/g, "-").replace(/×/g, "*").replace(/÷/g, "/")
+            .replace(/√\s*(\d+(?:\.\d+)?|\([^()]*\))/g, "sqrt($1)")
+            .replace(/π/g, "pi").replace(/²/g, "^2").replace(/³/g, "^3")
+            .replace(/\s+/g, " ").trim();
+    }
+
+    /* every name in the expression must be a real math.js function, constant or unit */
+    function mcMathKnownNames(node) {
+        let ok = true;
+        node.traverse(n => {
+            if (n.type === "AssignmentNode" || n.type === "FunctionAssignmentNode" || n.type === "BlockNode" || n.type === "ObjectNode") ok = false;
+            if (n.type === "SymbolNode") {
+                const name = n.name;
+                const isFn = name in mcMath.m;
+                let isUnit = false;
+                try { isUnit = mcMath.m.Unit.isValuelessUnit(name); } catch (e) { /* ignore */ }
+                if (!isFn && !isUnit) ok = false;
+            }
+        });
+        return ok;
+    }
+
+    function mcSolveMathjs(text) {
+        if (!mcMath) return null;
+        const raw = mcMathPrep(text);
+
+        try {
+            /* derivative */
+            let m = raw.match(/^(?:please\s+)?(?:differentiate|find the derivative of|derivative of|d\/dx(?:\s+of)?)\s*:?\s*(.+?)(?:\s+with respect to\s+([a-z]))?\s*\??$/i);
+            if (m && !/[^0-9a-z+\-*/^().,\s]/i.test(m[1])) {
+                const v = m[2] || "x";
+                const f = m[1].replace(/^f\(\s*[a-z]\s*\)\s*=\s*|^y\s*=\s*/i, "");
+                const d = mcMath.simplify(mcMath.derivative(f, v)).toString();
+                return { text: ["Step 1: Write the function", `f(${v}) = ${f}`, "Step 2: Differentiate (power, product, quotient and chain rules as needed)", `∴ f′(${v}) = ${d}`] };
+            }
+
+            /* simplify */
+            m = raw.match(/^(?:please\s+)?simplify\s*:?\s*(.+?)\s*\??$/i);
+            if (m && !/[^0-9a-z+\-*/^().,\s]/i.test(m[1])) {
+                const s = mcMath.simplify(m[1]).toString();
+                return { text: ["Step 1: Write the expression", m[1], "Step 2: Simplify", `∴ ${m[1]} = ${s}`] };
+            }
+
+            /* general expression: functions, matrices, units, statistics */
+            const expr = raw.replace(/^(?:please\s+)?(?:calculate|what is|what's|work out|evaluate|compute|find|convert)\s*:?\s*/i, "").replace(/[?=\s]+$/g, "");
+            if (!expr || !/\d/.test(expr) || expr.length > 300) return null;
+
+            const node = mcMath.parse(expr);
+            if (node.type === "ConstantNode" || node.type === "SymbolNode") return null;
+            if (!mcMathKnownNames(node)) return null;
+
+            const value = mcMath.evaluate(expr);
+            if (value === undefined || value === null || typeof value === "function") return null;
+
+            const shown = typeof value === "number"
+                ? (Number.isFinite(value) ? mcMinus(+value.toPrecision(12)) : null)
+                : mcMath.m.format(value, { precision: 10 });
+            if (shown === null || shown === "undefined") return null;
+
+            return { text: ["Step 1: Write the expression", expr, "Step 2: Evaluate", `∴ ${expr} = ${shown}`] };
+        } catch (e) {
+            return null;
+        }
+    }
+
+    mcInitMath();
+
+    /* ---------- combined local solver ---------- */
+
+    function mcSolveLocal(text) {
+        const solvers = [mcSolveWACC, mcSolveNPV, mcSolveIRR, mcSolvePayback, mcSolveBreakEven, mcSolveCAPM, mcSolveEOQ, mcSolveVAT, mcSolveGrossProfit, mcSolveEquation, mcSolveArithmetic, mcSolveMathjs];
+        for (const s of solvers) {
+            const r = s(text);
+            if (r && !r.unsupported) return r;
+        }
+        return null;
+    }
+
+    /* ---------- symbol button (appears with the keyboard, opens a symbol panel) ---------- */
+
+    (function mcSymbolPanel() {
+        if (!questionInput || document.getElementById("mcSymWrap")) return;
+
+        const symbols = ["+", "−", "×", "÷", "=", "(", ")", "^", "²", "³", "√", "π", "±", "≤", "≥", "≠", "≈", "%", "Δ", "Σ", "x", "∴"];
+        const keyStyle = "width:40px;height:40px;border-radius:8px;border:1px solid rgba(128,128,128,.45);background:rgba(128,128,128,.14);color:inherit;font-size:18px;line-height:1;cursor:pointer;padding:0;";
+
+        /* in-flow container: it pushes things apart instead of covering them */
+        const wrap = document.createElement("div");
+        wrap.id = "mcSymWrap";
+        wrap.style.cssText = "display:none;box-sizing:border-box;width:100%;position:relative;";
+
+        const row = document.createElement("div");
+        row.style.cssText = "display:flex;justify-content:flex-start;padding:4px 10px 2px;";
+
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.textContent = "Σ";
+        toggle.title = "Maths symbols";
+        toggle.setAttribute("aria-label", "Show maths symbols");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.style.cssText = "width:34px;height:34px;border-radius:50%;border:1px solid rgba(128,128,128,.5);background:rgba(128,128,128,.16);color:inherit;font-size:16px;line-height:1;cursor:pointer;padding:0;";
+        row.appendChild(toggle);
+
+        const panel = document.createElement("div");
+        panel.style.cssText = "display:none;flex-wrap:wrap;gap:6px;padding:6px 10px 8px;max-height:35vh;overflow-y:auto;box-sizing:border-box;";
+
+        /* keep the keyboard open when pressing the button or any symbol */
+        const keepFocus = el => {
+            el.addEventListener("pointerdown", e => e.preventDefault());
+            el.addEventListener("mousedown", e => e.preventDefault());
+            el.addEventListener("touchend", e => e.stopPropagation());
+        };
+        keepFocus(toggle);
+
+        symbols.forEach(sym => {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.textContent = sym;
+            b.setAttribute("aria-label", "Insert " + sym);
+            b.style.cssText = keyStyle;
+            keepFocus(b);
+            b.addEventListener("click", () => {
+                const start = questionInput.selectionStart ?? questionInput.value.length;
+                const end = questionInput.selectionEnd ?? start;
+                questionInput.value = questionInput.value.slice(0, start) + sym + questionInput.value.slice(end);
+                questionInput.selectionStart = questionInput.selectionEnd = start + sym.length;
+                questionInput.dispatchEvent(new Event("input", { bubbles: true }));
+                questionInput.focus();
+            });
+            panel.appendChild(b);
+        });
+
+        wrap.appendChild(row);
+        wrap.appendChild(panel);
+
+        /* place it: inside the composer if that is fixed/sticky, otherwise directly above it */
+        let fixedEl = null;
+        for (let el = questionInput.parentElement; el && el !== document.body; el = el.parentElement) {
+            const pos = window.getComputedStyle(el).position;
+            if (pos === "fixed" || pos === "sticky" || pos === "absolute") { fixedEl = el; break; }
+        }
+        if (fixedEl) {
+            fixedEl.insertBefore(wrap, fixedEl.firstChild);
+        } else {
+            const host = questionInput.parentElement;
+            if (host && host.parentElement) host.parentElement.insertBefore(wrap, host);
+        }
+
+        /* keep the last message visible when the composer grows (never touches the screen while hidden) */
+        const basePad = chatArea ? parseFloat(window.getComputedStyle(chatArea).paddingBottom) || 0 : 0;
+        let shown = false, isOpen = false, padChanged = false;
+
+        function reflow() {
+            if (!chatArea) return;
+            if (fixedEl && shown) {
+                chatArea.style.paddingBottom = (basePad + wrap.offsetHeight) + "px";
+                padChanged = true;
+            } else if (padChanged) {
+                chatArea.style.paddingBottom = "";
+                padChanged = false;
+            }
+            if (shown && chatArea.querySelector(".message-row")) {
+                requestAnimationFrame(() => { chatArea.scrollTop = chatArea.scrollHeight; });
+            }
+        }
+
+        function setOpen(open) {
+            if (open === isOpen) return;
+            isOpen = open;
+            panel.style.display = open ? "flex" : "none";
+            toggle.textContent = open ? "✕" : "Σ";
+            toggle.setAttribute("aria-expanded", String(open));
+            toggle.setAttribute("aria-label", open ? "Hide maths symbols" : "Show maths symbols");
+            reflow();
+        }
+
+        function setVisible(visible) {
+            if (visible === shown) return;          /* no change = do nothing at all */
+            shown = visible;
+            wrap.style.display = visible ? "block" : "none";
+            if (!visible) setOpen(false);
+            reflow();
+        }
+
+        toggle.addEventListener("click", () => setOpen(!isOpen));
+
+        /* The button only appears once the on-screen keyboard is really open.
+           Before that (including the app's automatic focus at start-up) nothing is shown. */
+        const vv = window.visualViewport;
+        const viewH = () => (vv ? vv.height : window.innerHeight);
+        const touchLike = !(window.matchMedia && window.matchMedia("(pointer: fine)").matches);
+        let baseH = viewH();
+        let lastW = window.innerWidth;
+        let userTyped = false;
+
+        function evaluate() {
+            const focused = document.activeElement === questionInput;
+
+            if (!focused) {
+                if (window.innerWidth !== lastW) { lastW = window.innerWidth; baseH = viewH(); }   /* rotated */
+                else baseH = Math.max(baseH, viewH());
+                userTyped = false;
+                setVisible(false);
+                return;
+            }
+
+            const keyboardUp = (baseH - viewH()) > 120;          /* phone/tablet keyboard opened */
+            setVisible(touchLike ? keyboardUp : userTyped);      /* desktop: only once typing starts */
+        }
+
+        questionInput.addEventListener("focus", () => { setTimeout(evaluate, 80); setTimeout(evaluate, 400); });
+        questionInput.addEventListener("blur", () => setTimeout(evaluate, 200));
+        questionInput.addEventListener("input", () => { userTyped = true; evaluate(); });
+        if (vv) vv.addEventListener("resize", evaluate);
+        window.addEventListener("resize", evaluate);
+    })();
+
+    /* ---------- document parsing ---------- */
+
+    function mcMarks(text) {
+        const m = text.match(/\(\s*(\d+)\s*marks?\s*\)|\[\s*(\d+)\s*(?:marks?)?\s*\]|\b(\d+)\s*marks?\b/i);
+        return m ? parseInt(m[1] || m[2] || m[3], 10) : null;
+    }
+
+    function mcParseDocument(raw) {
+        const lines = String(raw).replace(/\r/g, "").split("\n");
+        const top = /^\s*(?:question|q)\s*(\d+(?:\.\d+)*)\s*[.:)\-]?\s*(.*)$|^\s*(\d+(?:\.\d+)*)[.)]\s+(.*)$/i;
+        const sub = /^\s*\(?([a-z]|[ivx]{1,4})[.)]\s+(.*)$/i;
+
+        const items = [];
+        let cur = null, parent = null;
+
+        lines.forEach(line => {
+            const t = top.exec(line);
+            const s = !t ? sub.exec(line) : null;
+
+            if (t) {
+                const label = (t[1] || t[3]).replace(/\.$/, "");
+                cur = { label, text: (t[2] !== undefined ? t[2] : t[4]) || "", context: "", isSub: false };
+                items.push(cur);
+                parent = cur;
+            } else if (s && parent && s[1].length <= 4 && /^[a-z]$|^[ivx]+$/i.test(s[1])) {
+                cur = { label: `${parent.label}(${s[1].toLowerCase()})`, text: s[2], context: parent.text, isSub: true, parent };
+                items.push(cur);
+            } else if (cur) {
+                cur.text += (cur.text ? "\n" : "") + line;
+            } else if (line.trim()) {
+                mcDoc.preamble = (mcDoc.preamble || "") + line + "\n";
+            }
+        });
+
+        /* Questions that have sub-questions are answered via their parts; the stem is passed as context */
+        const parents = new Set(items.filter(i => i.isSub).map(i => i.parent));
+        const answerable = items.filter(i => !parents.has(i)).map(i => ({
+            label: i.label,
+            text: i.text.trim(),
+            context: ((i.isSub ? i.context : "") + "\n" + (mcDoc.preamble || "")).trim(),
+            marks: mcMarks(i.text) || (i.isSub ? mcMarks(i.parent.text) : null)
+        }));
+
+        return answerable.filter(q => q.text);
+    }
+
+    function mcLooksLikeDocument(raw) {
+        mcDoc.preamble = "";
+        const items = mcParseDocument(raw);
+        return items.length >= 2 ? items : null;
+    }
+
+    /* ---------- AI proxy (optional) ---------- */
+
+    async function mcAskAI(payload) {
+        if (!mcAI.endpoint) return null;
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), mcAI.timeoutMs);
+        try {
+            const res = await fetch(mcAI.endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+                signal: controller.signal
+            });
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            const data = await res.json();
+            return data && data.answer ? String(data.answer) : null;
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
+    /* ---------- answer one question ---------- */
+
+    function mcDepth(marks) {
+        if (!marks) return 3;
+        return marks <= 2 ? 1 : marks <= 5 ? 3 : 5;
+    }
+
+    async function mcAnswerOne(q, opts) {
+        const clean = t => String(t).replace(/\(\s*\d+\s*marks?\s*\)|\[\s*\d+\s*(?:marks?)?\s*\]/gi, " ");
+        const full = clean((q.context ? q.context + "\n" : "") + q.text);
+        /* try the question on its own first (so a document heading cannot interfere), then with its context */
+        let local = mcSolveLocal(clean(q.text));
+        if (!local || local.missing) {
+            const withContext = mcSolveLocal(full);
+            if (withContext && (!withContext.missing || !local)) local = withContext;
+        }
+
+        let body = "", status = "";
+
+        if (local && local.missing) {
+            body = `<p><strong>More information needed:</strong> ${escapeHtml(local.missing.join(", "))}.</p><p>I have not guessed these values.</p>`;
+            status = "missing";
+        } else if (local) {
+            body = opts.answersOnly ? mcLines([local.text[local.text.length - 1]]) : mcLines(local.text);
+            if (local.assumed && local.assumed.length) body += `<p><em>Assumption: ${escapeHtml(local.assumed.join(" "))}</em></p>`;
+            status = "solved";
+        } else {
+            let ai = null;
+            try { ai = await mcAskAI({ question: q.text, context: q.context, marks: q.marks, answersOnly: !!opts.answersOnly, examFormat: !!opts.exam }); } catch (e) { ai = null; }
+
+            if (ai) {
+                body = ai.split(/\n+/).map(l => `<p>${escapeHtml(l)}</p>`).join("");
+                status = "ai";
+            } else {
+                const hit = searchAllSubjects(full, 25)[0];
+                if (hit) {
+                    const it = hit.item, n = mcDepth(q.marks);
+                    body = `<p>${escapeHtml(it.information)}</p>`;
+                    if (!opts.answersOnly && it.formulas && it.formulas.length) body += mcLines(it.formulas.slice(0, n).map(f => "Formula: " + f));
+                    if (!opts.answersOnly && it.rules && it.rules.length) body += "<ul>" + it.rules.slice(0, n).map(r => `<li>${escapeHtml(r)}</li>`).join("") + "</ul>";
+                    body += `<p><em>This comes from my general notes on "${escapeHtml(it.topic)}". It is not worked out from your specific figures or case.</em></p>`;
+                    status = "notes";
+                } else {
+                    body = `<p><em>I can't answer this one reliably yet. It needs a connected AI model (see mcAI.endpoint) or a topic I have notes for.</em></p>`;
+                    status = "unsupported";
+                }
+            }
+        }
+
+        const marks = q.marks ? ` <small>[${q.marks} mark${q.marks === 1 ? "" : "s"}]</small>` : "";
+        const header = opts.exam
+            ? `<h3>Question ${escapeHtml(q.label)}${marks}</h3><p><strong>Answer:</strong></p>`
+            : `<h3>${escapeHtml(q.label)}${marks}</h3>`;
+
+        return { html: header + body, status };
+    }
+
+    /* ---------- answer a batch ---------- */
+
+    async function mcAnswerBatch(opts) {
+        const start = mcDoc.next;
+        const end = Math.min(start + mcBatchSize, mcDoc.items.length);
+        let html = `<h2>Answers ${escapeHtml(mcDoc.items[start].label)} to ${escapeHtml(mcDoc.items[end - 1].label)}</h2>`;
+        const counts = { solved: 0, ai: 0, notes: 0, missing: 0, unsupported: 0 };
+
+        for (let i = start; i < end; i++) {
+            const r = await mcAnswerOne(mcDoc.items[i], opts);
+            counts[r.status]++;
+            html += r.html;
+        }
+        mcDoc.next = end;
+
+        html += `<hr><p><em>Covered ${end} of ${mcDoc.items.length} questions. `;
+        html += `Worked from your figures: ${counts.solved}, AI: ${counts.ai}, general notes only: ${counts.notes}, need more info: ${counts.missing}, not answerable here: ${counts.unsupported}.</em></p>`;
+        if (end < mcDoc.items.length) html += `<p><strong>Say "continue" for questions ${end + 1} to ${mcDoc.items.length}.</strong></p>`;
+        return html;
+    }
+
+    /* ---------- request parsing ---------- */
+
+    function mcOptions(text) {
+        const t = text.toLowerCase();
+        return {
+            answersOnly: /(only the answers|answers only|just the answers|give me only the answers)/.test(t),
+            exam: /(exam(ination)? format|exam style|as in an exam)/.test(t)
+        };
+    }
+
+    function mcFindQuestion(label) {
+        return mcDoc.items.find(q => q.label.toLowerCase() === label.toLowerCase()) ||
+            mcDoc.items.find(q => q.label.toLowerCase().startsWith(label.toLowerCase() + "("));
+    }
+
+    function mcPlaceholder(promise, label) {
+        const slotId = "wikiSlot" + (++wikiSlotCounter);
+        promise.then(html => wikiFillSlot(slotId, html))
+            .catch(() => wikiFillSlot(slotId, "<p>Something went wrong while answering. Please try again.</p>"));
+        return `<div id="${slotId}"><div class="thinking"><span>${escapeHtml(label || "Working through the questions")}</span><span class="thinking-dot"></span><span class="thinking-dot"></span><span class="thinking-dot"></span></div></div>`;
+    }
+
+    function mcHandle(question) {
+        const text = String(question);
+        const lower = text.toLowerCase().trim();
+        const opts = mcOptions(text);
+
+        /* "continue" through a long document */
+        if (mcDoc.items.length && mcDoc.next < mcDoc.items.length && /^(continue|next|go on|carry on|more)\b/.test(lower)) {
+            return mcPlaceholder(mcAnswerBatch(mcDoc.lastOpts || opts));
+        }
+
+        /* A new pasted document with several questions */
+        const items = (text.length > 80 || text.includes("\n")) ? mcLooksLikeDocument(text) : null;
+        if (items) {
+            mcDoc = { items, next: 0, raw: text, preamble: "", lastOpts: opts };
+            return mcPlaceholder(mcAnswerBatch(opts));
+        }
+
+        /* "explain question 2" about the stored document */
+        const ref = lower.match(/(?:question|q|no\.?|number)\s*(\d+(?:\.\d+)?(?:\([a-z]\))?)/);
+        if (ref && mcDoc.items.length) {
+            const q = mcFindQuestion(ref[1]);
+            if (!q) return `<p>I could not find question ${escapeHtml(ref[1])} in the document you pasted. I found: ${escapeHtml(mcDoc.items.map(i => i.label).join(", "))}.</p>`;
+            return mcPlaceholder(mcAnswerOne(q, opts).then(r => r.html));
+        }
+
+        /* A single question with figures or an equation */
+        const local = mcSolveLocal(text.replace(/\(\s*\d+\s*marks?\s*\)|\[\s*\d+\s*(?:marks?)?\s*\]/gi, " "));
+        if (local) {
+            if (local.missing) {
+                return `<h2>More information needed</h2><p>To answer this I still need: <strong>${escapeHtml(local.missing.join(", "))}</strong>.</p><p>I have not guessed these values.</p>`;
+            }
+            let html = `<h2>Worked solution</h2>` + mcLines(local.text);
+            if (local.assumed && local.assumed.length) html += `<p><em>Assumption: ${escapeHtml(local.assumed.join(" "))}</em></p>`;
+            return html;
+        }
+
+        return null;
+    }
+
+    const mcPreviousGenerate = generateAnswer;
+    generateAnswer = function (question) {
+        try {
+            const result = mcHandle(question);
+            if (result !== null) return result;
+        } catch (e) { /* fall through to the normal engine */ }
+        return mcPreviousGenerate(question);
+    };
+
+    /* ---------- AI for everything else (live facts, any subject) ----------
+       Only active once mcAI.endpoint is set to YOUR proxy (see the proxy file).
+       Order: calculators and documents -> your own notes -> AI with web search
+       -> free live sources (Wikidata, Wikipedia...) if the AI is unreachable. */
+
+    function mcRenderAI(text) {
+        return String(text).split(/\n+/).filter(l => l.trim()).map(l =>
+            `<p>${escapeHtml(l).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")}</p>`).join("");
+    }
+
+    const mcPreviousGenerate2 = generateAnswer;
+    generateAnswer = function (question) {
+        if (!mcAI.endpoint) return mcPreviousGenerate2(question);
+
+        try {
+            const handled = mcHandle(question);                      /* solvers, documents, "continue" */
+            if (handled !== null) return handled;
+
+            const localAnswer = originalGenerateAnswer(question);    /* your notes, jokes, essays, statements... */
+            const localFailed =
+                isFallbackAnswer(localAnswer) ||
+                localAnswer.includes("I don't have that one in my study notes") ||
+                localAnswer.includes("I'm not 100% sure what you meant");
+
+            if (!localFailed && wikiNotesAnsweredWell(question, localAnswer)) return localAnswer;
+
+            const fallback = async () => {
+                try {
+                    const html = await wikiResolve(question, wikiMathExpression(question));
+                    return html || localAnswer;
+                } catch (e) { return localAnswer; }
+            };
+
+            return mcPlaceholder(
+                mcAskAI({ question: question, mode: "general" })
+                    .then(answer => (answer ? mcRenderAI(answer) : fallback()))
+                    .catch(() => fallback()),
+                "Looking that up"
+            );
+        } catch (e) {
+            return mcPreviousGenerate2(question);
+        }
+    };
+
+    /* =========================================================
+       WELCOME SCREEN ANIMATION
+       Logo spins in, the heading and subtitle flip in word by word,
+       then the subject cards rise in and their letters spin.
+       Plays every time the welcome screen appears (app open, Home,
+       New chat, Clear chat). Tap the "M" logo to replay it.
+       Respects the Reduced Motion setting and the device setting.
+    ========================================================= */
+
+    (function mcWelcomeAnimation() {
+
+        if (!document.getElementById("mcWelcomeStyle")) {
+            const style = document.createElement("style");
+            style.id = "mcWelcomeStyle";
+            style.textContent = `
+                @keyframes mcLogoSpin {
+                    0%   { opacity: 0; transform: scale(0) rotate(-540deg); }
+                    60%  { opacity: 1; transform: scale(1.15) rotate(20deg); }
+                    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+                }
+                @keyframes mcFloat {
+                    0%, 100% { transform: translateY(0); }
+                    50%      { transform: translateY(-5px); }
+                }
+                @keyframes mcWordSpin {
+                    0%   { opacity: 0; transform: perspective(500px) rotateX(-100deg) translateY(14px); }
+                    100% { opacity: 1; transform: perspective(500px) rotateX(0deg) translateY(0); }
+                }
+                @keyframes mcCardIn {
+                    0%   { opacity: 0; transform: translateY(26px) scale(0.94); }
+                    100% { opacity: 1; transform: translateY(0) scale(1); }
+                }
+                @keyframes mcLetterFlip {
+                    0%   { transform: rotateY(0deg); }
+                    100% { transform: rotateY(360deg); }
+                }
+
+                .mc-anim .welcome-logo {
+                    cursor: pointer;
+                    animation:
+                        mcLogoSpin 1.1s cubic-bezier(0.2, 0.9, 0.3, 1.15) backwards,
+                        mcFloat 3.2s ease-in-out 1.3s infinite;
+                }
+                .mc-anim .mc-word {
+                    display: inline-block;
+                    transform-origin: 50% 100%;
+                    animation: mcWordSpin 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+                }
+                .mc-anim .subject-card {
+                    animation: mcCardIn 0.6s ease-out backwards;
+                    animation-delay: var(--mc-card-delay, 1.2s);
+                }
+                .mc-anim .subject-letter {
+                    animation: mcLetterFlip 0.9s ease-in-out backwards;
+                    animation-delay: var(--mc-letter-delay, 1.4s);
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    .mc-anim .welcome-logo,
+                    .mc-anim .mc-word,
+                    .mc-anim .subject-card,
+                    .mc-anim .subject-letter { animation: none !important; }
+                }
+                body.reduced-motion .mc-anim .welcome-logo,
+                body.reduced-motion .mc-anim .mc-word,
+                body.reduced-motion .mc-anim .subject-card,
+                body.reduced-motion .mc-anim .subject-letter { animation: none !important; }
+            `;
+            document.head.appendChild(style);
+        }
+
+        /* Turn a line of text into words that can animate one at a time */
+        function splitWords(el, startDelay, step) {
+            if (!el) return 0;
+            if (el.dataset.mcSplit) return el.querySelectorAll(".mc-word").length;
+
+            const text = el.textContent.trim();
+            if (!text) return 0;
+
+            el.dataset.mcSplit = "1";
+            el.setAttribute("aria-label", text);
+            el.textContent = "";
+
+            const words = text.split(/\s+/);
+            words.forEach((word, i) => {
+                const span = document.createElement("span");
+                span.className = "mc-word";
+                span.setAttribute("aria-hidden", "true");
+                span.style.animationDelay = (startDelay + i * step).toFixed(2) + "s";
+                span.textContent = word;
+                el.appendChild(span);
+                if (i < words.length - 1) el.appendChild(document.createTextNode(" "));
+            });
+            return words.length;
+        }
+
+        function play(root) {
+            root.classList.remove("mc-anim");
+            void root.offsetWidth;                 /* restart the animations */
+            root.classList.add("mc-anim");
+        }
+
+        function mcAnimateWelcome(root) {
+            if (!root || root.dataset.mcAnimated) return;
+            root.dataset.mcAnimated = "1";
+
+            const heading = root.querySelector("h1");
+            const subtitle = root.querySelector(".welcome-content > p");
+
+            const headingWords = splitWords(heading, 0.55, 0.1);
+            splitWords(subtitle, 0.55 + headingWords * 0.1 + 0.15, 0.04);
+
+            root.querySelectorAll(".subject-card").forEach((card, i) => {
+                card.style.setProperty("--mc-card-delay", (1.3 + i * 0.15).toFixed(2) + "s");
+                const letter = card.querySelector(".subject-letter");
+                if (letter) letter.style.setProperty("--mc-letter-delay", (1.55 + i * 0.15).toFixed(2) + "s");
+            });
+
+            const logo = root.querySelector(".welcome-logo");
+            if (logo) logo.addEventListener("click", () => play(root));
+
+            play(root);
+        }
+
+        /* the welcome screen that is already on the page when the app opens */
+        mcAnimateWelcome(document.getElementById("welcomeScreen"));
+
+        /* every welcome screen created later (Home, New chat, Clear chat) */
+        const mcOriginalCreateWelcome = createWelcomeScreen;
+        createWelcomeScreen = function () {
+            const screen = mcOriginalCreateWelcome();
+            mcAnimateWelcome(screen);
+            return screen;
+        };
+    })();
+
+    /* =========================================================
+       END OF DOCUMENT + WORD-PROBLEM UPGRADE
+    ========================================================= */
+
+
+    /* =========================================================
+       LOAD SETTINGS
+    ========================================================= */
+
+    loadSettings();
+
+
+    /* =========================================================
+       START APP
+    ========================================================= */
+
+    autoResizeInput();
+
+    questionInput.focus();
+
+});
