@@ -1,0 +1,24 @@
+# Tools downloaded by npm (large, never upload)
+node_modules/
+
+# Generated copy of the website used by the mobile app
+www/
+
+# Build leftovers
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+ios/App/Pods/
+ios/App/build/
+ios/DerivedData/
+
+# Computer clutter
+.DS_Store
+Thumbs.db
+
+# Secrets must never be uploaded
+.env
+.env.*
+*.keystore
+*.jks
