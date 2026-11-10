@@ -1,0 +1,17 @@
+{
+  "name": "mastercommerce-app",
+  "version": "1.0.0",
+  "description": "Mastercommerce mobile app (Android and iOS) built with Capacitor. The website itself does not use this file.",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/ios": "^8.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.0.0"
+  }
+}
